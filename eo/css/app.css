@@ -266,6 +266,10 @@ nav.bottom button {
 	animation-iteration-count: 1;
 	animation-duration: 2.5s;
 	animation-timing-function: linear;
+	-webkit-animation-name: timerAnimation;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-duration: 2.5s;
+	-webkit-animation-timing-function: linear;
 }
 
 

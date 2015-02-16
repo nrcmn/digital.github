@@ -94,5 +94,5 @@ angular.module('EOapp', ['ui.router', 'router', 'ngAnimate'])
 		// this timeout returns user to the starting point - first page of private tab
 		$timeout(function(){
 			$state.go('users')
-		}, 25000);
+		}, 2500);
 	}])
