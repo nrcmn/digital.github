@@ -1,0 +1,155 @@
+[
+	{
+		"pageId":"/users/start",
+		"startButtonShow": false,
+		"category": "Нажмите на кноку с темой вашего обращения",
+		"buttons":[
+			{
+				"title": "Внести платёж через кассу", 
+				"subtitle": null,
+				"nextPage": "payments"
+			},
+			{
+				"title": "Вопросы мобильной связи",
+				"subtitle": null,
+				"nextPage": "mobile"
+			},
+			{
+				"title": "Домашний интернет и ТВ",
+				"subtitle": null,
+				"nextPage": "wire"
+			}
+		]
+	},
+	{
+		"pageId":"/users/payments",
+		"startButtonShow": false,
+		"category": null,
+		"buttons":[
+			{
+				"title": "Внести платёж через кассу", 
+				"subtitle": "Здесь будут ещё и другие услуги",
+				"nextPage": "end"
+			}
+		]
+	},
+	{
+		"pageId":"/users/wire",
+		"startButtonShow": false,
+		"category": null,
+		"buttons":[
+			{
+				"title": "Домашний интернет и ТВ",
+				"subtitle": "Здесь будут ещё и другие услуги",
+				"nextPage": "end"
+			}
+		]
+	},
+	{
+		"pageId": "/users/mobile",
+		"startButtonShow": false,
+		"category": "Мобильная связь",
+		"buttons":[
+			{
+				"title": "Вопросы по моему номеру",
+				"subtitle": null,
+				"nextPage": "mobile-my"
+			},
+			{
+				"title": "Купить SIM-карту или перейти в Билайн",
+				"subtitle": null,
+				"nextPage" : "mobile-buy"
+			},
+			{
+				"title": "Мобильные телефоны и устройства",
+				"subtitle": "Купить, настроить, починить",
+				"nextPage" : "mobile-devices"
+			}
+		]
+	},
+	{
+		"pageId": "/users/mobile-buy",
+		"startButtonShow": "hidden",
+		"category": "Выберите услугу",
+		"buttons":[
+			{
+				"title": "Перейти в Билайн со своим номером",
+				"subtitle": null,
+				"nextPage": "end"
+			},
+			{
+				"title": "Приобрести новую SIM-карту",
+				"subtitle": null,
+				"nextPage" : "end"
+			}
+		]
+	},
+		{
+		"pageId": "/users/mobile-my",
+		"startButtonShow": true,
+		"category": "Выберите услугу",
+		"buttons":[
+			{
+				"title": "Заменить SIM-карту",
+				"subtitle": null,
+				"nextPage": "end"
+			},
+			{
+				"title": "Финансовые вопросы",
+				"subtitle": "Счета и детализация",
+				"nextPage" : "end"
+			},
+			{
+				"title": "Тарифы и услуги",
+				"subtitle": "Консультация и подключение",
+				"nextPage" : "end"
+			},
+			{
+				"title": "Переоформить или расторгнуть договор",
+				"subtitle": null,
+				"nextPage" : "end"
+			}
+		]
+	},
+		{
+		"pageId": "/users/mobile-devices",
+		"startButtonShow": true,
+		"category": null,
+		"buttons":[
+			{
+				"title": "А это уже совсем другая кнопка",
+				"subtitle": null,
+				"nextPage": "end"
+			},
+			{
+				"title": "Какие-то там вопросы",
+				"subtitle": null,
+				"nextPage" : "end"
+			}
+		]
+	},
+	{
+		"pageId": "/premium/start",
+		"startButtonShow": false,
+		"category": null,
+		"buttons":[
+			{
+				"title": "Услуги для Премиум-клиетов",
+				"subtitle": "Здесь будут указаны услуги для Премиум-клиентов",
+				"nextPage": "end"
+			}
+		]
+	},
+	{
+		"pageId": "/business/start",
+		"startButtonShow": false,
+		"category": null,
+		"buttons":[
+			{
+				"title": "Услуги для Юридических лиц",
+				"subtitle": "Здесь будут указаны услуги для Юридических лиц",
+				"nextPage": "end"
+			}
+		]
+	}
+]

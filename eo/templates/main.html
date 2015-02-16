@@ -1,0 +1,16 @@
+<!-- Button Block STARTS HERE -->
+<div ng-controller="MainContentCtrl">
+	<div ng-repeat="button in buttonsContent" ng-if="loc == button.pageId">
+		<div class="title">
+			<h1>{{button.category||'Выберите категорию'}}:</h1><!-- Current Screen Title always sticks to the First Button in the Buttons Block; this stickiness defined in CSS -->
+		</div>
+		<!-- Buttons are perfect items for ng-repeat -->
+		<div>
+			<button ng-repeat="description in button.buttons" ui-sref="content({pageId: description.nextPage})"> <!-- First Button -->
+				<h2>{{description.title}}</h2> <!-- Button Title -->
+				<p>{{description.subtitle}}</p> <!-- Buttin Subtitle -->
+			</button> 
+		</div>
+	</div>
+</div>
+<!-- Buttons Block ENDS HERE -->

@@ -1,0 +1,76 @@
+<html ng-app="EOapp" ng-csp>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="user-scalable=no,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+
+	<link rel="stylesheet" href="css/app.css">
+	<link rel="stylesheet" href="css/angular-csp.css">
+
+	<!-- Angular Scripts -->
+	<script src="bower_components/angular/angular.min.js"></script>
+	<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+	<script src="bower_components/angular-animate/angular-animate.min.js"></script>
+	<!-- Angular Scripts -->
+
+	<script src="js/app.js"></script>
+	<script src="js/router.js"></script>
+
+	<script src="js/lib/fastclick.js"></script>
+
+	<script>
+
+	document.addEventListener('touchmove', function(event) {
+    	event.preventDefault();
+	}); // This thing prevents scrollin and scroll bouncing in particular on iOS devices
+
+	var button = document.querySelector(".fastclick");
+	new FastClick(button); // This thing removes 300ms tap delay on touch devices
+	
+	</script>
+
+</head>
+
+<body ng-cloak>
+
+<div class="screen">
+
+	<div class="wrap fastclick">
+
+		<!-- Top Navigation STARTS HERE -->
+		<nav class="top" ng-controller="NavCtrl">
+			<!-- Top Navigation STARTS HERE -->
+			<input id="button1" type="radio" name="group" value="1" ui-sref="users" ng-model="topNav">
+			<label for="button1">
+				<h1>Частным лицам</h1>
+			</label>
+			<input id="button2" type="radio" name="group" value="2" ui-sref="premium" ng-model="topNav">
+			<label for="button2">
+				<h1>Премиум-клиентам</h1>
+			</label>
+			<input id="button3" type="radio" name="group" value="3" ui-sref="business" ng-model="topNav">
+			<label for="button3">
+				<h1>Юридическим лицам</h1>
+			</label>
+		</nav>
+		<!-- Top Navigation ENDS HERE -->
+
+		<div class="main border-left">
+			 <!-- Content block view STARTS HERE -->
+			<div ui-view class="button-block"></div>
+			<!-- Content block view ENDS HERE -->
+
+			<!-- Bottom Navigation STARTS HERE -->
+			<nav class="bottom" ng-controller="NavCtrl">
+				<button ng-if="backStartLock != 'start' && backStartLock != 'end'" ng-click="back()"><span class="icon icon-back">&#9666;</span>Назад</button>
+				<button ng-repeat="button in buttonsContent" ng-show="button.startButtonShow" ng-if="navLoc == button.pageId" ng-click="comeInStart()">В начало</button>
+				<button class="{{nextPage || 'hidden'}}" ui-sref="premiumMain({pageId:'start'})"><span class="icon icon-forward">&#9656;</span>Продолжить</button>
+			</nav>
+			<!-- Bottom Navigation ENDS HERE -->
+		</div>
+	</div>
+
+</div>
+
+</body>
+</html>

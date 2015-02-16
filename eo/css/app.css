@@ -1,0 +1,286 @@
+@import 'reset.css'; /*Meyer's CSS Reset*/
+@import 'fonts/officina.css'; /* Custom Fonts (Officina) import */
+
+
+/* Styles to disable user selection ability */
+html, body {
+	overflow: hidden;
+	user-select: none;
+	-webkit-user-select: none;
+	-webkit-touch-callout: none;	
+}
+
+
+/* General Typorgaphy Styles */
+h1, h2, h3 {
+	text-rendering: optimizeLegibility;
+	font-family: 'officinaserifcregular';
+}
+
+h1 {
+	font-weight: normal;
+	color: #ddd;
+	letter-spacing: 1px;
+	font-size: 26px;
+	line-height: 36px;
+}
+
+h2 {
+	font-size: 32px;
+	margin: 0;
+	text-shadow: 0 1px 1px #fee215;
+	font-weight: bold;
+}
+
+p {
+	margin: 0;
+	font-style: italic;
+	font-family: arial;
+	color: #444;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+
+/* General Layout Styles */
+.screen {
+	height: 768px;
+	width: 1024px;
+	background: #282828;
+	padding: 48px;
+	margin: auto;
+	box-sizing: border-box;
+}
+
+.wrap {
+	display: flex;
+	display: -webkit-flex;
+	flex-direction: column;
+	-webkit-flex-direction: column;
+	height: 100%;
+}
+
+.title, nav.bottom, .button-block {
+	width: 640px;
+}
+
+
+/* General Button styles */
+button {
+	background: linear-gradient(to bottom,#ffe100 0%,#f7a700 100%);
+	border: 0;
+	border-radius: 4px;
+	outline: none;
+}
+
+button:active {
+	background: linear-gradient(to bottom,rgba(0,0,0,0.1) 0%,rgba(0,0,0,0.1) 100%), linear-gradient(to bottom,#f7a700 0%,#ffe100 100%);
+}
+
+
+/* Top Nav styles */
+nav.top {
+
+	flex: 1;
+	-webkit-flex: 1;
+	display: flex;
+	display: -webkit-flex;
+}
+
+	/*Top Nav Radio Button styles block STARTS HERE*/
+	[type="radio"]:not(:checked),
+	[type="radio"]:checked {
+	  position: absolute;
+	  left: -9999px;
+	}
+
+	label {
+		flex: 1;
+		-webkit-flex: 1;
+		display: flex;
+		display: -webkit-flex;
+		align-items: center;
+		-webkit-align-items: center;
+		justify-content: center;
+		-webkit-justify-content: center;
+		position: relative;
+		top: 0px;
+		background: #282828; 
+		/*transition: flex 0.3s ease;*/
+	}
+
+	label h1 {
+		transition: transform 0.3s ease;
+	}
+
+	input:not(:checked) + label h1 {
+		text-decoration: underline;
+	}
+
+	input:checked + label {
+		border: 1px solid #666;
+		border-bottom: 0;
+		border-top-left-radius: 6px;
+		border-top-right-radius: 6px;
+		top: 1px;
+		z-index: 10;
+		flex: 1.1;
+		-webkit-flex: 1.1;
+	}
+
+	input:checked + label h1 {
+		font-weight: bold;
+		transform: scale(1.1);
+		-webkit-transform: scale(1.1);
+	}
+
+
+/*Main Block styles*/
+.main {
+	flex: 8;
+	-webkit-flex: 8;
+	border: 1px solid #666;
+	border-radius: 6px;
+	display: flex;
+	display: -webkit-flex;
+	position: relative;
+}
+
+.title {
+	position: absolute;
+	top: -64px;
+	text-align: center;
+}
+
+.button-block {
+	margin: auto;
+	position: relative;
+}
+
+.button-block button {
+	display: block;
+	width: 100%;
+	height: 88px;
+}
+
+.border-left {
+	border-top-left-radius: 0;
+}
+
+.border-right {
+	border-top-right-radius: 0;
+}
+
+.disclaimer {
+	text-align: center;
+}
+
+.padding-bottom {
+	padding-bottom: 80px;
+}
+
+	/*Main Block ui-view Animation styles*/
+	[ui-view].ng-enter {
+		transition: opacity .3s ease-in-out;
+	}
+
+	[ui-view].ng-leave {
+		/*There is a bug in ng-animate, so there is no fade out when leaving the view*/
+	}
+
+	[ui-view].ng-enter {
+		opacity: 0;
+	}
+
+	[ui-view].ng-enter-active {
+		opacity: 1;
+	}
+
+	[ui-view].ng-leave {
+		opacity: 1;
+	}
+
+	[ui-view].ng-leave-active {
+		opacity: 0;
+	}
+
+
+/* Bottom Nav Styles */
+nav.bottom {
+	position: absolute;
+	display: flex;
+	display: -webkit-flex;
+	bottom: 32px;
+	left: 143px;
+	justify-content: space-between;
+	-webkit-justify-content: space-between;
+}
+
+nav.bottom button {
+	display: inline-block;
+	width: 200px;
+	height: 48px;
+	font-size: 1.4em;
+	font-weight: bold;
+	font-family: 'officinaserifcregular';
+}
+
+.icon {
+	color: #666;
+	position: absolute;
+	font-size: 36px;
+}
+
+.icon-back {
+	left: 50px;
+	top: -5px;
+}
+
+.icon-forward {
+	right: 20px;
+	top: -5px;
+}
+
+.hidden {
+	visibility: hidden;
+}
+
+.visible {
+	visibility: visible;
+}
+
+/*Timer Styles*/
+.timer-outer {
+	border: 1px solid #ddd;
+	height: 12px;
+	margin: auto;
+	width: 200px;
+	overflow: hidden;
+	
+}
+
+.timer-inner {
+	background: #ddd;
+	height: 100%;
+	animation-name: timerAnimation;
+	animation-iteration-count: 1;
+	animation-duration: 2.5s;
+	animation-timing-function: linear;
+}
+
+
+@keyframes timerAnimation {
+	0% {
+		transform: translateX(-90%);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
+
+
+
+
+
+
+
