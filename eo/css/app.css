@@ -262,14 +262,14 @@ nav.bottom button {
 .timer-inner {
 	background: #ddd;
 	height: 100%;
-	animation-name: timerAnimation;
-	animation-iteration-count: 1;
-	animation-duration: 2.5s;
-	animation-timing-function: linear;
 	-webkit-animation-name: timerAnimation;
 	-webkit-animation-iteration-count: 1;
 	-webkit-animation-duration: 2.5s;
 	-webkit-animation-timing-function: linear;
+	animation-name: timerAnimation;
+	animation-iteration-count: 1;
+	animation-duration: 2.5s;
+	animation-timing-function: linear;
 }
 
 
