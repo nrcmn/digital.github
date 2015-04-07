@@ -1,0 +1,91 @@
+<style>
+input {
+  width: 256px;
+  height: 64px;
+  font-size: 32px;
+}
+label {
+  font-size: 16px;
+}
+
+html,
+body {
+  -webkit-overflow-scrolling: touch;
+}
+</style>
+
+<script>
+document.ontouchmove = function(event){
+    event.preventDefault();
+}
+</script>
+
+<body>
+
+<label for="pattern">pattern="[0-9]*"</label>
+<br>
+<input type="password" pattern="[0-9]*" id="pattern" />
+
+<br>
+<br>
+<br>
+
+
+
+<style>
+input[type=number] {
+  -webkit-text-security: disc;
+}
+</style>
+<label for="security">-webkit-text-security: disc;</label>
+<br>
+<input type="number" id="security" />
+
+
+<br>
+<br>
+<br>
+
+<label>type="text" inputmode="numeric"</label>
+<br>
+<input type="text" inputmode="numeric" />
+
+
+<br>
+<br>
+<br>
+
+<label>type="password" inputmode="numeric"</label>
+<br>
+<input type="password" inputmode="numeric" />
+
+<br>
+<br>
+<br>
+<label>id="cardNumber"</label>
+<br>
+<input id="cardNumber" size="20" maxlength="20">
+
+<br>
+<br>
+<br>
+<label>name="cardNumber"</label>
+<br>
+<input name="cardNumber" size="20" maxlength="20">
+
+<br>
+<br>
+<br>
+<label>name="addCreditCardNumber"</label>
+<br>
+<input name="addCreditCardNumber" size="20" maxlength="20">
+
+<br>
+<br>
+<br>
+<label>name="cardnumber"</label>
+<br>
+<input name="cardnumber" type="number" size="20" maxlength="20">
+
+
+</body>
