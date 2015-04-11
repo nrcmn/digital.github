@@ -29,25 +29,33 @@
         <h1 class="title">Здесь будет навигация</h1>
       </ion-header-bar>
 
-      <ion-content has-bouncing="false" class="padding">
+      <ion-content has-bouncing="false" locking="true" class="padding">
 
         <ion-slide-box class="text-center" on-slide-changed="slideHasChanged($index)" show-pager="true">
 
           <ion-slide>
-            <div><h3 class="bold">Безлимитные <br> интернет-сервисы</h3></div>
+            <h3 class="bold">Безлимитные <br> интернет-сервисы</h3>
             <img src="img/social-icons.png">
+            <p>Пользуйтесь любимыми сервисами вне зависимости от основного объёма трафика. Пакеты доступны с опциями &laquo;<span>Хайвей</span>&raquo; или&nbsp;на&nbsp;тарифах&nbsp;&laquo;<span>Всё</span>&raquo;</p>
+          </ion-slide>
+
+
+          <ion-slide>
+            <p class="calm">Безлимитные интернет-сервисы</p>
+            <div>
+              <h3 class="bold">Пакет &laquo;Карты&raquo;</h3>
+            </div>
+            <img src="img/social-icons.png">
+            <p>Яндекс, Google, 2Gis, Navitel, Яндекс навигатор, Яндекс транспорт, Яндекс пробки</p>
           </ion-slide>
 
           <ion-slide>
-            <p>Безлимитные интернет-сервисы</p>
-            <div><h3 class="bold">Пакет &laquo;Соцсети&raquo;</h3></div>
+            <p class="calm">Безлимитные интернет-сервисы</p>
+            <div>
+              <h3 class="bold">Пакет &laquo;Соцсети&raquo;</h3>
+            </div>
             <img src="img/social-icons.png">
-          </ion-slide>
-
-          <ion-slide>
-            <p>Безлимитные интернет-сервисы</p>
-            <div><h3 class="bold">Пакет &laquo;Карты&raquo;</h3></div>
-            <img src="img/social-icons.png">
+            <p>Яндекс, Google, 2Gis, Navitel, Яндекс навигатор, Яндекс транспорт, Яндекс пробки</p>
           </ion-slide>
 
         </ion-slide-box>

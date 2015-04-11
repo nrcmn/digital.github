@@ -36,7 +36,7 @@ $dark:                            #444 !default;
   color: rgba(240, 190, 50, 0.6); }
 
 p {
-  color: #999; }
+  color: #bbb; }
 
 .bold {
   font-family: 'officinaserifcbold'; }
@@ -44,6 +44,10 @@ p {
 ion-slide img {
   padding: 20px 20px 48px;
   width: 60%; }
+
+.slider {
+  border-bottom: 1px dashed #999;
+  margin-bottom: 20px; }
 
 .disclaimer {
   border-bottom: 1px solid #999;
@@ -5864,7 +5868,7 @@ a.item-content {
 
 .slider-pager {
   position: absolute;
-  bottom: 20px;
+  bottom: 106px;
   z-index: 1;
   width: 100%;
   height: 15px;
