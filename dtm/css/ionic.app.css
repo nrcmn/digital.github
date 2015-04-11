@@ -41,9 +41,11 @@ p {
 .bold {
   font-family: 'officinaserifcbold'; }
 
-ion-slide img {
-  padding: 20px 20px 48px;
-  width: 60%; }
+ion-slide {
+  padding-top: 10px; }
+  ion-slide img {
+    padding: 36px 20px 48px;
+    width: 60%; }
 
 .slider {
   border-bottom: 1px dashed #999;
