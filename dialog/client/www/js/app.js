@@ -23,7 +23,7 @@ angular.module('dialogApp', ["firebase"])
             })
             .success(function (data) {
                 $scope.result = 'Красавец, отичный голос! ;)'
-                localStorage['dialog_id'] = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
+                // localStorage['dialog_id'] = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
             })
             .error(function (data) {
                 $scope.result = 'Произошла ошибка, попробуйте еще раз!'
