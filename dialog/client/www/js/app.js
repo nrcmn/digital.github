@@ -1,6 +1,6 @@
 angular.module('dialogApp', ["firebase"])
 
-    .controller('DialogCtrl',['$scope', function ($scope) {
+    .controller('DialogCtrl',['$scope', '$http', function ($scope, $http) {
         $scope.vote = {
             value: 1
         }
@@ -11,14 +11,22 @@ angular.module('dialogApp', ["firebase"])
                 return false;
             }
 
-            var myFirebaseRef = new Firebase("https://dialog-app.firebaseio.com/");
-
-            myFirebaseRef.push({
-                value: Number($scope.vote.value)
+            $http({
+                method: 'POST',
+                url: 'https://dialog-app.firebaseio.com/.json',
+                data:{
+                    value: Number($scope.vote.value)
+                },
+                headers:{
+                    'Content-Type': 'application/json'
+                }
             })
-
-            localStorage['dialog_id'] = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
-
-            $scope.result = 'Красавец, отичный голос! ;)'
+            .success(function (data) {
+                $scope.result = 'Красавец, отичный голос! ;)'
+                localStorage['dialog_id'] = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
+            })
+            .error(function (data) {
+                $scope.result = 'Произошла ошибка, попробуйте еще раз!'
+            })
         }
     }])
