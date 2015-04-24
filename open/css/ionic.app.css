@@ -274,7 +274,7 @@ ion-item.bill-info select {
     text-shadow: 0 0 1px #333; }
 
 :root {
-  font-size: 40px;
+  font-size: 28px;
   font-family: Helvetica, arial, sans-serif; }
 
 fieldset {
@@ -287,8 +287,8 @@ fieldset {
 
 #log {
   margin: 14px auto;
-  width: 1em;
-  font-size: 36px;
+  width: 2em;
+  font-size: 22px;
   font-family: 'officinaserifcbold';
   color: #fff;
   text-align: center;

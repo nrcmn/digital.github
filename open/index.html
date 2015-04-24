@@ -12,7 +12,7 @@
 
 </head>
 
-<body>
+<body class="">
 
 <div class="text-center">
 <i class="icon energized ion-ios-pulse" style="font-size:40px;"></i>
@@ -31,12 +31,15 @@
 <form>
   <fieldset>
     <span class="star-cb-group">
+
+      <input type="radio" id="rating-10" name="rating" value="10" />
+      <label for="rating-10">10</label>
       
-      <!-- <input type="radio" id="rating-9" name="rating" value="9" />
+      <input type="radio" id="rating-9" name="rating" value="9" />
       <label for="rating-9">9</label>
 
       <input type="radio" id="rating-8" name="rating" value="8" />
-      <label for="rating-8">8</label> -->
+      <label for="rating-8">8</label>
 
       <input type="radio" id="rating-7" name="rating" value="7" />
       <label for="rating-7">7</label>
@@ -47,7 +50,7 @@
       <input type="radio" id="rating-5" name="rating" value="5" />
       <label for="rating-5">5</label>
       
-      <input type="radio" id="rating-4" name="rating" value="4" checked="checked" />
+      <input type="radio" id="rating-4" name="rating" value="4" />
       <label for="rating-4">4</label>
       
       <input type="radio" id="rating-3" name="rating" value="3" />
@@ -68,7 +71,7 @@
 
 <div class="text-center">
 <div class="block-button">
-  <a href="#" class="button button-block button-beeline">Submit</a>
+  <a disabled="true" href="#" class="button button-block button-beeline">Submit</a>
 </div>
 <p class="small">Only one vote per device is allowed</p>
 <!-- <br>
