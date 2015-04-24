@@ -12,20 +12,21 @@
 
 </head>
 
-<body class="">
+<body>
 
-<div class="text-center">
+<div class="text-center padding">
 <i class="icon energized ion-ios-pulse" style="font-size:40px;"></i>
-<h3 class="bold">Are we being digital yet??</h3>
+
 <div style="border-bottom: 1px solid #666">
-  <p>Please make your choice and tap &laquo;Submit&raquo; button below</p>
+  <h3 style="line-height:1.5;" class="bold">Are we being digital yet??</h3>  
 </div>
 <br>
-<div id="log-container">
+  <div>
+    <p style="position:absolute;" id="hint">Please make your choice and tap &laquo;Submit&raquo; button below</p>
+    <div id="log-container" class="no-border">
+    </div>
+  </div>
 </div>
-</div>
-
-
 
 
 <form>
@@ -62,17 +63,19 @@
       <input type="radio" id="rating-1" name="rating" value="1" />
       <label for="rating-1">1</label>
       
-      <input type="radio" id="rating-0" name="rating" value="0" class="star-cb-clear" />
-      <label for="rating-0">0</label>
+      <!-- <input type="radio" id="rating-0" name="rating" value="0" class="star-cb-clear" />
+      <label for="rating-0">0</label> -->
 
     </span>
   </fieldset>
 </form>
 
-<div class="text-center">
+<div class="text-center padding">
+
 <div class="block-button">
-  <a disabled="true" href="#" class="button button-block button-beeline">Submit</a>
+  <a id="submit-button" disabled="true" href="#" class="button button-block button-beeline">Submit</a>
 </div>
+
 <p class="small">Only one vote per device is allowed</p>
 <!-- <br>
 <p>Your choice</p>
@@ -85,14 +88,25 @@
 <script>
 
 $( document ).ready(function() {
-    console.log( "is ready" );
+    console.log( "just to make sure jQuery is ready" );
+    var submitBtn = $('#submit-button');
+    var hint = $('#hint');
+    var logCont = $('#log-container');
     var logID = 'log',
       log = $('<div id="'+logID+'"></div>');
     $('#log-container').append(log);
       $('[type*="radio"]').change(function () {
         var me = $(this);
         log.html(me.attr('value'));
+        submitBtn.removeAttr('disabled');
+        logCont.removeClass('no-border');
+        hint.hide();
+
+
       });
+
+
+
 });
 
     
