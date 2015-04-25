@@ -7,6 +7,7 @@
     	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 
         <link href="lib/odometer/odometer-theme-car.css" rel="stylesheet">
+        <link href="css/app.css" rel="stylesheet">
 
         <script src="lib/angular/angular.min.js"></script>
         <script src="lib/angular-websocket/angular-websocket.min.js"></script>
@@ -20,47 +21,17 @@
         <script src="lib/odometer/odometer.min.js"></script>
         <script src="lib/odometer/angular-odometer.js"></script>
 
-        <style>
-            .main {
-                width: 400px;
-                margin: auto;
-                text-align: center;
-            }
-
-
-            #number {
-                font-family: serif;
-                font-weight: bold;
-            }
-
-            .count {
-                margin-top: 40px;
-                font-size: 32px;
-            }
-
-            .count h2 {
-                font-size: 30px;
-                font-family: Arial, sans-serif;
-                color: #888;
-            }
-
-            /*tspan {
-                font-size: 32px !important;
-                font-color: #999 !important;
-            }*/
-
-        </style>
-
     </head>
     <body ng-controller="GetDataCtrl">
-        <span style="color:#ccc;">WebSocket data:</span>
+        <h1><span class="title">Результаты</span> опроса</h1>
         <div class="main">
             <div class="thermo">
-                <!-- <img src="img/thermo.svg"> -->
+                <!-- <h2>Средняя оценка</h2> -->
                 <div justgage
                     id="number"
                     title="Средняя оценка"
                     value="{{result || 0}}"
+                    level-colors="{{levelColors}}"
                     min="0"
                     max="10"
                     decimals="2"
@@ -72,6 +43,7 @@
                 <h2>Кол-во ответивших</h2>
                 <span odometer="length"></span>
             </div>
+            <p class="signature">Разработано в Билайн Digital</p>
         </div>
     </body>
 </html>

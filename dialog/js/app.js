@@ -18,6 +18,8 @@ angular.module('ceoApp', ['ngWebSocket', 'frapontillo.gage','ui.odometer'])
         dataStream.send(arg);
     };
 
+    $scope.levelColors = ['#ef473a', '#f0be32','#feda24', '#33cd5f'];
+
     $scope.textRenderer = function (value) {
         return value;
     };
