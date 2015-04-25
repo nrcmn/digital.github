@@ -87,8 +87,10 @@
 
 <script>
 
-$( document ).ready(function() {
-    console.log( "just to make sure jQuery is ready" );
+$(function() {
+   
+
+
     var submitBtn = $('#submit-button');
     var hint = $('#hint');
     var logCont = $('#log-container');
@@ -101,8 +103,15 @@ $( document ).ready(function() {
         submitBtn.removeAttr('disabled');
         logCont.removeClass('no-border');
         hint.hide();
+      });
 
-
+      submitBtn.click(function(e){
+        e.preventDefault();
+        $.ajax ({
+          url: 'https://dialog-app.firebaseio.com/.json',
+          type: 'POST',
+          data: '{"value": 10}',
+        });
       });
 
 

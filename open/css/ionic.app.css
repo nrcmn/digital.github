@@ -279,7 +279,6 @@ ion-item.bill-info select {
 
 fieldset {
   border: 0 !important;
-  background: #222;
   width: 300px !important;
   border-radius: 1px;
   padding: 10px 6px !important;
@@ -300,7 +299,8 @@ body {
   font-size: 14px;
   color: #000;
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  max-width: 360px; }
 
 #log-container {
   height: 48px;
