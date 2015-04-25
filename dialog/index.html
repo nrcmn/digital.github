@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="ceoApp">
     <head>
-        <title>CEO page</title>
+        <title>Results</title>
 
         <meta charset="utf-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
@@ -13,6 +13,10 @@
 
         <script src="js/app.js"></script>
 
+        <script src="lib/justgage/raphael.2.1.0.min.js"></script>
+        <script src="lib/justgage/justgage.js"></script>
+        <script src="lib/justgage/angular-gage.min.js"></script>
+
         <script src="lib/odometer/odometer.min.js"></script>
         <script src="lib/odometer/angular-odometer.js"></script>
 
@@ -22,37 +26,50 @@
                 margin: auto;
                 text-align: center;
             }
-            .thermo {
-                position: relative;
-            }
 
-            .number {
-                position: absolute;
-                bottom: 26px;
-                left: 94px;
-                font-size: 24px;
-                font-family: sans-serif;
+
+            #number {
+                font-family: serif;
                 font-weight: bold;
             }
 
             .count {
                 margin-top: 40px;
-                margin-left: -160px;
                 font-size: 32px;
             }
+
+            .count h2 {
+                font-size: 30px;
+                font-family: Arial, sans-serif;
+                color: #888;
+            }
+
+            /*tspan {
+                font-size: 32px !important;
+                font-color: #999 !important;
+            }*/
 
         </style>
 
     </head>
     <body ng-controller="GetDataCtrl">
-        WebSocket data:<br/>
+        <span style="color:#ccc;">WebSocket data:</span>
         <div class="main">
             <div class="thermo">
-                <img src="img/thermo.svg">
-        
-                <span class="number">{{result | number:2}}</span>
+                <!-- <img src="img/thermo.svg"> -->
+                <div justgage
+                    id="number"
+                    title="Средняя оценка"
+                    value="{{result || 0}}"
+                    min="0"
+                    max="10"
+                    decimals="2"
+                    text-renderer="textRenderer()">
+                </div>
+                <!-- <span class="number">{{result | number:2}}</span> -->
             </div>
             <div class="count">
+                <h2>Кол-во ответивших</h2>
                 <span odometer="length"></span>
             </div>
         </div>

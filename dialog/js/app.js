@@ -1,4 +1,4 @@
-angular.module('ceoApp', ['ngWebSocket', 'ui.odometer'])
+angular.module('ceoApp', ['ngWebSocket', 'frapontillo.gage','ui.odometer'])
 
 .controller('GetDataCtrl', function ($scope, $websocket) {
     var dataStream = $websocket('wss://whispering-retreat-6757.herokuapp.com');
@@ -16,5 +16,9 @@ angular.module('ceoApp', ['ngWebSocket', 'ui.odometer'])
 
     $scope.getData = function (arg) {
         dataStream.send(arg);
-    }
+    };
+
+    $scope.textRenderer = function (value) {
+        return value;
+    };
 })
