@@ -5,6 +5,8 @@ angular.module('ceoApp', ['ngWebSocket', 'frapontillo.gage','ui.odometer'])
     // var dataStream = $websocket('ws://localhost:5000/');
     dataStream.onMessage(function(message) {
 
+        console.log(message);
+
         var data = JSON.parse(message.data);
 
         $scope.result = data.number;
