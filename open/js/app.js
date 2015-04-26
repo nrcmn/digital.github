@@ -2,22 +2,22 @@ angular.module('DialogApp', [])
 
 .controller('mainCtrl', function ($scope, $http) {
 
-    // if(localStorage.dialog_id != undefined){
-    //     $scope.result = 'Спасибо! Вы уже голосовали';
+    if(localStorage.dialog_id_ != undefined){
+        $scope.result = 'Спасибо! Вы уже голосовали';
 
-    //     $scope.vote = {
-    //         value: localStorage.dialog_val
-    //     };
+        $scope.vote = {
+            value: localStorage.dialog_val
+        };
 
-    //     $scope.disable = true;
-    //     $scope.starDisable = true;
-    //     $scope.voteClass = 'color-' + localStorage.dialog_val;
-    // }
-    // else{
-    //     $scope.disable = true;
-    //     $scope.voteClass = 'no-border'
-    //     $scope.starDisable = false;
-    // }
+        $scope.disable = true;
+        $scope.starDisable = true;
+        $scope.voteClass = 'color-' + localStorage.dialog_val;
+    }
+    else{
+        $scope.disable = true;
+        $scope.voteClass = 'no-border'
+        $scope.starDisable = false;
+    }
 
     $scope.clickStar = function (e) {
         $scope.disable = false;
