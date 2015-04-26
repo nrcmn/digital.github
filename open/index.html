@@ -23,7 +23,7 @@
         <br>
         <div>
             <p style="position:absolute;" id="hint">Please make your choice and tap &laquo;Submit&raquo; button below</p>
-            <div id="log-container" class="no-border"></div>
+            <div id="log-container" ng-class="voteClass">{{vote.value}}</div>
         </div>
     </div>
 
@@ -31,34 +31,34 @@
         <fieldset>
             <span class="star-cb-group">
 
-                <input type="radio" id="rating-10" name="rating" value="10" ng-model="vote.value"/>
+                <input type="radio" id="rating-10" name="rating" value="10" ng-model="vote.value" ng-click="clickStar()">
                 <label for="rating-10">10</label>
 
-                <input type="radio" id="rating-9" name="rating" value="9" ng-model="vote.value"/>
+                <input type="radio" id="rating-9" name="rating" value="9" ng-model="vote.value" ng-click="clickStar()">
                 <label for="rating-9">9</label>
 
-                <input type="radio" id="rating-8" name="rating" value="8" ng-model="vote.value"/>
+                <input type="radio" id="rating-8" name="rating" value="8" ng-model="vote.value" ng-click="clickStar()">
                 <label for="rating-8">8</label>
 
-                <input type="radio" id="rating-7" name="rating" value="7" ng-model="vote.value"/>
+                <input type="radio" id="rating-7" name="rating" value="7" ng-model="vote.value" ng-click="clickStar()">
                 <label for="rating-7">7</label>
 
-                <input type="radio" id="rating-6" name="rating" value="6" ng-model="vote.value"/>
+                <input type="radio" id="rating-6" name="rating" value="6" ng-model="vote.value" ng-click="clickStar()">
                 <label for="rating-6">6</label>
 
-                <input type="radio" id="rating-5" name="rating" value="5" ng-model="vote.value"/>
+                <input type="radio" id="rating-5" name="rating" value="5" ng-model="vote.value" ng-click="clickStar()">
                 <label for="rating-5">5</label>
 
-                <input type="radio" id="rating-4" name="rating" value="4" ng-model="vote.value"/>
+                <input type="radio" id="rating-4" name="rating" value="4" ng-model="vote.value" ng-click="clickStar()">
                 <label for="rating-4">4</label>
 
-                <input type="radio" id="rating-3" name="rating" value="3" ng-model="vote.value"/>
+                <input type="radio" id="rating-3" name="rating" value="3" ng-model="vote.value" ng-click="clickStar()">
                 <label for="rating-3">3</label>
 
-                <input type="radio" id="rating-2" name="rating" value="2" ng-model="vote.value"/>
+                <input type="radio" id="rating-2" name="rating" value="2" ng-model="vote.value" ng-click="clickStar()">
                 <label for="rating-2">2</label>
 
-                <input type="radio" id="rating-1" name="rating" value="1" ng-model="vote.value"/>
+                <input type="radio" id="rating-1" name="rating" value="1" ng-model="vote.value" ng-click="clickStar()">
                 <label for="rating-1">1</label>
 
                 <!-- <input type="radio" id="rating-0" name="rating" value="0" class="star-cb-clear" />
@@ -71,7 +71,7 @@
     <div class="text-center padding">
 
         <div class="block-button">
-            <a id="submit-button" href="#" class="button button-block button-beeline" ng-click="submit()">Submit</a>
+            <a id="submit-button" href="#" ng-disabled="disable" class="button button-block button-beeline" ng-click="submit()">Submit</a>
         </div>
 
         <p class="small">Only one vote per device is allowed</p>
