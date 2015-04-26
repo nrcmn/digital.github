@@ -2,22 +2,22 @@ angular.module('DialogApp', [])
 
 .controller('mainCtrl', function ($scope, $http) {
 
-    if(localStorage.dialog_id != undefined){
-        $scope.result = 'Спасибо! ваш голос обработан';
+    // if(localStorage.dialog_id != undefined){
+    //     $scope.result = 'Спасибо! Вы уже голосовали';
 
-        $scope.vote = {
-            value: localStorage.dialog_val
-        };
+    //     $scope.vote = {
+    //         value: localStorage.dialog_val
+    //     };
 
-        $scope.disable = true;
-        $scope.starDisable = true;
-        $scope.voteClass = 'color-' + localStorage.dialog_val;
-    }
-    else{
-        $scope.disable = true;
-        $scope.voteClass = 'no-border'
-        $scope.starDisable = false;
-    }
+    //     $scope.disable = true;
+    //     $scope.starDisable = true;
+    //     $scope.voteClass = 'color-' + localStorage.dialog_val;
+    // }
+    // else{
+    //     $scope.disable = true;
+    //     $scope.voteClass = 'no-border'
+    //     $scope.starDisable = false;
+    // }
 
     $scope.clickStar = function (e) {
         $scope.disable = false;
@@ -27,7 +27,7 @@ angular.module('DialogApp', [])
     $scope.submit = function () {
         $scope.disable = true;
         $scope.starDisable = true;
-        $scope.result = 'В процессе';
+        $scope.result = 'Выполняю операцию...';
         $scope.resultClass = 'yellow';
 
         $http({
@@ -41,13 +41,13 @@ angular.module('DialogApp', [])
             localStorage.dialog_id = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
             localStorage.dialog_val = $scope.vote.value;
 
-            $scope.result = 'Спасибо! ваш голос обработан';
+            $scope.result = 'Спасибо! Ваш голос обработан';
             $scope.disable = true;
             $scope.starDisable = true;
             $scope.resultClass = 'green';
         })
         .error(function (data) {
-            $scope.result = 'Что-то пошло нет так, попробуйте еще раз';
+            $scope.result = 'Что-то нет так :-( Попробуйте ещё раз';
             $scope.disable = false;
             $scope.starDisable = false;
             $scope.resultClass = 'red';

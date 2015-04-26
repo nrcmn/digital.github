@@ -2,87 +2,93 @@
 <html ng-app="DialogApp">
 <head>
     <meta charset="utf-8">
-    <title>It's Digital Baby</title>
+    <title>This is Digital, Baby!</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 
     <!-- compiled css output -->
-    <link href="css/ionic.app.css" rel="stylesheet">
+    <link href="css/ionic.app.min.css" rel="stylesheet">
 
-    <script src="lib/angular/angular.min.js"></script>
+    <!-- Ionicons CDN -->
+    <!-- <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet"> -->
+
+    <script src="js/angular.min.js"></script>
     <script src="js/app.js"></script>
 
 </head>
 
 <body ng-controller="mainCtrl">
 
-    <div class="text-center padding">
+<div class="container">
+
+<div class="text-center padding">
         <i class="icon energized ion-ios-pulse" style="font-size:40px;"></i>
-        <div style="border-bottom: 1px solid #666">
-            <h3 style="line-height:1.5;" class="bold">Are we being digital yet??</h3>
+        <div class="main-title">
+            <h3 class="bold">Digital - это круто!</h3>
         </div>
-        <br>
-        <div>
-            <p style="position:absolute;" id="hint">Please make your choice and tap &laquo;Submit&raquo; button below</p>
-            <div id="log-container" ng-class="voteClass">{{vote.value}}</div>
-        </div>
+        <p>1 звезда - совершенно не согласен<br> 10 звёзд - полностью согласен
+
+        <div class="log" ng-class="voteClass">{{vote.value}}</div>
+
     </div>
 
     <form>
-        <fieldset>
-            <span class="star-cb-group">
+      <fieldset>
+          <span class="star-cb-group">
 
-                <input type="radio" id="rating-10" ng-disabled="starDisable" name="rating" value="10" ng-model="vote.value" ng-click="clickStar()">
-                <label for="rating-10">10</label>
+              <input type="radio" id="rating-10" ng-disabled="starDisable" name="rating" value="10" ng-model="vote.value" ng-click="clickStar()">
+              <label for="rating-10">10</label>
 
-                <input type="radio" id="rating-9" ng-disabled="starDisable" name="rating" value="9" ng-model="vote.value" ng-click="clickStar()">
-                <label for="rating-9">9</label>
+              <input type="radio" id="rating-9" ng-disabled="starDisable" name="rating" value="9" ng-model="vote.value" ng-click="clickStar()">
+              <label for="rating-9">9</label>
 
-                <input type="radio" id="rating-8" ng-disabled="starDisable" name="rating" value="8" ng-model="vote.value" ng-click="clickStar()">
-                <label for="rating-8">8</label>
+              <input type="radio" id="rating-8" ng-disabled="starDisable" name="rating" value="8" ng-model="vote.value" ng-click="clickStar()">
+              <label for="rating-8">8</label>
 
-                <input type="radio" id="rating-7" ng-disabled="starDisable" name="rating" value="7" ng-model="vote.value" ng-click="clickStar()">
-                <label for="rating-7">7</label>
+              <input type="radio" id="rating-7" ng-disabled="starDisable" name="rating" value="7" ng-model="vote.value" ng-click="clickStar()">
+              <label for="rating-7">7</label>
 
-                <input type="radio" id="rating-6" ng-disabled="starDisable" name="rating" value="6" ng-model="vote.value" ng-click="clickStar()">
-                <label for="rating-6">6</label>
+              <input type="radio" id="rating-6" ng-disabled="starDisable" name="rating" value="6" ng-model="vote.value" ng-click="clickStar()">
+              <label for="rating-6">6</label>
 
-                <input type="radio" id="rating-5" ng-disabled="starDisable" name="rating" value="5" ng-model="vote.value" ng-click="clickStar()">
-                <label for="rating-5">5</label>
+              <input type="radio" id="rating-5" ng-disabled="starDisable" name="rating" value="5" ng-model="vote.value" ng-click="clickStar()">
+              <label for="rating-5">5</label>
 
-                <input type="radio" id="rating-4" ng-disabled="starDisable" name="rating" value="4" ng-model="vote.value" ng-click="clickStar()">
-                <label for="rating-4">4</label>
+              <input type="radio" id="rating-4" ng-disabled="starDisable" name="rating" value="4" ng-model="vote.value" ng-click="clickStar()">
+              <label for="rating-4">4</label>
 
-                <input type="radio" id="rating-3" ng-disabled="starDisable" name="rating" value="3" ng-model="vote.value" ng-click="clickStar()">
-                <label for="rating-3">3</label>
+              <input type="radio" id="rating-3" ng-disabled="starDisable" name="rating" value="3" ng-model="vote.value" ng-click="clickStar()">
+              <label for="rating-3">3</label>
 
-                <input type="radio" id="rating-2" ng-disabled="starDisable" name="rating" value="2" ng-model="vote.value" ng-click="clickStar()">
-                <label for="rating-2">2</label>
+              <input type="radio" id="rating-2" ng-disabled="starDisable" name="rating" value="2" ng-model="vote.value" ng-click="clickStar()">
+              <label for="rating-2">2</label>
 
-                <input type="radio" id="rating-1" ng-disabled="starDisable" name="rating" value="1" ng-model="vote.value" ng-click="clickStar()">
-                <label for="rating-1">1</label>
+              <input type="radio" id="rating-1" ng-disabled="starDisable" name="rating" value="1" ng-model="vote.value" ng-click="clickStar()">
+              <label for="rating-1">1</label>
 
-                <!-- <input type="radio" id="rating-0" name="rating" value="0" class="star-cb-clear" />
-                <label for="rating-0">0</label> -->
-
-            </span>
-        </fieldset>
+          </span>
+      </fieldset>
     </form>
 
-    <div class="text-center padding">
+    
 
-        <div class="block-button">
-            <a id="submit-button" href="#" ng-disabled="disable" class="button button-block button-beeline" ng-click="submit()">Submit</a>
+    <div class="text-center padding submit-block">
+
+        <div class="status-message" ng-class="resultClass">
+          <p>{{result}}</p>
         </div>
 
-        <p class="small">Only one vote per device is allowed</p>
-        <!-- <br>
-        <p>Your choice</p>
-        <i class="icon ion-chevron-down icon-down"></i> -->
+        <div class="block-button">
+            <a id="submit-button" href="#" ng-disabled="disable" class="button button-block button-beeline" ng-click="submit()">Голосовать</a>
+        </div>
+
+        <p class="small">Разработано в Билайн Digital</p>
+
     </div>
 
-    <div ng-class="resultClass">
-        {{result}}
-    </div>
+    
+</div>
+
 
 </body>
+
 </html>
