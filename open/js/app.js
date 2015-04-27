@@ -2,7 +2,7 @@ angular.module('DialogApp', [])
 
 .controller('mainCtrl', function ($scope, $http) {
 
-    if(localStorage.dialog_id_ != undefined){
+    if(localStorage.dialog_id != undefined){
         $scope.result = 'Спасибо! Вы уже голосовали';
 
         $scope.vote = {
