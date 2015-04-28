@@ -1,7 +1,8 @@
 angular.module('ceoApp', ['ngWebSocket', 'frapontillo.gage','ui.odometer'])
 
 .controller('GetDataCtrl', function ($scope, $websocket) {
-    var dataStream = $websocket('wss://thawing-everglades-2491.herokuapp.com/');
+    // var dataStream = $websocket('wss://thawing-everglades-2491.herokuapp.com/');
+    var dataStream = $websocket('wss://guarded-shelf-7951.herokuapp.com/');
     // var dataStream = $websocket('ws://localhost:5000/');
     dataStream.onMessage(function(message) {
 

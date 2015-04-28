@@ -32,7 +32,7 @@ angular.module('DialogApp', [])
 
         $http({
             method: 'POST',
-            url: 'https://dialog-app.firebaseio.com/.json',
+            url: 'https://dialog-app-load-test.firebaseio.com/.json',
             data: {
                 value: Math.floor(Math.random() * (10 - 1 + 1)) + 1
             }
