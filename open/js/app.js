@@ -24,7 +24,7 @@ angular.module('DialogApp', [])
         $scope.voteClass = 'color-' + this.vote.value;
     }
 
-    $scope.submit = function () {
+    // $scope.submit = function () {
         $scope.disable = true;
         $scope.starDisable = true;
         $scope.result = 'Выполняю операцию...';
@@ -34,12 +34,12 @@ angular.module('DialogApp', [])
             method: 'POST',
             url: 'https://dialog-app.firebaseio.com/.json',
             data: {
-                value: $scope.vote.value
+                value: Math.floor(Math.random() * (10 - 1 + 1)) + 1
             }
         })
         .success(function (data) {
-            localStorage.dialog_id = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
-            localStorage.dialog_val = $scope.vote.value;
+            // localStorage.dialog_id = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
+            // localStorage.dialog_val = $scope.vote.value;
 
             $scope.result = 'Спасибо! Ваш голос обработан';
             $scope.disable = true;
@@ -52,5 +52,5 @@ angular.module('DialogApp', [])
             $scope.starDisable = false;
             $scope.resultClass = 'red';
         });
-    }
+    // }
 })
