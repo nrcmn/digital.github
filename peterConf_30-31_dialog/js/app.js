@@ -1,0 +1,30 @@
+angular.module('ceoApp', ['ngWebSocket', 'frapontillo.gage','ui.odometer'])
+
+.controller('GetDataCtrl', function ($scope, $websocket) {
+    // var dataStream = $websocket('wss://thawing-everglades-2491.herokuapp.com/');
+    // var dataStream = $websocket('wss://guarded-shelf-7951.herokuapp.com/');
+    // var dataStream = $websocket('ws://localhost:5000/');
+
+    var dataStream = $websocket('wss://peterconf30-31.firebaseio.com/')
+    dataStream.onMessage(function(message) {
+
+        console.log(message);
+        var data = JSON.parse(message.data);
+
+        $scope.result = data.number;
+        $scope.length = data.length;
+        $scope.$apply();
+
+        dataStream.send('ok');
+    });
+
+    $scope.getData = function (arg) {
+        dataStream.send(arg);
+    };
+
+    $scope.levelColors = ['#ef473a', '#f0be32','#feda24', '#33cd5f'];
+
+    $scope.textRenderer = function (value) {
+        return value;
+    };
+})

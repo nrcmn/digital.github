@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html ng-app="ceoApp">
+
+    <head>
+        <title>Results</title>
+
+        <meta charset="utf-8">
+    	<meta name="viewport" content="width=content-width, initial-scale=1">
+
+        <!-- Styles -->
+        <link href="lib/odometer/odometer-theme-car.css" rel="stylesheet">
+        <link href="css/app.css" rel="stylesheet">
+
+        <!-- Angular Scripts -->
+        <script src="lib/angular/angular.min.js"></script>
+        <script src="lib/angular-websocket/angular-websocket.min.js"></script>
+
+        <!-- App Script -->
+        <script src="js/app.js"></script>
+
+        <!-- JustGage Scripts -->
+        <script src="lib/justgage/raphael.2.1.0.min.js"></script>
+        <script src="lib/justgage/justgage.js"></script>
+        <script src="lib/justgage/angular-gage.min.js"></script>
+
+        <!-- Odometer Scripts -->
+        <script src="lib/odometer/odometer.min.js"></script>
+        <script src="lib/odometer/angular-odometer.js"></script>
+
+    </head>
+
+    <body ng-controller="GetDataCtrl">
+        
+        <div class="title">
+            <h1><span class="bar">Результаты</span> опроса</h1>
+        </div>
+
+        <div class="main">
+
+            <div class="signature">
+                <p><span class="light">http://</span>beeline.digital</p>
+            </div>
+
+            <div class="section">
+                <div justgage
+                    id="number"
+                    title=""
+                    value="{{result || 0}}"
+                    level-colors="{{levelColors}}"
+                    min="0"
+                    max="10"
+                    decimals="2"
+                    gauge-width-scale="0.5"
+                    text-renderer="textRenderer()">
+                </div>
+                <div class="sub-section count">
+                    <span odometer="length"></span>
+                    <h2>Кол-во голосов</h2>
+                </div>
+            </div>
+        </div>
+
+    </body>
+
+</html>
