@@ -1,95 +1,65 @@
-<!DOCTYPE html>
-<html ng-app="DialogApp">
+<html>
+
 <head>
-    <meta charset="utf-8">
-    <meta name="blitz" content="mu-54763a0f-e30b6bfe-05b3b7cc-ed3350f7">
-    <title>White Nights 2015</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+	<meta charset="utf-8">
 
-    <!-- compiled css output -->
-    <link href="css/ionic.app.min.css" rel="stylesheet">
+	<style>
+		div {
+			height:128px;
+			width:600px;
+			display:block;
+			line-height: 128px;
+			text-align: center;
+			border:2px solid black;
+			font-size:40px;
+			font-family: sans-serif;
+			background:white;
+			margin-left:auto;
+			margin-right:auto;
+			margin-bottom: 64px;
+			color:black;
+		}
 
-    <!-- Ionicons CDN -->
-    <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+		h1 {
+			font-weight: bold;
+			font-family: sans-serif;
+			font-size: 48px;
+			text-align: center;
+		}
 
-    <script src="js/angular.min.js"></script>
-    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.min.js"></script> -->
-    <script src="js/app.js"></script>
+		div:active {
+			color: orange;
+			background-color: #000;
+
+		}
+
+		body {
+			text-align: center;
+		}
+
+		img {
+			width: 400px;
+			padding: 32px;
+		}
+	</style>
 
 </head>
 
-<body ng-controller="mainCtrl">
+<body>
 
-  <div class="container">
+	<!-- <h1>KnowHow</h1> -->
+	<img src="cio/img/logo.png">
 
-    <div class="text-center padding">
+	<br>
+	<br>
 
-      <!-- <i class="icon energized ion-ios-pulse" style="font-size:40px;"></i> -->
-      <img src="img/logo.png" style="width:180px;margin:10px;">
-      
-      <div class="main-title">
-        <h3 class="bold">Насколько Вы готовы начать воспринимать оператора связи как провайдера ИКТ услуг?</h3>
-      </div>
-      <p>Выберите количество звёзд<br>и нажмите &laquo;Голосовать&raquo;</p>
-      <p>1 звезда &#8212; совершенно не готовы<br> 10 звёзд &#8212; полностью готовы
+	<a style="text-decoration:none;" href="itms-services://?action=download-manifest&amp;url=https://raw.githubusercontent.com/Beeline-Digital/PeterConf-30-31/master/release_app/xxx.plist">
+		<div>Установить для iOS</div>
+	</a>
 
-      <div class="log" ng-class="voteClass" ng-cloak>{{vote.value}}</div>
-
-    </div>
-
-    <form>
-      <fieldset>
-          <span class="star-cb-group">
-
-              <input type="radio" id="rating-10" ng-disabled="starDisable" name="rating" value="10" ng-model="vote.value" ng-click="clickStar()">
-              <label for="rating-10">10</label>
-
-              <input type="radio" id="rating-9" ng-disabled="starDisable" name="rating" value="9" ng-model="vote.value" ng-click="clickStar()">
-              <label for="rating-9">9</label>
-
-              <input type="radio" id="rating-8" ng-disabled="starDisable" name="rating" value="8" ng-model="vote.value" ng-click="clickStar()">
-              <label for="rating-8">8</label>
-
-              <input type="radio" id="rating-7" ng-disabled="starDisable" name="rating" value="7" ng-model="vote.value" ng-click="clickStar()">
-              <label for="rating-7">7</label>
-
-              <input type="radio" id="rating-6" ng-disabled="starDisable" name="rating" value="6" ng-model="vote.value" ng-click="clickStar()">
-              <label for="rating-6">6</label>
-
-              <input type="radio" id="rating-5" ng-disabled="starDisable" name="rating" value="5" ng-model="vote.value" ng-click="clickStar()">
-              <label for="rating-5">5</label>
-
-              <input type="radio" id="rating-4" ng-disabled="starDisable" name="rating" value="4" ng-model="vote.value" ng-click="clickStar()">
-              <label for="rating-4">4</label>
-
-              <input type="radio" id="rating-3" ng-disabled="starDisable" name="rating" value="3" ng-model="vote.value" ng-click="clickStar()">
-              <label for="rating-3">3</label>
-
-              <input type="radio" id="rating-2" ng-disabled="starDisable" name="rating" value="2" ng-model="vote.value" ng-click="clickStar()">
-              <label for="rating-2">2</label>
-
-              <input type="radio" id="rating-1" ng-disabled="starDisable" name="rating" value="1" ng-model="vote.value" ng-click="clickStar()">
-              <label for="rating-1">1</label>
-
-            </span>
-        </fieldset>
-      </form>
-
-      <div class="text-center padding submit-block">
-
-          <div class="status-message" ng-class="resultClass" ng-cloak>
-            <p>{{result}}</p>
-          </div>
-
-          <div class="block-button">
-              <a id="submit-button" href="#" ng-disabled="disable" class="button button-block button-beeline" ng-click="submit()">Голосовать</a>
-          </div>
-
-          <p class="small">Разработано в Билайн Digital</p>
-
-      </div>
-      
-  </div>
+	<a style="text-decoration:none;" href="https://github.com/Beeline-Digital/PeterConf-30-31/raw/master/release_app/xxx.apk">
+		<div>Установить для Android</div>
+	</a>
 
 </body>
 
