@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html ng-app="DialogApp">
+<head>
+    <meta charset="utf-8">
+    <meta name="blitz" content="mu-54763a0f-e30b6bfe-05b3b7cc-ed3350f7">
+    <title>This is Digital, Baby!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+    <!-- compiled css output -->
+    <link href="css/ionic.app.min.css" rel="stylesheet">
+
+    <!-- Ionicons CDN -->
+    <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+
+    <script src="js/angular.min.js"></script>
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.min.js"></script> -->
+    <script src="js/app.js"></script>
+
+</head>
+
+<body ng-controller="mainCtrl">
+
+  <div class="container">
+
+    <div class="text-center padding">
+
+      <i class="icon energized ion-ios-pulse" style="font-size:40px;"></i>
+
+      <div class="main-title">
+        <h3 class="bold">Насколько Вы готовы начать воспринимать оператора связи как провайдера ИКТ услуг?</h3>
+      </div>
+      <p>Выберите количество звёзд<br>и нажмите &laquo;Голосовать&raquo;</p>
+      <p>1 звезда &#8212; совершенно не согласны<br> 10 звёзд &#8212; полностью согласны
+
+      <div class="log" ng-class="voteClass" ng-cloak>{{vote.value}}</div>
+
+    </div>
+
+    <form>
+      <fieldset>
+          <span class="star-cb-group">
+
+              <input type="radio" id="rating-10" ng-disabled="starDisable" name="rating" value="10" ng-model="vote.value" ng-click="clickStar()">
+              <label for="rating-10">10</label>
+
+              <input type="radio" id="rating-9" ng-disabled="starDisable" name="rating" value="9" ng-model="vote.value" ng-click="clickStar()">
+              <label for="rating-9">9</label>
+
+              <input type="radio" id="rating-8" ng-disabled="starDisable" name="rating" value="8" ng-model="vote.value" ng-click="clickStar()">
+              <label for="rating-8">8</label>
+
+              <input type="radio" id="rating-7" ng-disabled="starDisable" name="rating" value="7" ng-model="vote.value" ng-click="clickStar()">
+              <label for="rating-7">7</label>
+
+              <input type="radio" id="rating-6" ng-disabled="starDisable" name="rating" value="6" ng-model="vote.value" ng-click="clickStar()">
+              <label for="rating-6">6</label>
+
+              <input type="radio" id="rating-5" ng-disabled="starDisable" name="rating" value="5" ng-model="vote.value" ng-click="clickStar()">
+              <label for="rating-5">5</label>
+
+              <input type="radio" id="rating-4" ng-disabled="starDisable" name="rating" value="4" ng-model="vote.value" ng-click="clickStar()">
+              <label for="rating-4">4</label>
+
+              <input type="radio" id="rating-3" ng-disabled="starDisable" name="rating" value="3" ng-model="vote.value" ng-click="clickStar()">
+              <label for="rating-3">3</label>
+
+              <input type="radio" id="rating-2" ng-disabled="starDisable" name="rating" value="2" ng-model="vote.value" ng-click="clickStar()">
+              <label for="rating-2">2</label>
+
+              <input type="radio" id="rating-1" ng-disabled="starDisable" name="rating" value="1" ng-model="vote.value" ng-click="clickStar()">
+              <label for="rating-1">1</label>
+
+            </span>
+        </fieldset>
+      </form>
+
+      <div class="text-center padding submit-block">
+
+          <div class="status-message" ng-class="resultClass" ng-cloak>
+            <p>{{result}}</p>
+          </div>
+
+          <div class="block-button">
+              <a id="submit-button" href="#" ng-disabled="disable" class="button button-block button-beeline" ng-click="submit()">Голосовать</a>
+          </div>
+
+          <p class="small">Разработано в Билайн Digital</p>
+
+      </div>
+
+  </div>
+
+</body>
+
+</html>
