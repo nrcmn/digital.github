@@ -2,7 +2,7 @@ angular.module('DialogApp', [])
 
 .controller('mainCtrl', function ($scope, $http) {
 
-    if(localStorage.dialog_id != undefined){
+    if(localStorage.dialog_id1 != undefined){
         $scope.result = 'Спасибо! Вы уже голосовали';
 
         $scope.vote = {
@@ -38,7 +38,7 @@ angular.module('DialogApp', [])
             }
         })
         .success(function (data) {
-            // localStorage.dialog_id = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
+            // localStorage.dialog_id1 = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
             // localStorage.dialog_val = $scope.vote.value;
 
             $scope.result = 'Спасибо! Ваш голос обработан';
