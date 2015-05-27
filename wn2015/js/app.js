@@ -32,7 +32,7 @@ angular.module('DialogApp', [])
 
         $http({
             method: 'POST',
-            url: 'https://dialog-app.firebaseio.com/.json',
+            url: 'https://peterconf30-31.firebaseio.com/.json',
             data: {
                 value: $scope.vote.value
             }
