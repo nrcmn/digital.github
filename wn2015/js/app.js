@@ -38,8 +38,8 @@ angular.module('DialogApp', [])
             }
         })
         .success(function (data) {
-            localStorage.dialog_id = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
-            localStorage.dialog_val = $scope.vote.value;
+            // localStorage.dialog_id = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
+            // localStorage.dialog_val = $scope.vote.value;
 
             $scope.result = 'Спасибо! Ваш голос обработан';
             $scope.disable = true;
