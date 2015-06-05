@@ -1,0 +1,127 @@
+<html>
+
+<head>
+	<meta charset="utf-8">
+
+	<style>
+
+		div.button {
+			height:128px;
+			width:600px;
+			display:block;
+			line-height: 128px;
+			text-align: center;
+			border:2px solid black;
+			font-size:40px;
+			font-family: sans-serif;
+			background:white;
+			margin-left:auto;
+			margin-right:auto;
+			margin-bottom: 64px;
+			color:black;
+		}
+
+		h1, h2 {
+			font-weight: bold;
+			font-family: sans-serif;
+			font-size: 48px;
+			text-align: center;
+		}
+
+		p {
+			font-size: 24px;
+		}
+
+		h2 {
+			font-weight: normal;
+		}
+
+		div.button:active {
+			color: orange;
+			background-color: #000;
+		}
+
+		body {
+			padding: 128px;
+		}
+
+		.timer {
+			text-align: center;
+		}
+
+		input {
+			text-align: center;
+			color: #000;
+			background: #fff;
+			border: none;
+			font-size: 32px;
+		}
+
+	</style>
+
+</head>
+
+<body>
+
+	<h1>Технологии Достижений</h1>
+	<h2>МОСКВА</h2>
+
+	<br>
+	<br>
+
+	<div class="timer">
+	<p>До выпуска приложения осталось:</p>
+	<form name="count">
+	<input type="text" size="69" name="count2" disabled="true">
+	</form>
+	</div>
+
+
+	<!-- <a style="text-decoration:none;" href="itms-services://?action=download-manifest&amp;url=https://raw.githubusercontent.com/Beeline-Digital/xxx">
+		<div class="button">Установить для iOS</div>
+	</a>
+
+	<a style="text-decoration:none;" href="https://github.com/Beeline-Digital/xxx">
+		<div class="button">Установить для Android</div>
+	</a> -->
+
+
+
+<script>
+
+var current="Готово!"
+var montharray=new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")
+
+function countdown(yr,m,d){
+theyear=yr;themonth=m;theday=d
+var today=new Date()
+var todayy=today.getYear()
+if (todayy < 1000)
+todayy+=1900
+var todaym=today.getMonth()
+var todayd=today.getDate()
+var todayh=today.getHours()
+var todaymin=today.getMinutes()
+var todaysec=today.getSeconds()
+var todaystring=montharray[todaym]+" "+todayd+", "+todayy+" "+todayh+":"+todaymin+":"+todaysec
+futurestring=montharray[m-1]+" "+d+", "+yr
+dd=Date.parse(futurestring)-Date.parse(todaystring)
+dday=Math.floor(dd/(60*60*1000*24)*1)
+dhour=Math.floor((dd%(60*60*1000*24))/(60*60*1000)*1)
+dmin=Math.floor(((dd%(60*60*1000*24))%(60*60*1000))/(60*1000)*1)
+dsec=Math.floor((((dd%(60*60*1000*24))%(60*60*1000))%(60*1000))/1000*1)
+if(dday==0&&dhour==0&&dmin==0&&dsec==1){
+document.forms.count.count2.value=current
+return
+}
+else
+document.forms.count.count2.value=dhour+" : "+dmin+" : "+dsec
+setTimeout("countdown(theyear,themonth,theday)",1000)
+}
+//enter the count down date using the format year/month/day
+countdown(2015,06,06)
+</script>
+
+</body>
+
+</html>
