@@ -23,30 +23,39 @@
         }
         .firepad {
             background: #999;
-            height: 100vh !important;
+            height: 10000px;
 
         }
         .CodeMirror {
-            background: #ccc;
+            background: #eee;
         }
         .powered-by-firepad {
             display: none;
         }
 
         .firepad-btn-group:nth-child(1),
+        .firepad-btn-group:nth-child(5),
+        .firepad-btn-group:nth-child(6),
+        .firepad-btn-group:nth-child(7),
         .firepad-btn-group:nth-child(9),
         .firepad-btn-group:nth-child(2) ul a:nth-child(1),
         .firepad-btn-group:nth-child(2) ul a:nth-child(2),
         .firepad-btn-group:nth-child(2) ul a:nth-child(3),
-        .firepad-btn-group:nth-child(2) ul a:nth-child(6),
+        .firepad-btn-group:nth-child(2) ul a:nth-child(5),
+        .firepad-btn-group:nth-child(2) ul a:nth-child(7),
         .firepad-btn-group:nth-child(2) ul a:nth-child(8),
         .firepad-btn-group:nth-child(3) ul a:nth-child(3),
         .firepad-btn-group:nth-child(3) ul a:nth-child(5),
         .firepad-btn-group:nth-child(3) ul a:nth-child(6),
         .firepad-btn-group:nth-child(3) ul a:nth-child(7),
-        .firepad-btn-group:nth-child(3) ul a:nth-child(8)
+        .firepad-btn-group:nth-child(3) ul a:nth-child(8),
+        .firepad-btn-group:nth-child(4) .firepad-btn:nth-child(2)
         {
             display: none;
+        }
+
+        .firepad-btn-group:nth-child(2) ul a {
+            height: 28px;
         }
 
     </style>
@@ -60,6 +69,6 @@
   var firepadRef = new Firebase('https://strat-flip.firebaseio.com/');
   var codeMirror = CodeMirror(document.getElementById('firepad'), { lineWrapping: true });
   var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
-      { richTextShortcuts: true, richTextToolbar: true, defaultText: 'Hello, World!' });
+      { richTextShortcuts: true, richTextToolbar: true, defaultText: 'Виртуальный Флипчарт, Команда #1' });
 </script>
 </html>
