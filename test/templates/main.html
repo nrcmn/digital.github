@@ -1,0 +1,18 @@
+<div ng-controller="MainCtrl">
+
+    <div class="list">
+        <div class="item-divider" ng-repeat-start="question in questions.questions">
+            {{question.questionName}}
+        </div>
+        <label class="item item-radio" ng-repeat-end ng-repeat="choice in question.choice">
+            <input type="radio" ng-model="answers[question.questionId]" ng-value="choice.choiceValue">
+            <div class="item-content">
+                {{choice.choiceName}}
+            </div>
+            <i class="radio-icon ion-checkmark"></i>
+        </label>
+
+    </div>
+
+    <button class="button" ng-click="sendIt()">Send it</button>
+</div>

@@ -1,0 +1,56 @@
+{
+    "questions": [
+        {
+            "questionName": "Первый вопрос",
+            "questionId": "first",
+            "choice": [
+                {
+                    "choiceName": "приклоняю колено, перед гениальностью этой идеи",
+                    "choiceValue": 5
+                },
+                {
+                    "choiceName": "согласен",
+                    "choiceValue": 4
+                },
+                {
+                    "choiceName": "не совсем",
+                    "choiceValue": 3
+                },
+                {
+                    "choiceName": "не согласен",
+                    "choiceValue": 2
+                },
+                {
+                    "choiceName": "затрудняюсь ответить",
+                    "choiceValue": 1
+                }
+            ]
+        },
+        {
+            "questionName": "Второй вопрос",
+            "questionId": "second",
+            "choice": [
+                {
+                    "choiceName": "приклоняю колено, перед гениальностью этой идеи",
+                    "choiceValue": 5
+                },
+                {
+                    "choiceName": "согласен",
+                    "choiceValue": 4
+                },
+                {
+                    "choiceName": "не совсем",
+                    "choiceValue": 3
+                },
+                {
+                    "choiceName": "не согласен",
+                    "choiceValue": 2
+                },
+                {
+                    "choiceName": "затрудняюсь ответить",
+                    "choiceValue": 1
+                }
+            ]
+        }
+    ]
+}

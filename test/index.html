@@ -1,8 +1,80 @@
-<html>
-<head>
-	<title></title>
-</head>
-<body>
-	testing-1-2-3-4-5
-</body>
+<!DOCTYPE html>
+<html ng-app="conference">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+        <meta name="format-detection" content="telephone=no">
+        <title></title>
+
+        <style>
+
+        .firepad {
+            width: 100% !important;
+            height: 81vh !important;
+        }
+        .firepad-btn-group:nth-child(1), .firepad-btn-group:nth-child(5), .firepad-btn-group:nth-child(6), .firepad-btn-group:nth-child(7), .firepad-btn-group:nth-child(9), .firepad-btn-group:nth-child(4) .firepad-btn:nth-child(2) {
+            display: none;
+        }
+
+        </style>
+
+        <!-- Ionic -->
+        <link rel="stylesheet" href="css/ionic.app.css" media="screen" title="no title" charset="utf-8">
+
+        <!-- AngularJS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+        <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+
+        <!-- Firebase -->
+        <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+
+        <!-- AngularFire -->
+        <script src="https://cdn.firebase.com/libs/angularfire/1.1.1/angularfire.min.js"></script>
+
+        <!-- CodeMirror -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.2.0/codemirror.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.2.0/codemirror.css">
+
+        <!-- Firepad -->
+        <link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/1.1.1/firepad.css">
+        <script src="https://cdn.firebase.com/libs/firepad/1.1.1/firepad.min.js"></script>
+
+        <!-- Scripts -->
+        <script src="js/app.js" charset="utf-8"></script>
+        <script src="js/router.js" charset="utf-8"></script>
+
+        <style media="screen">
+
+            .firepad {
+                width: 700px;
+                height: 450px;
+                background-color: #f62; /* dark orange background */
+            }
+            .CodeMirror {
+                background-color: #f62;
+            }
+
+            .powered-by-firepad{
+                display: none;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="bar bar-header bar-energized">
+            <h1 class="title">bar-energized</h1>
+        </div>
+        <div ui-view="" style="margin-top: 44px; color: #000 !important;"></div>
+        <div class="tabs tabs-dark">
+            <a class="tab-item" ui-sref="main">
+                &#x413;&#x43E;&#x43B;&#x43E;&#x441;&#x43E;&#x432;&#x430;&#x43D;&#x438;&#x435;
+            </a>
+            <a class="tab-item" ui-sref="textEditor">
+                Editor
+            </a>
+            <a class="tab-item" ui-sref="about">
+                &#x418;&#x43D;&#x444;&#x43E;&#x440;&#x43C;&#x430;&#x446;&#x438;&#x44F;
+            </a>
+        </div>
+    </body>
 </html>
