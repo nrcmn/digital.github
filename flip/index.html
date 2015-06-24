@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <!-- Firebase -->
+    <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+
+    <!-- CodeMirror -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.2.0/codemirror.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.2.0/codemirror.css">
+
+    <!-- Firepad -->
+    <link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/1.1.1/firepad.css">
+    <script src="https://cdn.firebase.com/libs/firepad/1.1.1/firepad.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .firepad {
+            background: #999;
+            height: 100vh !important;
+
+        }
+        .CodeMirror {
+            background: #ccc;
+        }
+        .powered-by-firepad {
+            display: none;
+        }
+
+        .firepad-btn-group:nth-child(1),
+        .firepad-btn-group:nth-child(9),
+        .firepad-btn-group:nth-child(2) ul a:nth-child(1),
+        .firepad-btn-group:nth-child(2) ul a:nth-child(2),
+        .firepad-btn-group:nth-child(2) ul a:nth-child(3),
+        .firepad-btn-group:nth-child(2) ul a:nth-child(6),
+        .firepad-btn-group:nth-child(2) ul a:nth-child(8),
+        .firepad-btn-group:nth-child(3) ul a:nth-child(3),
+        .firepad-btn-group:nth-child(3) ul a:nth-child(5),
+        .firepad-btn-group:nth-child(3) ul a:nth-child(6),
+        .firepad-btn-group:nth-child(3) ul a:nth-child(7),
+        .firepad-btn-group:nth-child(3) ul a:nth-child(8)
+        {
+            display: none;
+        }
+
+    </style>
+
+  </head>
+
+  <body>
+    <div id="firepad"></div>    
+  </body>
+  <script>
+  var firepadRef = new Firebase('https://strat-flip.firebaseio.com/');
+  var codeMirror = CodeMirror(document.getElementById('firepad'), { lineWrapping: true });
+  var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
+      { richTextShortcuts: true, richTextToolbar: true, defaultText: 'Hello, World!' });
+</script>
+</html>
