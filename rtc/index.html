@@ -10,12 +10,19 @@
         <script src="https://cdn.icecomm.io/angular-ice/angular-ice.min.js"></script>
 
         <style>
-          icecomm-local {
+          .icecomm-local {
             position: absolute;
             right: 20px;
             bottom: 20px;
             border: 2px solid orange;
+            width: 256px;
           }
+
+          .icecomm-peer {
+
+          }
+
+
           button {
             width: 256px;
             height: 64px;
@@ -32,7 +39,8 @@
         room="beeline_room" 
         text="Подключиться" 
         limit="5" 
-        audio="false">
+        audio="false"
+        prestream="hide">
       </icecomm-connect>
 
       <icecomm-local></icecomm-local>
@@ -41,7 +49,7 @@
 
       <icecomm-leave prestream="hide" text="Выйти"></icecomm-leave>
 
-      <script type="text/javascript">
+      <script>
            angular.module("BeelineRTC",['Icecomm']);
       </script>
     </body>
