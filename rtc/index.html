@@ -1,58 +1,45 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Web RTC example</title>
+  <head>
+    <title>Icecomm Chat</title>
+    <script type="text/javascript" src="http://cdn.icecomm.io/icecomm.js"></script>
+    <style media="screen">
+    #localVideo {
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+        width: 200px;
+    }
 
-        <!--<script src="https://cdn.icecomm.io/icecomm.js" ></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js" ></script>
-        <script src="https://cdn.icecomm.io/angular-ice/angular-ice.min.js"></script>-->
-        <script type="text/javascript" src="http://cdn.icecomm.io/icecomm.js"></script>
-        <script type="text/javascript">
+    video:nth-of-type(2) {
+        position: fixed; right: 0; bottom: 0;
+        min-width: 100%; min-height: 100%;
+        width: auto; height: auto; z-index: -100;
+        background-size: cover;
+    }
+    </style>
 
-            var comm = new Icecomm('IpLnkpyVUHQwc06u5pOXViLLQrkfSd6DwKfWqQKfHcRMqoum', {debug: true});
 
-            comm.connect('custom room', {
-                stream: true,
-                audio: true,
-                video: true,
-                limit: 5
-            });
+    <script type="text/javascript">
+        var comm = new Icecomm('cFXbKhPcx9NqAelMFCAbW5ksANd95g2UMkUja54QKK5wMZZW')
+        comm.on('local', function(options) {
+          localVideo.src = options.stream;
+        });
 
-            comm.on('connected', function(peer) {
-                // document.body.appendChild(peer.getVideo());
-                remoteVideo.src = peer.stream;
-                remoteVideo.id = peer.ID;
-            });
+        comm.on('connected', function(options) {
+            document.body.appendChild(options.video);
+        });
 
-            comm.on('local', function(peer) {
-                localVideo.src = peer.stream;
-            });
+        comm.on('disconnect', function(options) {
+            document.getElementById(options.callerID).remove();
+        });
 
-            comm.on('disconnect', function(peer) {
-                document.getElementById(peer.ID).remove();
-            });
+        comm.connect('Beeline')
 
-        </script>
-
-        <style media="screen">
-            video{
-                height: 300px;
-            }
-        </style>
-    </head>
-    <body>
-
-    </body>
-        ver: 7
-        <video id="localVideo" autoplay></video>
-        <video id="remoteVideo" autoplay></video>
-
-    <!-- <body ng-app="RTC" icecomm apikey="IpLnkpyVUHQwc06u5pOXViLLQrkfSd6DwKfWqQKfHcRMqoum">
-        <icecomm-connect room="test room" text="Connect to test room (4)" video=true audio=true></icecomm-connect>
-        <icecomm-local></icecomm-local>
-        <icecomm-peer></icecomm-peer>
-        <icecomm-leave prestream="hide" text="Leave"></icecomm-leave>
-    </body>
-    <script src="app.js" charset="utf-8"></script> -->
+    </script>
+  </head>
+  <body>
+      ver: 8
+    <video id="localVideo" autoplay></video>
+  </body>
 </html>
