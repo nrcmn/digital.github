@@ -1,46 +1,62 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Icecomm Chat</title>
-    <script type="text/javascript" src="http://cdn.icecomm.io/icecomm.js"></script>
-    <style media="screen">
-    #localVideo {
-        position: absolute;
-        right: 20px;
-        bottom: 20px;
-        width: 200px;
-    }
+    <title>Beeline RTC video chat</title>
+    <head>
+        <script src="https://cdn.icecomm.io/icecomm.js" ></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js" ></script>
+        <script src="https://cdn.icecomm.io/angular-ice/angular-ice.min.js"></script>
+    </head>
+    <body ng-app="BeelineRTC" icecomm apikey="cFXbKhPcx9NqAelMFCAbW5ksANd95g2UMkUja54QKK5wMZZW">
+      <icecomm-connect room="beeline_room" text="Connect to beeline_room" limit="5"></icecomm-connect>
+      <icecomm-local></icecomm-local>
+      <icecomm-peer></icecomm-peer>
+      <icecomm-leave prestream="hide" text="leave"></icecomm-leave>
 
-    video:nth-of-type(2) {
-        position: fixed; right: 0; bottom: 0;
-        min-width: 100%; min-height: 100%;
-        width: auto; height: auto; z-index: -100;
-        background-size: cover;
-    }
-    </style>
+      <script type="text/javascript">
+           angular.module("BeelineRTC",['Icecomm']);
+      </script>
+    </body>
 
-
-    <script type="text/javascript">
-
-        var comm = new Icecomm('cFXbKhPcx9NqAelMFCAbW5ksANd95g2UMkUja54QKK5wMZZW');
-
-        comm.connect('beeline_room', {audio: false});
-
-        comm.on('connected', function(peer) {
-        document.body.appendChild(peer.getVideo());
-        });
-
-        comm.on('local', function(peer) {
-        localVideo.src = peer.stream;
-        });
-
-        comm.on('disconnect', function(peer) {
-        document.getElementById(peer.ID).remove();
-        });
-    </script>
-  </head>
-  <body>
-      ver: 9
-      <video id="localVideo" autoplay></video>
-  </body>
+  <!-- //   <script type="text/javascript" src="http://cdn.icecomm.io/icecomm.js"></script>
+  //   <style media="screen">
+  //   #localVideo {
+  //       position: absolute;
+  //       right: 20px;
+  //       bottom: 20px;
+  //       width: 200px;
+  //   }
+  //
+  //   video:nth-of-type(2) {
+  //       position: fixed; right: 0; bottom: 0;
+  //       min-width: 100%; min-height: 100%;
+  //       width: auto; height: auto; z-index: -100;
+  //       background-size: cover;
+  //   }
+  //   </style>
+  //
+  //
+  //   <script type="text/javascript">
+  //
+  //       var comm = new Icecomm('cFXbKhPcx9NqAelMFCAbW5ksANd95g2UMkUja54QKK5wMZZW');
+  //
+  //       comm.connect('beeline_room', {audio: false});
+  //
+  //       comm.on('connected', function(peer) {
+  //       document.body.appendChild(peer.getVideo());
+  //       });
+  //
+  //       comm.on('local', function(peer) {
+  //       localVideo.src = peer.stream;
+  //       });
+  //
+  //       comm.on('disconnect', function(peer) {
+  //       document.getElementById(peer.ID).remove();
+  //       });
+  //   </script>
+  // </head>
+  // <body>
+  //     ver: 9
+  //     <video id="localVideo" autoplay></video>
+  // </body> -->
 </html>
