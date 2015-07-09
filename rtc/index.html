@@ -21,25 +21,26 @@
 
 
     <script type="text/javascript">
-        var comm = new Icecomm('cFXbKhPcx9NqAelMFCAbW5ksANd95g2UMkUja54QKK5wMZZW')
-        comm.on('local', function(options) {
-          localVideo.src = options.stream;
+
+        var comm = new Icecomm('cFXbKhPcx9NqAelMFCAbW5ksANd95g2UMkUja54QKK5wMZZW');
+
+        comm.connect('beeline_room', {audio: false});
+
+        comm.on('connected', function(peer) {
+        document.body.appendChild(peer.getVideo());
         });
 
-        comm.on('connected', function(options) {
-            document.body.appendChild(options.video);
+        comm.on('local', function(peer) {
+        localVideo.src = peer.stream;
         });
 
-        comm.on('disconnect', function(options) {
-            document.getElementById(options.callerID).remove();
+        comm.on('disconnect', function(peer) {
+        document.getElementById(peer.ID).remove();
         });
-
-        comm.connect('Beeline')
-
     </script>
   </head>
   <body>
-      ver: 8
-    <video id="localVideo" autoplay></video>
+      ver: 9
+      <video id="localVideo" autoplay></video>
   </body>
 </html>
