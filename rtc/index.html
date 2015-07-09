@@ -15,7 +15,7 @@
             right: 20px;
             bottom: 20px;
             border: 2px solid orange;
-            width: 256px;
+            width: 20%;
           }
 
           .icecomm-peer {
@@ -36,11 +36,11 @@
     <body ng-app="BeelineRTC" icecomm apikey="cFXbKhPcx9NqAelMFCAbW5ksANd95g2UMkUja54QKK5wMZZW">
 
       <icecomm-connect 
+        ng-if="!icecomm.local"
         room="beeline_room" 
         text="Подключиться" 
         limit="5" 
-        audio="false"
-        prestream="hide">
+        audio="false">
       </icecomm-connect>
 
       <icecomm-local></icecomm-local>
