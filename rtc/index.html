@@ -7,12 +7,17 @@
         <!--<script src="https://cdn.icecomm.io/icecomm.js" ></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js" ></script>
         <script src="https://cdn.icecomm.io/angular-ice/angular-ice.min.js"></script>-->
-        <script type="text/javascript" src="http://cdn.icecomm.io/icecomm.js"></script>  
+        <script type="text/javascript" src="http://cdn.icecomm.io/icecomm.js"></script>
         <script type="text/javascript">
 
             var comm = new Icecomm('IpLnkpyVUHQwc06u5pOXViLLQrkfSd6DwKfWqQKfHcRMqoum');
 
-            comm.connect('custom room', {audio: true});
+            comm.connect('custom room', {
+                stream: true,
+                audio: true,
+                video: true,
+                limit: 5
+            });
 
             comm.on('connected', function(peer) {
                 document.body.appendChild(peer.getVideo());
@@ -37,6 +42,7 @@
     <body>
 
     </body>
+        ver: 6
         <video id="localVideo" autoplay></video>
     <!-- <body ng-app="RTC" icecomm apikey="IpLnkpyVUHQwc06u5pOXViLLQrkfSd6DwKfWqQKfHcRMqoum">
         <icecomm-connect room="test room" text="Connect to test room (4)" video=true audio=true></icecomm-connect>
