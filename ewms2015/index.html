@@ -4,9 +4,15 @@
 	<meta charset="utf-8">
 
 	<style>
-		div {
+
+		.container {
+			width: 600px;
+			margin-left:auto;
+			margin-right:auto;
+		}
+
+		a.button {
 			height:128px;
-			width:600px;
 			display:block;
 			line-height: 128px;
 			text-align: center;
@@ -14,10 +20,9 @@
 			font-size:40px;
 			font-family: sans-serif;
 			background:white;
-			margin-left:auto;
-			margin-right:auto;
-			margin-bottom: 64px;
+			margin-top: 64px;
 			color:black;
+			text-decoration:none;
 		}
 
 		h1, h2 {
@@ -27,11 +32,18 @@
 			text-align: center;
 		}
 
+		p {
+			font-size: 18px;
+			line-height: 1.4;
+			font-family: sans-serif;
+			text-align: center;
+		}
+
 		h2 {
 			font-weight: normal;
 		}
 
-		div:active {
+		a:active {
 			color: orange;
 			background-color: #000;
 
@@ -44,21 +56,24 @@
 
 </head>
 
-<body>
-
+<body ontouchstart="">
+	<div class="container">
 	<h1>EWMS2015</h1>
 
-	<br>
-	<br>
 
 
-	<a style="text-decoration:none;" href="itms-services://?action=download-manifest&amp;url=https://raw.githubusercontent.com/Beeline-Digital/b2b/master/hqconf/release_apps/TownHall.plist">
-		<div>Установить для iOS</div>
+	<a class="button" href="itms-services://?action=download-manifest&amp;url=https://raw.githubusercontent.com/Beeline-Digital/b2b/master/hqconf/release_apps/TownHall.plist">
+		Установить для iOS
 	</a>
 
-	<a style="text-decoration:none;" href="https://github.com/Beeline-Digital/b2b/raw/master/hqconf/release_apps/EWMS2015.apk">
-		<div>Установить для Android</div>
+	
+	<p>Вниманию пользователей Apple iPhone! После подтверждения установки (нажатие на "Install/Установить"), вам необходимо закрыть браузер и вернуться на экран с приложениями.</p>
+
+	<a class="button" href="https://github.com/Beeline-Digital/b2b/raw/master/hqconf/release_apps/EWMS2015.apk">
+		Установить для Android
 	</a>
+
+	</div>
 
 </body>
 
