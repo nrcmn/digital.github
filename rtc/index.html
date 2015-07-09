@@ -8,20 +8,17 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js" ></script>
         <script src="https://cdn.icecomm.io/angular-ice/angular-ice.min.js"></script>
 
-        <script src="app.js" charset="utf-8"></script>
-
         <style media="screen">
             video{
                 border-radius: 5px;
             }
         </style>
     </head>
-    <body>
-        <body ng-app="RTC" icecomm apikey="IpLnkpyVUHQwc06u5pOXViLLQrkfSd6DwKfWqQKfHcRMqoum">
-            <icecomm-connect room="test room" text="Connect to test room"></icecomm-connect>
-            <icecomm-local></icecomm-local>
-            <icecomm-peer></icecomm-peer>
-            <icecomm-leave prestream="hide" text="Leave"></icecomm-leave>
-        </body>
+    <body ng-app="RTC" icecomm apikey="IpLnkpyVUHQwc06u5pOXViLLQrkfSd6DwKfWqQKfHcRMqoum">
+        <icecomm-connect room="test room" text="Connect to test room"></icecomm-connect>
+        <icecomm-local></icecomm-local>
+        <icecomm-peer></icecomm-peer>
+        <icecomm-leave prestream="hide" text="Leave"></icecomm-leave>
     </body>
+    <script src="app.js" charset="utf-8"></script>
 </html>
