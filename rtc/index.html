@@ -19,7 +19,16 @@
           }
 
           .icecomm-peer {
+            flex:1;
 
+          }
+
+          .flex {
+            display: flex;
+            flex-direction-column;
+            width:80%;
+            margin:auto;
+            justify-content: center;
           }
 
 
@@ -45,7 +54,9 @@
 
       <icecomm-local></icecomm-local>
 
+      <div class="flex">
       <icecomm-peer></icecomm-peer>
+      </div>
 
       <icecomm-leave prestream="hide" text="Выйти"></icecomm-leave>
 
