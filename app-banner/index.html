@@ -31,28 +31,21 @@
 
 
 <script>
-	banner = undefined;
-	function run(force) {
-		var n = document.querySelector('.smartbanner');
-		if (n) {
-			n.parentNode.removeChild(n);
-		}
+
 		new SmartBanner({
 				daysHidden: 15, // days to hide banner after close button is clicked (defaults to 15)
 				daysReminder: 90, // days to hide banner after "VIEW" button is clicked (defaults to 90)
 				appStoreLanguage: 'ru', // language code for the App Store (defaults to us)
-				title: 'KudaGo',
-				author: 'KudaGo Inc',
-				button: 'OPEN'
+				title: 'Mой Билайн',
+				author: 'ПАО Вымпелком',
+				button: 'ОТКРЫТЬ'
 				//force: force
 		});
-	};
+
 </script>
 
 <body>
-	<div>
-		<a href="#" onclick="run('android')">android</a>
-		<a href="#" onclick="run('ios')">ios</a>
-		<a href="#" onclick="run('windows')">windows</a>
-	</div>
+
+	This is my body
+
 </body>
