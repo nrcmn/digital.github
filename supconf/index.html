@@ -2,26 +2,35 @@
 
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<style>
+		
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
 
 		.container {
-			width: 600px;
-			margin-left:auto;
-			margin-right:auto;
-			margin-top: 64px;
+			min-width: 320px;
+			max-width: 414px;
+			margin: auto;
+			padding: 10px;
+		}
+
+		.title {
+			margin-bottom: 40px;
 		}
 
 		a.button {
-			height:128px;
 			display:block;
-			line-height: 128px;
+			padding: 20px 0; 
 			text-align: center;
 			border:2px solid black;
-			font-size:2.5em;
+			font-size:18px;
 			font-family: sans-serif;
 			background:white;
-			margin-top: 64px;
 			color:black;
 			text-decoration:none;
 		}
@@ -29,22 +38,19 @@
 		h1, h2 {
 			font-weight: bold;
 			font-family: sans-serif;
-			font-size: 3.5em;
+			font-size: 32px;
 			text-align: center;
-		}
-
-		p {
-			font-size: 2em;
-			line-height: 1.4;
-			font-family: sans-serif;
-			text-align: center;
-			padding: 20px;
-			background: #eee;
-
 		}
 
 		h2 {
 			font-weight: normal;
+		}
+
+		p {
+			font-size: 14px;
+			line-height: 1.4;
+			font-family: sans-serif;
+			text-align: center;	
 		}
 
 		a:active {
@@ -53,26 +59,56 @@
 
 		}
 
+		.block {
+			padding: 20px;
+			padding-bottom: 10px;
+		}
+
+		.ios {
+			background: #eee;
+		}
+
+		.sign {
+			margin-top: 40px;
+			text-align: center;
+		}
+
+		.sign p {
+			color: #777;
+			font-size: 12px;
+			font-family: monospace;
+		}
+
 	</style>
 
 </head>
 
 <body ontouchstart="">
 	<div class="container">
-	<h1>Развитие в партнёрстве</h1>
+		<div class="title">
+			<h1>Развитие в партнёрстве</h1>
+		</div>
 
+		<div class="block ios">
+			<a class="button" href="itms-services://?action=download-manifest&amp;url=https://raw.githubusercontent.com/Beeline-Digital/b2b/master/supconf/release_apps/TownHall.plist">
+			Установить для iOS
+			</a>
+			<div class="block">
+				<p>Вниманию пользователей Apple iPhone! После подтверждения установки закройте браузер и вернитесь на экран с приложениями.</p>
+			</div>
+		</div>
 
+		<br>
 
-	<a class="button" href="itms-services://?action=download-manifest&amp;url=https://raw.githubusercontent.com/Beeline-Digital/b2b/master/supconf/release_apps/TownHall.plist">
-		Установить для iOS
-	</a>
+		<div class="block">
+			<a class="button" href="https://github.com/Beeline-Digital/b2b/raw/master/supconf/release_apps/%D0%9A%D0%BE%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%86%D0%B8%D1%8F.apk">
+				Установить для Android
+			</a>
+		</div>
 
-
-	<p>Вниманию пользователей Apple iPhone! После подтверждения установки (нажатие на "Install/Установить"), вам необходимо закрыть браузер и вернуться на экран с приложениями.</p>
-
-	<a class="button" href="https://github.com/Beeline-Digital/b2b/raw/master/supconf/release_apps/%D0%9A%D0%BE%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%86%D0%B8%D1%8F.apk">
-		Установить для Android
-	</a>
+		<div class="sign">
+			<p>beeline.digital</p>
+		</div>
 
 	</div>
 
