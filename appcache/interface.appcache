@@ -1,0 +1,54 @@
+CACHE MANIFEST
+# v2 2015-10-19
+
+
+# CSS
+css/ionic.app.min.css
+
+
+# Libs
+lib/ionic/js/ionic.bundle.js
+lib/ionic/fonts/ionicons.woff
+lib/angular/angular-cookies.min.js
+lib/angular/angular-locale_ru-ru.js
+lib/analytics.js
+lib/angular-websocket/angular-websocket.min.js
+lib/ng-cordova.min.js
+lib/runtime.js
+
+
+# JavaScript
+js/controllers.js
+js/app.js
+js/new.router.js
+js/resources.js
+js/directives.js
+js/version.js
+js/swiffy.js
+
+
+# templates and others
+img/puaro.png
+css/fonts/officinaserifc-book-webfont.woff
+templates/services/subscription.detail.html
+templates/services/service.detail.html
+templates/services/all-services.category.html
+templates/services/all-services.html
+templates/start_pages/slidebox.html
+css/fonts/officinaserifc-book-webfont.ttf
+templates/rates/rates.detail.html
+templates/rates/rates.html
+templates/balances/detalization.html
+templates/main/main.pay.html
+templates/main/main.balance.html
+templates/main/main.detal.html
+templates/system_temp/tabs.html
+templates/errors/error-page.html
+templates/start_pages/slidebox.html
+templates/system_temp/design.html
+templates/start_pages/offer.html
+templates/start_pages/auth.html
+templates/start_pages/admin.html
+templates/start_pages/login.html
+templates/system_temp/keyboard.html
+templates/system_temp/users.popover.html
