@@ -1,117 +1,199 @@
-<html>
+<!DOCTYPE html>
+<html ng-app="parserApp">
+    <head>
+        <meta charset="utf-8">
+        <title>Статистика использования интерфейса</title>
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style type="text/css">
 
-	<style>
+        html, body {
+          margin: 0;
+          padding: 0;
+          font-family: sans-serif;
+        }
 
-		* {
-			box-sizing: border-box;
-			margin: 0;
-			padding: 0;
-		}
+        * {
+          box-sizing: border-box;
+        }
 
-		.container {
-			min-width: 320px;
-			max-width: 414px;
-			margin: auto;
-			padding: 10px;
-		}
+        .container {
+          max-width: 414px;
+          margin: auto;
+          text-align: center;
+        }
 
-		.title {
-			margin-bottom: 40px;
-		}
+        .container div {
+          padding: 10px;
+        }
 
-		a.button {
-			display:block;
-			padding: 20px 0;
-			text-align: center;
-			border:2px solid black;
-			font-size:18px;
-			font-family: sans-serif;
-			background:white;
-			color:black;
-			text-decoration:none;
-		}
+        table {
+          text-align: left;
+          border-spacing: 10px;
+        }
 
-		h1, h2 {
-			font-weight: bold;
-			font-family: sans-serif;
-			font-size: 32px;
-			text-align: center;
-		}
+        table tr td {
+            border-bottom: 1px solid #999;
+            text-align: center;
+        }
 
-		h2 {
-			font-weight: normal;
-		}
+        tr:nth-child(2n) {
+          background-color: #dbdbdb;
+        }
 
-		p {
-			font-size: 14px;
-			line-height: 1.4;
-			font-family: sans-serif;
-			text-align: center;
-		}
+        li {
+            list-style-type: none;
+            text-align: left;
+        }
 
-		a:active {
-			color: orange;
-			background-color: #000;
+        th {
 
-		}
+        }
 
-		.block {
-			padding: 20px;
-			padding-bottom: 10px;
-		}
+        .w5 {
+          width: 5%;
+        }
 
-		.ios {
-			background: #eee;
-		}
+        .w10 {
+          width: 10%;
+        }
 
-		.sign {
-			margin-top: 40px;
-			text-align: center;
-		}
+        .w35 {
+          width: 35%;
+        }
 
-		.sign p {
-			color: #777;
-			font-size: 12px;
-			font-family: monospace;
-		}
+        .w40 {
+          width: 40%;
+        }
 
-	</style>
 
-</head>
 
-<body ontouchstart="">
-	<div class="container">
-		<div class="title">
-			<h1>Customer Interface</h1>
-		</div>
+        </style>
 
-		<div class="block ios">
-			<a class="button" href="itms-services://?action=download-manifest&amp;url=https://raw.githubusercontent.com/Beeline-Digital/beeline.customers/master/release_app/TownHall.plist">
-			Установить для iOS
-			</a>
-			<div class="block">
-				<p>Вниманию пользователей Apple iPhone! После подтверждения установки закройте браузер и вернитесь на экран с приложениями.</p>
-			</div>
-		</div>
+        <script src="https://code.angularjs.org/1.4.3/angular.min.js"></script>
 
-		<br>
+        <script type="text/javascript">
+        angular.module('parserApp', [])
 
-		<div class="block">
-			<a class="button" href="https://github.com/Beeline-Digital/beeline.customers/raw/master/app/release_app/beeline.customers.0.2.5.apk">
-				Установить для Android
-			</a>
-		</div>
+        .run(function () {
+            window.DBdata = [];
+        })
 
-		<div class="sign">
-			<p>beeline.digital</p>
-		</div>
+        .controller('MainCtrl', function ($http, $scope) {
+            $scope.authMe = function () {
+                $http.get('https://customers-list.firebaseio.com/.json?auth=' + $scope.key)
+                .success(function (data, status) {
+                    $scope.authResult = 'Вы авторизованы!'
+                    $scope.dataShow = true;
+                    localStorage.parse_auth_customers = $scope.key;
 
-	</div>
+                    for (var i in data) {
+                        if (data[i].shop_id != 'Арбат 12') {
+                            continue
+                        }
+                        if (data[i].Services) {
+                            data[i].serviceArr = [];
+                            for (var s in data[i].Services) {
+                                data[i].serviceArr.push(data[i].Services[s]);
+                            }
+                        }
 
-</body>
+                        DBdata.push(data[i])
+                    }
 
+                    $scope.data = DBdata;
+                })
+                .error(function () {
+                    $scope.key = null
+                    $scope.authResult = 'Неверный код, попробуйте еще раз!'
+                });
+            }
+
+            if (localStorage.parse_auth_customers != undefined) {
+                $scope.key = localStorage.parse_auth_customers;
+                $scope.authMe();
+                $scope.authResult = 'Происходит авторизация'
+            }
+        })
+        </script>
+    </head>
+    <body ng-controller="MainCtrl">
+        <div class="container" ng-show="!dataShow">
+          <div>Введите код</div>
+          <div>
+              <input type="text" ng-model="key">
+          </div>
+          <div>
+            <button type="button" ng-click="authMe()">Авторизоваться</button>
+          </div>
+          <div>
+            {{authResult}}
+          </div>
+        </div>
+
+        <div ng-show="dataShow">
+
+            <table>
+                <tr style="font-weight: bold;">
+                    <td>
+                        Версия приложения
+                    </td>
+                    <td>
+                        Авторизация по одноразовому паролю
+                    </td>
+                    <td>
+                        Переход на главную страницу
+                    </td>
+                    <td>
+                        Переход на страницу баланса
+                    </td>
+                    <td>
+                        Переход на страницу детализации
+                    </td>
+                    <td>
+                        Подключение / отключение услуг
+                    </td>
+                    <td>
+                        ID магазина
+                    </td>
+                    <td>
+                        Пользователь
+                    </td>
+                </tr>
+                <tr ng-repeat="result in data">
+                    <td>
+                        {{result.app_version || '---'}}
+                    </td>
+                    <td>
+                        <span ng-if="result.one_time_password">true</span>
+                    </td>
+                    <td>
+                        {{result.open_main_page || '---'}}
+                    </td>
+                    <td>
+                        {{result.balance || '---'}}
+                    </td>
+                    <td>
+                        {{result.detalization.load || '---'}}<br/>
+                        <small ng-if="result.detalization.load">{{result.detalization.periodStart}} / {{result.detalization.periodEnd}}</small>
+                    </td>
+                    <td>
+                        <span ng-if="!result.serviceArr">---</span>
+                        <ul>
+                            <li ng-repeat="service in result.serviceArr">
+                                Type: {{service.type}}<br/>
+                                SOC: {{service.soc}}
+                            </li>
+                        </ul>
+                    </td>
+                    <td>
+                        {{result.shop_id || '---'}}
+                    </td>
+                    <td>
+                        {{result.user || '---'}}
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </body>
 </html>
