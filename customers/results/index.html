@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html ng-app="results">
+    <head>
+        <meta charset="utf-8">
+        <title>Статистика использования интерфейса</title>
+
+        <script src="https://code.angularjs.org/1.4.7/angular.min.js" charset="utf-8"></script>
+        <script type="text/javascript">
+            angular.module('results', [])
+                .controller('MainCtrl', function ($http, $scope) {
+                    $scope.resultArray = [];
+                    $http.get('https://customers-list.firebaseio.com/.json?auth=konL850J4B3ZshNhM4vtpbI42kuPfpoc31L7S2cm').success(function (data) {
+                        for (var i in data) {
+                            if (data[i].shop_id != 'Арбат 12') {
+                                continue
+                            }
+                            if (data[i].Services) {
+                                data[i].serviceArr = [];
+                                for (var s in data[i].Services) {
+                                    data[i].serviceArr.push(data[i].Services[s]);
+                                }
+                            }
+
+                            $scope.resultArray.push(data[i])
+                        }
+
+                        console.log($scope.resultArray);
+                    }).error(function () {
+                        console.log('err');
+                    })
+                })
+
+                .filter('convert', function (boo) {
+                    console.log(boo);
+                })
+        </script>
+
+        <style media="screen">
+            table {
+                border-spacing: 15px;
+            }
+            table tr {
+                text-align: center;
+            }
+            table tr td {
+                border-bottom: 1px solid #999;
+                padding: 10px;
+            }
+            li {
+                list-style-type: none;
+                text-align: left;
+            }
+            h1 {
+                font-family: monospace;
+            }
+        </style>
+    </head>
+    <body ng-controller="MainCtrl">
+        <h1>beeline.customers</h1>
+        <table>
+            <tr style="font-weight: bold;">
+                <td>
+                    Версия приложения
+                </td>
+                <td>
+                    Авторизация по одноразовому паролю
+                </td>
+                <td>
+                    Переход на главную страницу
+                </td>
+                <td>
+                    Переход на страницу баланса
+                </td>
+                <td>
+                    Переход на страницу детализации
+                </td>
+                <td>
+                    Подключение / отключение услуг
+                </td>
+                <td>
+                    ID магазина
+                </td>
+                <td>
+                    Пользователь
+                </td>
+            </tr>
+            <tr ng-repeat="result in resultArray">
+                <td>
+                    {{result.app_version || '---'}}
+                </td>
+                <td>
+                    <span ng-if="result.one_time_password">true</span>
+                </td>
+                <td>
+                    {{result.open_main_page || '---'}}
+                </td>
+                <td>
+                    {{result.balance || '---'}}
+                </td>
+                <td>
+                    {{result.detalization.load || '---'}}<br/>
+                    <small ng-if="result.detalization.load">{{result.detalization.periodStart}} / {{result.detalization.periodEnd}}</small>
+                </td>
+                <td>
+                    <span ng-if="!result.serviceArr">---</span>
+                    <ul>
+                        <li ng-repeat="service in result.serviceArr">
+                            Type: {{service.type}}<br/>
+                            SOC: {{service.soc}}
+                        </li>
+                    </ul>
+                </td>
+                <td>
+                    {{result.shop_id || '---'}}
+                </td>
+                <td>
+                    {{result.user || '---'}}
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
