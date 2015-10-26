@@ -138,6 +138,9 @@
                         Версия приложения
                     </td>
                     <td>
+                        Дата авторизации
+                    </td>
+                    <td>
                         Авторизация по одноразовому паролю
                     </td>
                     <td>
@@ -162,6 +165,9 @@
                 <tr ng-repeat="result in data">
                     <td>
                         {{result.app_version || '---'}}
+                    </td>
+                    <td>
+                        {{(result.date | date : 'd.MM.yyyy / H:mm') || '---'}}
                     </td>
                     <td>
                         <span ng-if="result.one_time_password">true</span>
