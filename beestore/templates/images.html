@@ -1,0 +1,39 @@
+<div>
+    <!-- <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" style="text-align: center;" ng-repeat="image in product.images">
+                <img ng-src="{{image}}" alt="" />
+            </div>
+        </div>
+
+        <div class="swiper-pagination"></div>
+
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+
+    </div> -->
+
+    <div class="swiper-container gallery-top">
+    <div class="swiper-wrapper">
+
+        <div ng-repeat="image in product.images" class="swiper-slide" style="background-image:url({{image}});">
+        </div>
+
+    </div>
+
+    <div class="swiper-button-next swiper-button-black" ng-if="product.images.length > 1"></div>
+    <div class="swiper-button-prev swiper-button-black" ng-if="product.images.length > 1"></div>
+</div>
+
+<div class="swiper-container gallery-thumbs" ng-if="product.images.length > 1">
+    <div class="swiper-wrapper">
+
+        <div ng-repeat="image in product.images" class="swiper-slide" style="background-image:url({{image}});">
+        </div>
+
+    </div>
+</div>
+
+
+
+</div>

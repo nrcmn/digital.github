@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ru" ng-app="BeeStore">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>BeeStore</title>
+        <link href="./assets/css/app.css" rel="stylesheet" type="text/css">
+
+        <!-- Swiper CSS -->
+        <link rel="stylesheet" href="./assets/lib/swiper/dist/css/swiper.min.css" charset="utf-8">
+
+        <!-- Swiper.js -->
+        <script src="./assets/lib/swiper/dist/js/swiper.min.js" charset="utf-8"></script>
+
+        <script src="./assets/js/foundation.js"></script>
+        <script src="./assets/js/templates.js"></script>
+        <script src="./assets/js/routes.js"></script>
+        <script src="./assets/js/app.js"></script>
+
+        <!-- Angular scroll -->
+        <script src="./assets/lib/angular-scroll.min.js" charset="utf-8"></script>
+
+        <style media="screen">
+            /* Product list bug */
+            .grid-frame {
+                height: initial;
+            }
+        </style>
+    </head>
+
+    <!-- <body oncontextmenu="return false;"> -->
+    <body>
+
+            <!-- Upper Video block (fixed positioned) -->
+            <div class="video-block">
+                <video style="width:100%;" src="assets/img/gorod.webm" autoplay="true" loop="true">
+                </video>
+            </div>
+
+            <!-- Dark Overlay -->
+            <!-- <div id="dark-overlay" class="dark-overlay">
+                <h1>Все товары католога Билайн</h1>
+                <button style="width:200px;" class="beeline-button" onclick="document.getElementById('dark-overlay').className = 'hide-overlay';">Посмотреть</button>
+            </div> -->
+
+            <!-- Shadow block (fixed positioned) -->
+            <div class="shadow-block" ng-show="shadowShow"></div>
+
+            <!-- HEADER -->
+            <div class="shrink" style="padding:20px 40px 0;position: fixed; top: 30%; width: 100%;z-index:100;background:#fff;box-shadow: 0 20px 44px 1px rgba(255,255,255,0.9);">
+                <ul class="menu-bar" style="">
+                    <li style="border:2px solid #555;border-radius:8px;">
+                        <a href="/#!/">Девайсы</a>
+                    </li>
+                    <li>
+                        <a href="">Тарифы</a>
+                    </li>
+                    <li>
+                        <a ui-sref="internet">Мобильный интернет</a>
+                    </li>
+                    <li>
+                        <a style="color:#666;" href="">Другие вопросы &dtrif;</a>
+                    </li>
+                </ul>
+
+                <!-- <h4 ng-cloak style="padding: 10px; font-family: sans-serif;" ng-show="showCrumbs"><span><a style="font-size:28px;color:#666;" onclick="history.back();">&#9666;Назад | </a></span> {{crumbs.join('  /  ')}}</h4> -->
+
+                <h4 ng-cloak style="margin-top:16px; padding: 10px; font-family: sans-serif;">
+                    <span ng-show="crumb.show" ng-repeat="crumb in crumbs" ng-click="openCrumb(crumb)"><span style="text-decoration:underline;">{{crumb.title}}</span> / </span>
+                </h4>
+
+
+            </div>
+
+
+        <div class="grid-frame vertical" style="padding-top:70%;padding-bottom:256px;">
+
+            <!-- CONTENT -->
+            <div ui-view class="grid-content" ng-cloak></div>
+
+        </div>
+
+
+
+
+
+        <!-- FOOTER -->
+
+        <!-- <div style="position: fixed; bottom: 0; width: 100%;z-index:9999;">
+            <div class="menu-group dark" style="height:96px;">
+                <div class="menu-group-left">
+                    <ul class="menu-bar primary">
+                        <li>
+                            <a style="font-size:28px;color:#ccc;" onclick="history.back();">&#9668;Назад</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="menu-group-right">
+                    <ul class="icon-left primary menu-bar">
+                    </ul>
+                </div>
+            </div>
+        </div> -->
+
+
+        <!-- <div class="menu-group dark" style="position: fixed; bottom: 0; width: 100%;">
+            <div class="menu-group-left">
+                <ul class="menu-bar primary">
+                    <li><a onclick="history.back()">НАЗАД</a></li>
+                    <li><a href="#!/">домой</a></li>
+                </ul>
+            </div>
+            <div class="menu-group-right">
+                <ul class="icon-left primary menu-bar">
+                    <li>
+                        <a>
+                            <img zf-iconic="" icon="Cart" size="small" class="iconic-color-primary">
+                            Корзина
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div> -->
+
+    </body>
+</html>

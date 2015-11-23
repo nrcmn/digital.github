@@ -1,0 +1,109 @@
+<div class="grid-container" ng-controller="ProductDetailCtrl">
+    <zf-notification-set id="orderNotify" position="top-right"></zf-notification-set>
+
+    <!-- <h1>{{product.name}}</h1>
+    <br> -->
+    <div class="grid-block">
+        <div class="grid-content  medium-12">
+            <h2>{{product.name}}</h2>
+            <br>
+        </div>
+        <div class="grid-content  medium-8">
+            <images></images>
+        </div>
+        <div class="grid-content medium-4">
+
+                <span style="text-decoration: line-through;">{{product.old_price}}<br/></span>
+                <!-- <span ng-if="product.oplPrice" style="text-decoration: overline;">{{product.oplPrice}}</span> -->
+                <h3 ng-if="product.price" class="inline old-price">{{product.price * 2 | price}}</h3> руб.
+                <div ng-if="product.price">
+                    <h1 style="display:inline;font-size:3.75rem;">{{product.price | price}}</h1><span> руб.</span>
+                </div>
+
+            <p>
+                <!-- На складе: {{product.remain}} -->
+            </p>
+
+            <a title="Есть в наличии!" content="Для оформления заказа обратитесь к консультанту" color="success" autoclose="5000" zf-notify="orderNotify" class="beeline-button">Позвать консультанта</a>
+
+            <!-- <a title="В корзину" content="Товар добавлен в корзину" color="success" autoclose="5000" zf-notify="orderNotify" class="beeline-button" ng-click="addToBasket()">В корзину</a> -->
+
+        </div>
+    </div>
+    <div class="grid-block" style="margin-top:20px;margin-bottom:20px;">
+
+        <div class="grid-content medium-6">
+            <h3>Описание:</h3>
+            <p>
+                {{product.description || 'Описание'}}
+            </p>
+        </div>
+        <div class="grid-content medium-6">
+            <h3>Характеристики:</h3>
+
+            <section class="block-list grid-content">
+                <ul>
+                    <li style="display:flex;padding:10px 2px;" ng-repeat="intag in product.general_intags.intags" ng-if="intag.value[0] != null">
+                        <div style="flex:2;">
+                            {{intag.name}}
+                        </div>
+                        <div style="flex:1;">
+                            <b>{{intag.value[0]}}</b>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <a class="large dark hollow button" zf-open="intagModal">Все характеристики</a>
+
+            <div zf-modal="" id="intagModal">
+                <a zf-close="" class="close-button" style="top:0.1rem;right:0.1rem;"><img src="assets/img/close.svg" style="width:40px;"></a>
+                <div class="grid-block">
+                    <div class="grid-content medium-4">
+                        <section class="block-list">
+                            <ul>
+                                <li ng-repeat="field in product.intags_categories">
+                                    <a ng-style="setActiveStyle(field.id == modalIntags.id)" ng-click="openField(field)">{{field.name}}</a>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                    <div class="grid-block medium-8">
+
+
+                        <section class="block-list grid-content">
+                            <ul>
+                                <li style="display:flex;padding:10px 2px;" ng-repeat="param in modalIntags.intags | color:param" ng-if="param.value[0] != null">
+                                    <div style="flex:3;padding-right:1rem;">
+                                        {{param.name}}
+                                    </div>
+                                    <div style="flex:2;">
+                                        <b>{{param.value[0]}}</b>
+                                        <div ng-if="param.value[1]" style="border-radius:50%; width:30px; height:30px; background: {{param.value[1]}};"></div>
+                                        <!-- <span>
+                                            <div>
+                                                <b ng-if="param.id == 21">{{param.value[0].split(';')[0]}}</b>
+                                            </div>
+                                            <div style="border-radius:50%; width:30px; height:30px; background: {{param.value[0].split(';')[1]}};"></div>
+                                        </span>
+                                        <span>
+                                            <b ng-if="param.id != 21">{{param.value[0]}}</b>
+                                        </span> -->
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </section>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</div>

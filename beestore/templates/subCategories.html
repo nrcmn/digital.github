@@ -1,0 +1,43 @@
+<div class="grid-container" ng-controller="SubCategoryCtrl">
+
+    <!-- <div class="grid-block small-up-3">
+        <div class="grid-content card" style="text-align: center;" ng-repeat="subCategory in subCategories | orderBy:'order':true" ng-click="openSubCategory(subCategory)">
+            <img ng-src="{{subCategory.image}}" ng-if="$index <= 2">
+            <img ng-src="{{subCategory.image}}" ng-if="$index > 2" style="width: 50%;"/>
+            <div class="card-section">
+                <h3>{{subCategory.name}}</h3>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="grid-block small-up-3 align-center">
+        <div class="text-center padding" style="margin-bottom:20px;" ng-repeat="subCategory in subCategories | orderBy:'order':true" ng-click="openSubCategory(subCategory)" ng-if="$index <= 2" >
+
+            
+                <img src="assets/img/ring.svg" ng-src="{{subCategory.image}}">
+                <div class="padding">
+                    <h3>{{subCategory.name}}</h3>
+                </div>
+            
+            
+        </div>
+    </div>
+
+    <br>
+
+    <div class="grid-block small-up-4 align-center">
+        <div class="text-center padding" style="margin-bottom:20px;" ng-repeat="subCategory in subCategories | orderBy:'order':true" ng-click="openSubCategory(subCategory)" ng-if="$index > 2">
+            
+            <img src="assets/img/ring.svg" class="swiper-img" ng-src="{{subCategory.image}}">
+            
+            <div class="padding">    
+                <h4>{{subCategory.name}}</h4>
+            </div>
+            
+        </div>
+    </div>
+
+    <br>
+
+    <leaders ng-show="showLeader"></leaders>
+</div>
