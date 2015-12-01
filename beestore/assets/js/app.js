@@ -214,7 +214,7 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
 
         window.touchEvents = {};
         document.addEventListener(start, function(event) {
-            console.log('user start touch');
+            // console.log('user start touch');
             window.touchEvents = {
                 start: true,
                 scroll: false,
@@ -225,13 +225,12 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
 
         document.addEventListener(move, function (event) {
             window.touchEvents.scroll = true;
-
-            console.log(event);
+            console.log(event, move);
         }, false)
 
         document.addEventListener(end, function(event) {
             window.touchEvents.end = true;
-            console.log(window.touchEvents.e);
+            // console.log(window.touchEvents.e);
 
             if (!window.touchEvents.scroll && window.touchEvents.e.touches.length > 1) {
                 var evObj = document.createEvent('Events');
