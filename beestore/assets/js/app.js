@@ -223,8 +223,10 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
             }
         }, false)
 
-        document.addEventListener(move, function () {
+        document.addEventListener(move, function (event) {
             window.touchEvents.scroll = true;
+
+            console.log(event);
         }, false)
 
         document.addEventListener(end, function(event) {
