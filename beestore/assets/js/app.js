@@ -202,9 +202,9 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
 
         /* --------- Multi-touch event handlers --------- */
         if (window.navigator.msPointerEnabled) {
-            var start = 'MSPointerDown',
-                move = 'MSPointerMove',
-                end = 'MSPointerUp';
+            var start = 'pointerdown',
+                move = 'pointermove',
+                end = 'pointerup';
         }
         else {
             var start = 'touchstart',
@@ -229,6 +229,8 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
 
         document.addEventListener(end, function(event) {
             window.touchEvents.end = true;
+            console.log(window.touchEvents.e);
+
             if (!window.touchEvents.scroll && window.touchEvents.e.touches.length > 1) {
                 var evObj = document.createEvent('Events');
                 evObj.initEvent('click', true, false);
