@@ -6351,6 +6351,66 @@ blockquote p {
   font-weight: normal;
   font-style: normal; }
 
+#container {
+  margin: 60px auto;
+  width: 688px; }
+
+#keyboard {
+  margin: 0;
+  padding: 0;
+  list-style: none; }
+
+#keyboard button {
+  float: left;
+  margin: 0 5px 5px 0;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  background: #fff;
+  border: 1px solid #999;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.33); }
+
+.capslock, .tab, .left-shift {
+  clear: left; }
+
+#keyboard .tab, #keyboard .delete {
+  width: 70px; }
+
+#keyboard .capslock {
+  width: 80px; }
+
+#keyboard .return {
+  width: 77px; }
+
+#keyboard .left-shift {
+  width: 95px; }
+
+#keyboard .right-shift {
+  width: 109px; }
+
+.lastitem {
+  margin-right: 0; }
+
+.uppercase {
+  text-transform: uppercase; }
+
+#keyboard .space {
+  clear: left;
+  width: 660px; }
+
+.on {
+  display: none; }
+
+#keyboard button:active {
+  position: relative;
+  top: 1px;
+  left: 1px;
+  border-color: #e5e5e5;
+  cursor: pointer; }
+
 * {
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -6367,6 +6427,15 @@ blockquote p {
   position: fixed;
   top: 0;
   z-index: 99; }
+
+.show-overlay-button {
+  position: fixed;
+  top: 15%;
+  left: 0;
+  z-index: 1000;
+  background: rgba(255, 0, 0, 0.03);
+  width: 200px;
+  height: 200px; }
 
 .shadow-block {
   background: red;
@@ -6409,6 +6478,9 @@ h1, h2, h3, h4 {
 .gallery-thumbs .swiper-slide-active {
   opacity: 1; }
 
+.gallery-top .swiper-button-disabled {
+  opacity: 0.05 !important; }
+
 .beeline-button {
   color: #000;
   font-family: 'officinaserifcbold';
@@ -6438,7 +6510,7 @@ a:hover, a:focus {
   -webkit-transform: rotate(270deg);
           transform: rotate(270deg);
   line-height: 2rem;
-  font-size: 2rem;
+  font-size: 1.8rem;
   box-shadow: 0 0 32px 10px rgba(0, 0, 0, 0.16);
   padding: 2rem;
   padding-top: 3rem;
@@ -6449,6 +6521,16 @@ a:hover, a:focus {
   width: 420px;
   z-index: 300;
   transition: 1s ease-in left; }
+
+.filters-block {
+  position: fixed;
+  top: 38%;
+  left: 0;
+  z-index: 150;
+  width: 100%;
+  background: #fff;
+  padding: 1rem 3rem;
+  box-shadow: 0 20px 44px 1px rgba(255, 255, 255, 0.9); }
 
 .filters-button.ng-hide {
   left: -500px;
@@ -6462,9 +6544,9 @@ a:hover, a:focus {
   color: #666; }
 
 .dark-overlay {
-  position: absolute;
+  position: fixed;
   z-index: 9999;
-  top: 0;
+  top: 30%;
   bottom: 0;
   width: 100%;
   background: rgba(0, 0, 0, 0.9);
@@ -6481,15 +6563,55 @@ a:hover, a:focus {
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 33%;
-  padding-top: 66%;
+  padding: 20%;
   text-align: center; }
   .dark-overlay h1 {
     color: #eee;
-    padding-bottom: 32px; }
+    padding-bottom: 32px;
+    font-size: 4rem; }
+  .dark-overlay button {
+    -webkit-animation: 2s infinite alternate button-animation;
+            animation: 2s infinite alternate button-animation; }
+
+@-webkit-keyframes button-animation {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1); }
+  84% {
+    -webkit-transform: scale(1.33);
+            transform: scale(1.33); }
+  96% {
+    -webkit-transform: scale(1.33) translateY(5px);
+            transform: scale(1.33) translateY(5px); }
+  99% {
+    -webkit-transform: scale(1.33) translateY(0px);
+            transform: scale(1.33) translateY(0px); }
+  100% {
+    -webkit-transform: scale(1.33) translateY(0px);
+            transform: scale(1.33) translateY(0px); } }
+
+@keyframes button-animation {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1); }
+  84% {
+    -webkit-transform: scale(1.33);
+            transform: scale(1.33); }
+  96% {
+    -webkit-transform: scale(1.33) translateY(5px);
+            transform: scale(1.33) translateY(5px); }
+  99% {
+    -webkit-transform: scale(1.33) translateY(0px);
+            transform: scale(1.33) translateY(0px); }
+  100% {
+    -webkit-transform: scale(1.33) translateY(0px);
+            transform: scale(1.33) translateY(0px); } }
 
 .hide-overlay {
   display: none; }
+
+.show-overlay {
+  display: block; }
 
 .modal {
   min-width: 600px; }
@@ -6497,7 +6619,7 @@ a:hover, a:focus {
 .arrow-up {
   position: fixed;
   right: 2rem;
-  bottom: 3rem;
+  bottom: 10rem;
   display: inline-block;
   padding: 2rem;
   background: rgba(0, 0, 0, 0.2);
@@ -6520,3 +6642,6 @@ a:hover, a:focus {
 .arrow-up.ng-hide {
   transition: opacity 0.5s linear;
   opacity: 0; }
+
+.notification-container.top-right {
+  top: 31%; }

@@ -5,7 +5,7 @@
         <div class="grid-content medium-4">
             <section class="block-list">
                 <ul>
-                    <li ng-style="setActiveStyle($index == filterInd)" ng-repeat="filter in productsListFilter" ng-click="checkFilter($index)">
+                    <li ng-if="$index != 0" ng-style="setActiveStyle($index == filterInd)" ng-repeat="filter in productsListFilter" ng-click="checkFilter($index)">
                         <a>{{filter.name}}</a>
                     </li>
                 </ul>
@@ -37,22 +37,30 @@
 
 <div class="grid-container" ng-controller="ProductListCtrl">
     <br>
-
-    <div class="grid-block">
-        <div class="small-12 medium-4 grid-content">
-            <label>Сортировать по:</label>
-            <select ng-options="item as item.label for item in items" ng-model="selected" ng-change="sortBy()"></select>
-        </div>
-        <div class="small-12 medium-4 grid-content">
-            <label>Фильтровать по:</label>
-            <a style="width:100%;" zf-open="filterModal" class="warning button">Выбрано фильтров ({{intagChoicesList.length}})</a>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="filters-block">
+        <div class="grid-block">
+            <div class="small-12 medium-5 grid-content">
+                <label>Фильтровать по:</label>
+                <a ng-if="intagChoicesList.length == 0" style="position:relative;width:100%;border: 1px solid #ccc;background:#fff;font-size:1rem; line-height:0.8rem; text-align:left;" zf-open="filterModal" class="secondary button">выберите параметры <img style="position:absolute;right:3px;width:10px;" zf-iconic="" icon="chevron" size="small"></a>
+                <a ng-if="intagChoicesList.length != 0" style="width:100%;" zf-open="filterModal" class="warning button">выбрано параметров ({{intagChoicesList.length}})</a>
+            </div>
+            <div class="small-12 medium-5 grid-content">
+                <label>Сортировать по:</label>
+                <select ng-options="item as item.label for item in items" ng-model="selected" ng-change="sortBy()"></select>
+            </div>
         </div>
     </div>
 
     <!-- *** FILTERS BUTTON *** -->
-    <a ng-show="leftFilter" zf-open="filterModal" class="filters-button beeline-button">
-        Выбрано фильтров ({{intagChoicesList.length}})
-    </a>
+    <!-- <a ng-show="leftFilter" zf-open="filterModal" class="filters-button beeline-button">
+        <span ng-if="intagChoicesList.length == 0">Выберите параметры</span>
+        <span ng-if="intagChoicesList.length != 0">Выбрано параметров ({{intagChoicesList.length}})</span>
+    </a> -->
 
     <!-- *** Arrow Up BUTTON *** -->
     <div class="arrow-up" ng-show="leftFilter" ng-click="scrollToTop()">

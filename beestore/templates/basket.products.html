@@ -1,34 +1,69 @@
-<div class="grid-block padding">
-    <div class="grid-content medium-12" style="border: 3px dashed #999; border-radius: 10px; padding: 10px;">
+<div class="grid-block padding" ng-controller="BasketProductListCtrl">
+    <div ng-if="basket.length == 0" class="grid-content medium-12 text-center" style="border: 3px dashed #999; border-radius: 10px; padding: 20px;">
+        <h3>Корзина пуста</h3>
+        <a ui-sref="main">Перейти к товарам</a>
+    </div>
+
+    <div ng-if="basket.length != 0" class="grid-content medium-12">
         <div class="grid-block">
+            <div class="grid-content medium-12 text-center">
+                <h2>Шаг 1 из 2</h2>
+            </div>
+
+            <br><br>
+
             <div class="grid-content medium-2"></div>
-            <div class="grid-content medium-5">
-                <h3>Название</h3>
+            <div class="grid-content medium-4">
+                <p>Название</p>
             </div>
-            <div class="grid-content medium-2">
-                <h3>Кол-во</h3>
+            <div class="grid-content medium-3 text-center">
+                <p>Кол-во</p>
             </div>
-            <div class="grid-content medium-2">
-                <h3>Цена</h3>
+            <div class="grid-content medium-2 text-center">
+                <p>Цена</p>
             </div>
             <div class="grid-content medium-1"></div>
         </div>
-        <div class="grid-block" ng-repeat="product in basket">
-            <div class="grid-content medium-2 align-center">
-                <img ng-src="{{product.images[0]}}" />
+
+        <div class="grid-block" ng-repeat="product in basket" style="margin-bottom:32px;">
+            
+            <div class="grid-content medium-2 text-center swiper-image">
+                <img style="max-height:120px;" ng-src="{{product.images[0]}}" ng-click="openProduct(product)"/>
             </div>
-            <div class="grid-content medium-5" style="font-size: 25px">
-                {{product.name}}
+
+            <div class="grid-content medium-4" ng-click="openProduct(product)">
+                <h4>{{product.name}}</h4>
             </div>
-            <div class="grid-content medium-2" style="font-size: 40px">
-                <span style="font-size: 45px;" ng-click="product.quantity - 1">-</span> {{product.quantity}} <span style="font-size: 45px;" ng-click="product.quantity + 1">+</span>
+
+            <div class="grid-content medium-3 text-center" style="font-size: 40px">
+                <button style="font-size: 44px; width:52px;" ng-click="quantity(false, product)">-</button> {{product.quantity}} <button style="font-size: 44px; width:52px;" ng-click="quantity(true, product)">+</button>
             </div>
-            <div class="grid-content medium-2" style="font-size: 30px">
+
+            <div class="grid-content medium-2 text-center" style="font-size: 28px">
                 {{product.price | price}}
             </div>
-            <div class="grid-content medium-1" ng-click="basket.splice($index, 1)">
-                <a>X</a>
+
+            <div class="grid-content medium-1 text-center" ng-click="deleteItem(product, $index)">
+                <a><img src="assets/img/close.svg" style="width:40px;"></a>
+            </div>
+            
+        </div>
+
+        <br><br>
+
+        <h2>
+            Итого: {{basketPrice | price}}
+        </h2>
+
+        <br><br>
+
+        <div class="grid-block">
+            <div class="grid-content align-right text-right">
+                <a class="button beeline-button" style="width:280px;" ui-sref="basket.form">Перейти к оформлению</a>
             </div>
         </div>
+
     </div>
+
+
 </div>

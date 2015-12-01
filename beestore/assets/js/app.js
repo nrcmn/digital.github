@@ -8,7 +8,10 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
                 url: "/",
                 templateUrl: "./templates/mainCategories.html",
                 getTitle: function () {return 'Главная'},
-                controller: function ($rootScope) {$rootScope.shadowShow = false;},
+                controller: function ($rootScope) {
+                    $rootScope.shadowShow = false;
+                    $rootScope.basketBottomShow = true;
+                },
                 show: false,
                 id: 1,
                 animation: {
@@ -25,7 +28,10 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
                         return true
                     }
                 },
-                controller: function ($rootScope) {$rootScope.shadowShow = false;},
+                controller: function ($rootScope) {
+                    $rootScope.shadowShow = false;
+                    $rootScope.basketBottomShow = true;
+                },
                 show: true,
                 id: 2,
                 animation: {
@@ -42,7 +48,10 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
                         return true
                     }
                 },
-                controller: function ($rootScope) {$rootScope.shadowShow = true;},
+                controller: function ($rootScope) {
+                    $rootScope.shadowShow = true;
+                    $rootScope.basketBottomShow = true;
+                },
                 show: true,
                 id: 3,
                 animation: {
@@ -53,7 +62,11 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
                 url: '/categories/products/{id}',
                 templateUrl: './templates/products.detail.html',
                 getTitle: function () {return null}, // hide on detail page
-                controller: function ($rootScope) {$rootScope.shadowShow = true;},
+                controller: function ($rootScope, $scope) {
+                    $rootScope.shadowShow = true;
+                    $scope.toCartShow = true;
+                    $rootScope.basketBottomShow = true;
+                },
                 show: false,
                 id: 4,
                 animation: {
@@ -65,7 +78,10 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
                 url: '/leaders/{id}',
                 templateUrl: './templates/products.detail.html',
                 getTitle: function () {return 'Лидеры'},
-                controller: function ($rootScope) {$rootScope.shadowShow = true;},
+                controller: function ($rootScope) {
+                    $rootScope.shadowShow = true;
+                    $rootScope.basketBottomShow = true;
+                },
                 show: true,
                 id: 5,
                 animation: {
@@ -81,8 +97,55 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
                 url: '/products',
                 templateUrl: './templates/basket.products.html',
                 getTitle: function () {return 'Корзина'},
+                controller: function ($rootScope) {
+                    $rootScope.shadowShow = false;
+                    $rootScope.basketBottomShow = false;
+                },
                 show: true,
-                id: 6
+                id: 6,
+                animation: {
+                    enter: 'fadeIn'
+                }
+            })
+            .state('basket.form', {
+                url: '/form',
+                templateUrl: './templates/basket.form.html',
+                getTitle: function () {return 'Оформление заказа'},
+                controller: function ($rootScope) {
+                    $rootScope.shadowShow = false;
+                    $rootScope.basketBottomShow = false;
+                },
+                show: true,
+                id: 7,
+                animation: {
+                    enter: 'fadeIn'
+                }
+            })
+            .state('basketDetail', {
+                url: '/basket/products/{id}',
+                templateUrl: './templates/products.detail.html',
+                getTitle: function () {return null}, // hide on detail page
+                controller: function ($rootScope, $scope) {
+                    $rootScope.shadowShow = true;
+                    $scope.toCartShow = false;
+                    $rootScope.basketBottomShow = true;
+                },
+                show: false,
+                id: 8,
+                animation: {
+                    enter: 'fadeIn'
+                }
+            })
+
+            .state('plans', {
+                url: '/plans',
+                templateUrl: './templates/plans.html',
+                getTitle: function () {return 'Тарифы'},
+                show: false,
+                id: 9,
+                animation: {
+                    enter: 'fadeIn'
+                }
             })
     })
 
@@ -95,8 +158,24 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
             page = 2;
 
         // Bread crumbs
-        $rootScope.crumbs = [];
-        $rootScope.basket = [];
+        $rootScope.crumbs = []; // crumbs
+        $rootScope.basket = []; // basket
+        $rootScope.basketProductsCount = $rootScope.basket.length; // basket products summary count
+
+        $rootScope.$watch('basketProductsCount', function () { // basket summary price
+            var price = 0;
+            $rootScope.basket.forEach(function (item, i, arr) {
+                if (item.quantity) {
+                    price += (item.price * item.quantity);
+                }
+                else {
+                    price += item.price;
+                }
+            })
+
+            return $rootScope.basketPrice = price; // basket summary price variable
+        })
+
         $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
 
             toState.title = toState.getTitle(); // get readable crumb name
@@ -113,14 +192,51 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
                     return $rootScope.crumbs.splice(i + 1, 10); // back button event
                 }
             }
+
             try {
                 $rootScope.crumbs[0].show = true; // show first state in other states
-            } catch (e) {
-                console.log('ok');
-            }
+            } catch (e) {console.log('ok');}
 
             return $rootScope.crumbs.push(toState);
         })
+
+        /* --------- Multi-touch event handlers --------- */
+        if (window.navigator.msPointerEnabled) {
+            var start = 'MSPointerDown',
+                move = 'MSPointerMove',
+                end = 'MSPointerUp';
+        }
+        else {
+            var start = 'touchstart',
+                move = 'touchmove',
+                end = 'touchend';
+        }
+
+        window.touchEvents = {};
+        document.addEventListener(start, function(event) {
+            console.log('user start touch');
+            window.touchEvents = {
+                start: true,
+                scroll: false,
+                end: false,
+                e: event
+            }
+        }, false)
+
+        document.addEventListener(move, function () {
+            window.touchEvents.scroll = true;
+        }, false)
+
+        document.addEventListener(end, function(event) {
+            window.touchEvents.end = true;
+            if (!window.touchEvents.scroll && window.touchEvents.e.touches.length > 1) {
+                var evObj = document.createEvent('Events');
+                evObj.initEvent('click', true, false);
+                event.target.dispatchEvent(evObj);
+            }
+        }, false);
+        /* -------- END -------- */
+
 
         $rootScope.openCrumb = function (crumb) {
             $state.go(crumb.name);
@@ -243,7 +359,7 @@ angular.module('controllers', [])
         $scope.openSubCategory = function (subCategory) {
             window.subCategory = subCategory; // set subCategory to global variable
             $rootScope.progress = true; // show progress bar
-            __LoadProducts(window.subCategory, 10, 1, '-weight', null); // load products
+            __LoadProducts(window.subCategory, 15, 1, '-weight', null); // load products
 
 
             /* Cache filters */
@@ -251,7 +367,13 @@ angular.module('controllers', [])
                 __LoadFilters(window.subCategory.id);
             }
             else {
-                $rootScope.cancelFilter(); // delete all later checked params
+                // delete all checked filters
+                window.filter[window.subCategory.id].forEach(function (item, i, arr) {
+                    item.choices.forEach(function (_item, _i, _arr) {
+                        delete _item['check'];
+                    })
+                })
+
                 $rootScope.productsListFilter = window.filter[window.subCategory.id];
             }
 
@@ -263,7 +385,7 @@ angular.module('controllers', [])
 
         $scope.leftFilter = false; //hide filter on left side
         window.scrollLoad = true; // progress bar status
-        __LoadProducts(window.subCategory, 5, 2, '-weight', null); // load other for empty array except
+        // __LoadProducts(window.subCategory, 5, 2, '-weight', null); // load other for empty array except
 
         // -- LAZY loading block
         window.onscroll = function () {
@@ -281,9 +403,12 @@ angular.module('controllers', [])
                 $scope.$apply();
             }
 
-            if (window.scrollLoad && (Number(window.pageYOffset.toFixed()) - (document.body.scrollHeight - window.innerHeight) >= -5)) {
+            if (window.scrollLoad && (Number(window.pageYOffset.toFixed()) - (document.body.scrollHeight - window.innerHeight) >= -1500)) {
+                if (lazyLoadNow) {return false} // if loading process running later
+
                 __LoadProducts(window.subCategory, 15, window.page += 1, '-weight', $rootScope.intagChoicesList);
                 $rootScope.progress = true;
+                window.lazyLoadNow = true; // start lazy loading process
             }
         }
 
@@ -341,7 +466,7 @@ angular.module('controllers', [])
         }
     })
 
-    .controller('ProductDetailCtrl', function ($scope, $rootScope, $stateParams, $document, __LoadOneProduct) {
+    .controller('ProductDetailCtrl', function ($scope, $rootScope, $stateParams, $document, $state, FoundationApi, __LoadOneProduct) {
         window.scroll(0,0); // scroll to top
 
         if (!window.product) {
@@ -379,14 +504,36 @@ angular.module('controllers', [])
         }
 
         $scope.addToBasket = function () {
-            window.product.quantity = 1;
+            $rootScope.basketBottomShow = false;
+            
+            if (!window.product.quantity) {
+                window.product.quantity = 1;
+            }
+
+            for (var i = 0; i < $rootScope.basket.length; i++) {
+                if ($rootScope.basket[i].id == window.product.id) {
+                    if ($rootScope.basket[i].quantity == 5) {
+                        FoundationApi.publish('orderNotify', { title: 'В корзину', content: 'Количество одинаковых позиций не может быть больше 5', color: 'alert', autoclose: '5000'});
+                        return false
+                    }
+                    else {
+                        FoundationApi.publish('orderNotify', { title: 'В корзину', content: 'Товар добавлен в корзину', color: 'success', autoclose: '5000'});
+                        return $rootScope.basket[i].quantity += 1, $rootScope.basketProductsCount += 1, $state.go('basket.products');
+                    }
+                }
+            }
+
             $rootScope.basket.push(window.product);
+            $rootScope.basketProductsCount += 1;
+            $state.go('basket.products');
+
+            // FoundationApi.publish('orderNotify', { title: 'В корзину', content: 'Товар добавлен в корзину', color: 'success', autoclose: '5000'});
         }
     })
 
     .controller('FilterCtrl', function ($scope, $rootScope, __LoadProducts) {
         // $rootScope.intagChoicesList = []; // array for intag_choices ids
-        $rootScope.filterInd = 0;
+        $rootScope.filterInd = 1;
         $rootScope.checkFilter = function (index) {
             $rootScope.filterInd = index;
         }
@@ -433,6 +580,73 @@ angular.module('controllers', [])
         }
     })
 
+    .controller('BasketProductListCtrl', function ($scope, $rootScope, $state) {
+        // clear crumbs
+        $rootScope.crumbs.length = 0;
+
+        // push mock main state
+        $rootScope.crumbs.push(
+            {
+                animation: {
+                    enter: 'fadeIn'
+                },
+                controller: function ($rootScope) {$rootScope.shadowShow = false;},
+                getTitle: function () {return 'На главную'},
+                id: 1,
+                show: true,
+                title: 'На главную',
+                name: 'main'
+            }
+        )
+
+        $scope.quantity = function (bool, item) {
+            if (item.quantity == 5 && bool) {
+                return false
+            }
+            else if (item.quantity == 1 && !bool) {
+                return false
+            }
+
+            (bool) ? (item.quantity += 1, $rootScope.basketProductsCount += 1) : (item.quantity -= 1, $rootScope.basketProductsCount -= 1);
+        }
+
+        $scope.deleteItem = function (product, $index) {
+            $rootScope.basketProductsCount -= product.quantity;
+            $rootScope.basket.splice($index, 1);
+
+            if ($rootScope.basket.length == 0) {
+                $rootScope.basketProductsCount = 0;
+            }
+        }
+
+        $scope.openProduct = function (product) {
+            var cart = $state.current; // set mock "back to cart" crumb
+            cart.title = 'Назад в корзину';
+            cart.show = true;
+            $rootScope.crumbs.push(cart);
+
+            window.product = product;
+            $state.go('basketDetail', {id: product.id});
+        }
+    })
+
+    .controller('BasketFormCtrl', function ($scope, $rootScope, $timeout, $state) {
+        $scope.form = {};
+        $scope.form.phone = '';
+
+        // $scope.checkNews = function ($event) {
+        //     $scope.form.news = $event.target.checked;
+        // }
+
+        $scope.placeAnOrder = function () {
+            console.log($scope.form);
+            $rootScope.basket.length = 0;
+            $timeout(function () {
+                $state.go('main')
+            }, 2000)
+        }
+    })
+
 angular.module('services', [])
     .service('__LoadCategories', function ($http, $q) {
         var deferred = $q.defer();
@@ -472,20 +686,13 @@ angular.module('services', [])
                 }
             })
             .success(function (data) {
-                if (data.length < amount && page == 1) {
+                if (data.length < amount) {
                     window.scrollLoad = false;
                     $rootScope.progress = false;
                 }
 
                 if (intags && page == 1) {
                     $rootScope.productsList = data;
-                    return true
-                }
-
-                if (data.length == 0) {
-                    window.scrollLoad = false;
-                    $rootScope.progress = false;
-
                     return true
                 }
 
@@ -498,8 +705,8 @@ angular.module('services', [])
                         $rootScope.productsList.push(item);
                     })
                 }
-                //
-                // $rootScope.progress = false;
+
+                window.lazyLoadNow = false; // end lazy loading process
             })
             .error(function () {
                 console.error('ERROR! "__LoadProducts"');
@@ -659,6 +866,218 @@ angular.module('directives', [])
                     swiper1.params.control = swiper2;
                     swiper2.params.control = swiper1;
                 }, 1000);
+            }
+        }
+    })
+
+    .directive('key', function () {
+        return {
+            restrict: 'C',
+            controller: function ($scope, $element, $attrs) {
+                $element.on('click', function () {
+                    var phoneLength = $scope.form.phone.length;
+                    switch (phoneLength) {
+                        case 0:
+                            $scope.form.phone += '(';
+                            break;
+                        case 4:
+                            $scope.form.phone += ') ';
+                            break;
+                        case 9:
+                            $scope.form.phone += ' ';
+                            break;
+                        case 12:
+                            $scope.form.phone += ' ';
+                            break;
+                        case 15:
+                            return false
+                    }
+
+                    $scope.form.phone += $element[0].innerText;
+                    $scope.$apply();
+                })
+            }
+        }
+    })
+
+    .directive('clear', function () {
+        return {
+            restrict: 'C',
+            controller: function ($scope, $element, $attrs) {
+                $element.on('click', function () {
+                    $scope.form = {};
+                    $scope.form.phone = '';
+                    $scope.$apply();
+                })
+            }
+        }
+    })
+
+    .directive('backspace', function () {
+        return {
+            restrict: 'C',
+            controller: function ($scope, $element, $attrs) {
+                $element.on('click', function () {
+                    var a = $scope.form.phone.split('');
+                    a.pop();
+
+                    $scope.form.phone = a.join('');
+                    $scope.$apply();
+                })
+            }
+        }
+    })
+
+    // basket form
+    .directive('field', function () {
+        return {
+            controller: function ($scope, $element, $attrs) {
+                $element.on('focus', function () { // listen focus on input
+                    window.selectedInput = $attrs.field; // set global variable with input model name
+                })
+            }
+        }
+    })
+
+    /* --- KEYBOARD BLOCK --- */
+    .directive('keyboard', function () {
+        return {
+            templateUrl: 'templates/keyboard.html',
+            replace: true,
+            controller: function () {
+                // document.addEventListener("blur", function( $event ) {
+                //     // console.log($event.srcElement);
+                //     window.selectedInput = null;
+                // }, true);
+            }
+        }
+    })
+
+    // keyboard buttons
+    .directive('letter', function () {
+        return {
+            restrict: 'C',
+            controller: function ($scope, $element, $attrs) {
+                $element.on('click', function () {
+                    if ($scope.form[window.selectedInput] == undefined) {
+                        $scope.form[window.selectedInput] = ''
+                    }
+
+                    $scope.form[window.selectedInput] += $element[0].innerText;
+                    $scope.$apply();
+                })
+            }
+        }
+    })
+    .directive('symbol', function () {
+        return {
+            restrict: 'C',
+            controller: function ($scope, $element, $attrs) {
+                $element.on('click', function () {
+                    if ($scope.form[window.selectedInput] == undefined) {
+                        $scope.form[window.selectedInput] = ''
+                    }
+
+                    $scope.form[window.selectedInput] += $element[0].innerText;
+                    $scope.$apply();
+                })
+            }
+        }
+    })
+    .directive('delete', function () {
+        return {
+            restrict: 'C',
+            controller: function ($scope, $element, $attrs) {
+                $element.on('click', function () {
+                    if ($scope.form[window.selectedInput] == undefined) {
+                        $scope.form[window.selectedInput] = ''
+                    }
+
+                    var a = $scope.form[window.selectedInput].split('');
+                    a.pop();
+
+                    $scope.form[window.selectedInput] = a.join('');
+                    $scope.$apply();
+                })
+            }
+        }
+    })
+    .directive('capslock', function () {
+        return {
+            restrict: 'C',
+            controller: function ($scope, $element, $attrs) {
+                $element.on('click', function () {
+                    var letters = document.querySelectorAll('.letter');
+                    var uppercase = document.querySelectorAll('.uppercase');
+
+                    if (uppercase.length != 0) {
+                        for (var i = 0; i < uppercase.length; i++) {
+                            var arr = uppercase[i].className.split(' ');
+                            arr.splice(arr.indexOf('uppercase'), 1);
+
+                            uppercase[i].className = arr.join('');
+                        }
+
+                        return true
+                    }
+
+                    for (var i = 0; i < letters.length; i++) {
+                        letters[i].className += ' uppercase';
+                    }
+                })
+            }
+        }
+    })
+    .directive('shift', function () {
+        return {
+            restrict: 'C',
+            controller: function ($scope, $element, $attrs) {
+                $element.on('click', function () {
+                    var letters = document.querySelectorAll('.letter');
+                    var uppercase = document.querySelectorAll('.uppercase');
+
+                    if (uppercase.length != 0) {
+                        for (var i = 0; i < uppercase.length; i++) {
+                            var arr = uppercase[i].className.split(' ');
+                            arr.splice(arr.indexOf('uppercase'), 1);
+
+                            uppercase[i].className = arr.join('');
+                        }
+
+                        return true
+                    }
+
+                    for (var i = 0; i < letters.length; i++) {
+                        letters[i].className += ' uppercase';
+                    }
+
+                    var listen = $scope.$watch('form', function () {
+                        var uppercase = document.querySelectorAll('.uppercase');
+                        for (var i = 0; i < uppercase.length; i++) {
+                            var arr = uppercase[i].className.split(' ');
+                            arr.splice(arr.indexOf('uppercase'), 1);
+
+                            uppercase[i].className = arr.join('');
+                        }
+
+                        listen();
+                    })
+                })
+            }
+        }
+    })
+    .directive('space', function () {
+        return {
+            restrict: 'C',
+            controller: function ($scope, $element, $attrs) {
+                $element.on('click', function () {
+                    if ($scope.form[window.selectedInput] == undefined) {
+                        $scope.form[window.selectedInput] = ''
+                    }
+
+                    $scope.form[window.selectedInput] += ' ';
+                    $scope.$apply();
+                })
             }
         }
     })

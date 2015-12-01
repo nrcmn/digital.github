@@ -2,7 +2,7 @@
 <html lang="ru" ng-app="BeeStore">
     <head>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <title>BeeStore</title>
         <link href="./assets/css/app.css" rel="stylesheet" type="text/css">
 
@@ -28,32 +28,50 @@
         </style>
     </head>
 
-    <!-- <body oncontextmenu="return false;"> -->
-    <body>
+    <body oncontextmenu="return false;">
+    <!-- <body> -->
 
             <!-- Upper Video block (fixed positioned) -->
             <div class="video-block">
                 <video style="width:100%;" src="assets/img/gorod.webm" autoplay="true" loop="true">
                 </video>
+                <div class="show-overlay-button" onclick="document.getElementById('dark-overlay').classList.toggle('hide-overlay');"></div>
             </div>
 
             <!-- Dark Overlay -->
-            <!-- <div id="dark-overlay" class="dark-overlay">
-                <h1>Все товары католога Билайн</h1>
-                <button style="width:200px;" class="beeline-button" onclick="document.getElementById('dark-overlay').className = 'hide-overlay';">Посмотреть</button>
-            </div> -->
+            <div id="dark-overlay" class="dark-overlay">
+                <h1>Все товары<br>каталога Билайн</h1>
+                <button style="width:200px;" class="beeline-button" onclick="document.getElementById('dark-overlay').classList.toggle('hide-overlay');">Посмотреть</button>
+            </div>
 
             <!-- Shadow block (fixed positioned) -->
             <div class="shadow-block" ng-show="shadowShow"></div>
+
+            <!-- Basket block (fixed positioned to bottom) -->
+            <div ng-if="basket.length != 0" ng-show="basketBottomShow" style="width: 100%; height: 125px; background: #191919; position: fixed; bottom: 0; z-index: 1001; padding: 30px">
+                <div class="grid-block">
+                    <div class="grid-content medium-6 text-left" style="display:flex;flex-direction:row;align-items:center;">
+                        <img zf-iconic="" icon="cart" size="large" class="iconic-color-secondary" style="margin-right:24px;width:64px;height:64px;">
+                        <div>
+                            <h4 style="color:#999; margin-bottom:0;line-height:1;">Товаров в корзине ({{basketProductsCount}})</h4>
+                            <h3 style="color:#fff;display:inline;">{{basketPrice | price}}</h3><span style="color:#fff;"> руб.</span>
+                        </div>
+                    </div>
+                    <div class="grid-content medium-6 text-right">
+                        <!-- <h4 style="color: #fff;">{{basketPrice | price}} руб.</h4> -->
+                        <a style="margin:6px 0 0 0;border-radius:6px;position:relative;padding-right:2rem;" class="button hollow warning large" ui-sref="basket.products">Перейти в корзину <img style="position:absolute;right:6px;top:44%;widht:12px;height:14px;" zf-iconic="" icon="chevron" size="small"></a>
+                    </div>
+                </div>
+            </div>
 
             <!-- HEADER -->
             <div class="shrink" style="padding:20px 40px 0;position: fixed; top: 30%; width: 100%;z-index:100;background:#fff;box-shadow: 0 20px 44px 1px rgba(255,255,255,0.9);">
                 <ul class="menu-bar" style="">
                     <li style="border:2px solid #555;border-radius:8px;">
-                        <a href="/#!/">Девайсы</a>
+                        <a ui-sref="main">Девайсы</a>
                     </li>
                     <li>
-                        <a href="">Тарифы</a>
+                        <a ui-sref="plans">Тарифы</a>
                     </li>
                     <li>
                         <a ui-sref="internet">Мобильный интернет</a>
@@ -74,6 +92,8 @@
 
 
         <div class="grid-frame vertical" style="padding-top:70%;padding-bottom:256px;">
+
+            <zf-notification-set id="eventError" position="top-right"></zf-notification-set>
 
             <!-- CONTENT -->
             <div ui-view class="grid-content" ng-cloak></div>
