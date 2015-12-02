@@ -202,68 +202,68 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
 
         /* --------- Multi-touch event handlers --------- */
 
-        // if (window.navigator.msPointerEnabled) {
-        //     var start = 'pointerdown',
-        //         move = 'pointermove',
-        //         end = 'pointerup';
-        // }
-        // else {
-        //     var start = 'touchstart',
-        //         move = 'touchmove',
-        //         end = 'touchend';
-        // }
-        //
-        // window.touchEvents = {};
-        // window.pointerCount = 0;
-        //
-        // document.addEventListener("pointerover", function (event) {
-        //     console.log('Pointerover handle run');
-        // }, false)
-        //
-        // document.addEventListener(start, function(event) {
-        //     console.info('User start touch');
-        //     window.pointerCount += 1;
-        //
-        //     window.touchEvents = {
-        //         start: true,
-        //         scroll: false,
-        //         scrollCount: 0,
-        //         end: false,
-        //         e: event
-        //     }
-        // }, false)
-        //
-        // document.addEventListener(move, function (event) {
-        //     window.touchEvents.scroll = true;
-        //     window.touchEvents.scrollCount += 1;
-        //
-        //     if (window.touchEvents.scrollCount == 1) {
-        //         applyClass('none');
-        //     }
-        //     else if (window.touchEvents.scrollCount > 1) {
-        //         applyClass('auto');
-        //     }
-        //
-        //     console.info('Move event');
-        // }, false)
-        //
-        // document.addEventListener(end, function(event) {
-        //     window.touchEvents.end = true;
-        //     console.info('pointer count:', window.pointerCount, '\nUser end touch');
-        //
-        //     window.pointerCount = 0;
-        //
-        //     if (window.touchEvents.scrollCount > 1 && window.pointerCount > 1) {
-        //         var evObj = document.createEvent('Events');
-        //         evObj.initEvent('click', true, false);
-        //         event.target.dispatchEvent(evObj);
-        //     }
-        //
-        //     applyClass('none');
-        // }, false);
-        //
-        //
-        // // F*&!@K you IE
+        if (window.navigator.msPointerEnabled) {
+            var start = 'pointerdown',
+                move = 'pointermove',
+                end = 'pointerup';
+        }
+        else {
+            var start = 'touchstart',
+                move = 'touchmove',
+                end = 'touchend';
+        }
+
+        window.touchEvents = {};
+        window.pointerCount = 0;
+
+        document.addEventListener("pointerover", function (event) {
+            console.log('Pointerover handle run');
+        }, false)
+
+        document.addEventListener(start, function(event) {
+            console.info('User start touch');
+            window.pointerCount += 1;
+
+            window.touchEvents = {
+                start: true,
+                scroll: false,
+                scrollCount: 0,
+                end: false,
+                e: event
+            }
+        }, false)
+
+        document.addEventListener(move, function (event) {
+            window.touchEvents.scroll = true;
+            window.touchEvents.scrollCount += 1;
+
+            // if (window.touchEvents.scrollCount == 1) {
+            //     applyClass('none');
+            // }
+            // else if (window.touchEvents.scrollCount > 1) {
+            //     applyClass('auto');
+            // }
+
+            console.info('Move event');
+        }, false)
+
+        document.addEventListener(end, function(event) {
+            window.touchEvents.end = true;
+            console.info('pointer count:', window.pointerCount, '\nUser end touch');
+
+            window.pointerCount = 0;
+
+            if (window.touchEvents.scrollCount > 1 && window.pointerCount > 1) {
+                var evObj = document.createEvent('Events');
+                evObj.initEvent('click', true, false);
+                event.target.dispatchEvent(evObj);
+            }
+
+            // applyClass('none');
+        }, false);
+
+
+        // F*&!@K you IE
         // function applyClass (property) {
         //     document.querySelectorAll('html')[0].style['touch-action'] = property;
         //     document.querySelectorAll('body')[0].style['touch-action'] = property;
