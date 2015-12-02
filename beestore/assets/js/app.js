@@ -253,7 +253,7 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
 
             window.pointerCount = 0;
 
-            if (window.touchEvents.scrollCount > 1 && window.pointerCount > 1) {
+            if (window.touchEvents.scrollCount <= 1 && window.pointerCount > 1) {
                 var evObj = document.createEvent('Events');
                 evObj.initEvent('click', true, false);
                 event.target.dispatchEvent(evObj);
