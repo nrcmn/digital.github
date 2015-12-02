@@ -310,3 +310,785 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
             }
         }
     })
+
+angular.module('controllers', [])
+    .controller('MainCategoryCtrl', function ($scope, $state, __LoadCategories, mainCategories) {
+        var unacceptableCategories = [6, 5, 4, 101, 15, 202, 23, 24, 164, 78, 80, 79, 166, 162, 165, 71, 70, 77, 122, 121, 182, 93, 86, 85, 90, 87, 163]; // unacceptable categories ids
+
+        // if haven't categories data, load them
+        if(!window.categories){
+            __LoadCategories(unacceptableCategories).then(function (data) {
+                window.categories = {
+                    main: [],
+                    sub: []
+                }
+
+                data.forEach(function (item, i, arr) {
+                    if (unacceptableCategories.indexOf(item.id) > -1) {
+                        return false
+                    }
+                    else if (!item.parent) {
+                        window.categories.main.push(item);
+                    }
+                    else if (item.parent) {
+                        window.categories.sub.push(item);
+                    }
+                })
+
+                // $scope.categories = window.categories;
+
+            });
+        }
+        // if have categories data initialize to variable
+        // else {
+        //     $scope.categories = window.categories;
+        // }
+
+        $scope.categories = mainCategories;
+
+        $scope.openCategory = function (arg) {
+            window.category = arg;
+            $state.go('categories');
+        }
+    })
+
+    .controller('SubCategoryCtrl', function ($scope, $rootScope, $state, __LoadProducts, __LoadFilters) {
+        $scope.subCategories = []; // clear subCategories
+        $rootScope.intagChoicesList = []; // clear filters
+        $rootScope.productsList = undefined;
+        window.scroll(0,0); // scroll to top
+        window.page = 1; // set page number in products list
+        window.sortItem = undefined; // set sortItem
+        window.categories.sub.forEach(function (item, i, arr) { // all subcategories to global scope
+            if (item.parent == window.category.id) {
+                $scope.subCategories.push(item);
+            }
+
+            ($scope.subCategories.length <= 3) ? $scope.showLeader = true : $scope.showLeader = false; // show leader rule
+        })
+
+        $scope.openSubCategory = function (subCategory) {
+            window.subCategory = subCategory; // set subCategory to global variable
+            $rootScope.progress = true; // show progress bar
+            __LoadProducts(window.subCategory, 15, 1, '-weight', null); // load products
+
+
+            /* Cache filters */
+            if (!window.filter[window.subCategory.id]) {
+                __LoadFilters(window.subCategory.id);
+            }
+            else {
+                // delete all checked filters
+                window.filter[window.subCategory.id].forEach(function (item, i, arr) {
+                    item.choices.forEach(function (_item, _i, _arr) {
+                        delete _item['check'];
+                    })
+                })
+
+                $rootScope.productsListFilter = window.filter[window.subCategory.id];
+            }
+
+            $state.go('products');
+        }
+    })
+
+    .controller('ProductListCtrl', function ($scope, $rootScope, $state, $document, __LoadProducts) {
+
+        $scope.leftFilter = false; //hide filter on left side
+        window.scrollLoad = true; // progress bar status
+        // __LoadProducts(window.subCategory, 5, 2, '-weight', null); // load other for empty array except
+
+        // -- LAZY loading block
+        window.onscroll = function () {
+
+            if ($state.current.name != "products") {
+                return false
+            }
+
+            if (Number(window.pageYOffset.toFixed()) > 250) {
+                $scope.leftFilter = true;
+                $scope.$apply();
+            }
+            else {
+                $scope.leftFilter = false;
+                $scope.$apply();
+            }
+
+            if (window.scrollLoad && (Number(window.pageYOffset.toFixed()) - (document.body.scrollHeight - window.innerHeight) >= -1500)) {
+                if (lazyLoadNow) {return false} // if loading process running later
+
+                __LoadProducts(window.subCategory, 15, window.page += 1, '-weight', $rootScope.intagChoicesList);
+                $rootScope.progress = true;
+                window.lazyLoadNow = true; // start lazy loading process
+            }
+        }
+
+        $scope.scrollToTop = function () {
+            $document.scrollTop(0, 1200).then(function() {});
+        }
+
+        $scope.openProduct = function (product) {
+            product.collectionId = window.subCategory.id; // set collectionId to product data
+            product.intags_categories.forEach(function (item, i, arr) { // general intags for detail page
+                if (item.id == 61) {
+                    product.general_intags = item;
+                }
+            })
+
+            window.product = product; // set this product to global variable
+            $state.go('detail', {id: product.id});
+        }
+
+        // -- SORT block
+        $scope.items = [
+            {
+                value: '-weight',
+                label: 'популярности',
+            },
+            {
+                value: 'price',
+                label: 'цене: по возрастанию',
+            },
+            {
+                value: '-price',
+                label: 'цене: по убыванию',
+            }
+        ];
+
+        try {
+            $scope.selected = $scope.items[window.sortItem.index]
+        } catch (e) {
+            window.sortItem = $scope.selected = $scope.items[0];
+            window.sortItem.index = 0;
+        }
+
+        $scope.sortBy = function () {
+            $rootScope.productsList = undefined;
+
+            window.page = 1;
+            window.sortItem = $scope.selected;
+            $scope.items.forEach(function (item, i, arr) {
+                if (item.value == $scope.selected.value) {
+                    window.sortItem.index = i;
+                }
+            })
+
+            __LoadProducts(window.subCategory, 15, 1, $scope.selected.value, $rootScope.intagChoicesList);
+        }
+    })
+
+    .controller('ProductDetailCtrl', function ($scope, $rootScope, $stateParams, $document, $state, FoundationApi, __LoadOneProduct) {
+        window.scroll(0,0); // scroll to top
+
+        if (!window.product) {
+            __LoadOneProduct($stateParams.id).then(function (data) {
+                data.intags_categories.forEach(function (item, i, arr) { // general intags for detail page
+                    if (item.id == 61) {
+                        data.general_intags = item;
+                    }
+                })
+
+                $scope.product = data;
+                window.product = data;
+
+                $scope.modalIntags = window.product.intags_categories[0]; // set opened intag
+            })
+        }
+        else {
+            $scope.product = window.product;
+            $scope.modalIntags = window.product.intags_categories[0]; // set opened intag
+        }
+
+        // open field in intags
+        $scope.openField = function (f) {
+            $scope.modalIntags = f;
+        }
+
+        // active style for intags
+        $scope.setActiveStyle = function (condition) {
+            if (condition) {
+                return {background: '#fff'}
+            }
+            else {
+                return {background: '#ccc'}
+            }
+        }
+
+        $scope.addToBasket = function () {
+            $rootScope.basketBottomShow = false;
+            
+            if (!window.product.quantity) {
+                window.product.quantity = 1;
+            }
+
+            for (var i = 0; i < $rootScope.basket.length; i++) {
+                if ($rootScope.basket[i].id == window.product.id) {
+                    if ($rootScope.basket[i].quantity == 5) {
+                        FoundationApi.publish('orderNotify', { title: 'В корзину', content: 'Количество одинаковых позиций не может быть больше 5', color: 'alert', autoclose: '5000'});
+                        return false
+                    }
+                    else {
+                        FoundationApi.publish('orderNotify', { title: 'В корзину', content: 'Товар добавлен в корзину', color: 'success', autoclose: '5000'});
+                        return $rootScope.basket[i].quantity += 1, $rootScope.basketProductsCount += 1, $state.go('basket.products');
+                    }
+                }
+            }
+
+            $rootScope.basket.push(window.product);
+            $rootScope.basketProductsCount += 1;
+            $state.go('basket.products');
+
+            // FoundationApi.publish('orderNotify', { title: 'В корзину', content: 'Товар добавлен в корзину', color: 'success', autoclose: '5000'});
+        }
+    })
+
+    .controller('FilterCtrl', function ($scope, $rootScope, __LoadProducts) {
+        // $rootScope.intagChoicesList = []; // array for intag_choices ids
+        $rootScope.filterInd = 1;
+        $rootScope.checkFilter = function (index) {
+            $rootScope.filterInd = index;
+        }
+
+        $rootScope.check = function ($event, val) {
+            var checkbox = $event.target;
+            if (checkbox.checked) {
+                $rootScope.intagChoicesList.push(checkbox.value);
+                val.check = true;
+            }
+            else if (!checkbox.checked) {
+                $rootScope.intagChoicesList.splice($rootScope.intagChoicesList.indexOf(checkbox.value), 1);
+                val.check = false;
+            }
+        }
+
+        $rootScope.setFilter = function () {
+            __LoadProducts(window.subCategory, 15, 1, window.sortItem.value, $rootScope.intagChoicesList);
+            $rootScope.productsList = undefined;
+        }
+
+        $rootScope.clearFilter = function () {
+            $rootScope.intagChoicesList.length = 0; // clear global intag choices array
+
+            // delete all checked filters
+            window.filter[window.subCategory.id].forEach(function (item, i, arr) {
+                item.choices.forEach(function (_item, _i, _arr) {
+                    delete _item['check'];
+                })
+            })
+
+            $rootScope.productsList = undefined;
+            $rootScope.progress = true; // show progress bar
+            __LoadProducts(window.subCategory, 15, 1, window.sortItem.value, $rootScope.intagChoicesList);
+        }
+
+        $rootScope.setActiveStyle = function (condition) {
+            if (condition) {
+                return {background: '#fff'}
+            }
+            else {
+                return {background: '#ccc'}
+            }
+        }
+    })
+
+    .controller('BasketProductListCtrl', function ($scope, $rootScope, $state) {
+        // clear crumbs
+        $rootScope.crumbs.length = 0;
+
+        // push mock main state
+        $rootScope.crumbs.push(
+            {
+                animation: {
+                    enter: 'fadeIn'
+                },
+                controller: function ($rootScope) {$rootScope.shadowShow = false;},
+                getTitle: function () {return 'На главную'},
+                id: 1,
+                show: true,
+                title: 'На главную',
+                name: 'main'
+            }
+        )
+
+        $scope.quantity = function (bool, item) {
+            if (item.quantity == 5 && bool) {
+                return false
+            }
+            else if (item.quantity == 1 && !bool) {
+                return false
+            }
+
+            (bool) ? (item.quantity += 1, $rootScope.basketProductsCount += 1) : (item.quantity -= 1, $rootScope.basketProductsCount -= 1);
+        }
+
+        $scope.deleteItem = function (product, $index) {
+            $rootScope.basketProductsCount -= product.quantity;
+            $rootScope.basket.splice($index, 1);
+
+            if ($rootScope.basket.length == 0) {
+                $rootScope.basketProductsCount = 0;
+            }
+        }
+
+        $scope.openProduct = function (product) {
+            var cart = $state.current; // set mock "back to cart" crumb
+            cart.title = 'Назад в корзину';
+            cart.show = true;
+            $rootScope.crumbs.push(cart);
+
+            window.product = product;
+            $state.go('basketDetail', {id: product.id});
+        }
+    })
+
+    .controller('BasketFormCtrl', function ($scope, $rootScope, $timeout, $state) {
+        $scope.form = {};
+        $scope.form.phone = '';
+
+        // $scope.checkNews = function ($event) {
+        //     $scope.form.news = $event.target.checked;
+        // }
+
+        $scope.placeAnOrder = function () {
+            console.log($scope.form);
+            $rootScope.basket.length = 0;
+            $timeout(function () {
+                $state.go('main')
+            }, 2000)
+        }
+    })
+
+angular.module('services', [])
+    .service('__LoadCategories', function ($http, $q) {
+        var deferred = $q.defer();
+        return function (categories) {
+            $http({
+                method: 'GET',
+                url: 'http://beeline-ecommerce.herokuapp.com/api/public/v1/collections/',
+                params: {
+                    "api_key": window.api_key,
+                    "market_region": window.market_region
+                }
+            })
+            .success(function (data) {
+                deferred.resolve(data);
+            })
+            .error(function () {
+                deferred.reject('ERROR! "__LoadOneProduct"');
+            })
+
+            return deferred.promise;
+        }
+    })
+
+    .service('__LoadProducts', function ($http, $rootScope) {
+        return function (subCategory, amount, page, sort, intags) {
+            $http({
+                method: 'GET',
+                url: 'http://beeline-ecommerce.herokuapp.com/api/public/v1/products/',
+                params: {
+                    "api_key": window.api_key,
+                    "market_region": window.market_region,
+                    collection: subCategory.id,
+                    amount: amount,
+                    page: page,
+                    sort_by: sort,
+                    intag_choices: intags
+                }
+            })
+            .success(function (data) {
+                if (data.length < amount) {
+                    window.scrollLoad = false;
+                    $rootScope.progress = false;
+                }
+
+                if (intags && page == 1) {
+                    $rootScope.productsList = data;
+                    return true
+                }
+
+                // for lazy loading function
+                if (!$rootScope.productsList) {
+                    $rootScope.productsList = data;
+                }
+                else {
+                    data.forEach(function (item, i, arr) {
+                        $rootScope.productsList.push(item);
+                    })
+                }
+
+                window.lazyLoadNow = false; // end lazy loading process
+            })
+            .error(function () {
+                console.error('ERROR! "__LoadProducts"');
+            })
+        }
+    })
+
+    .service('__LoadFilters', function ($http, $rootScope) {
+        return function (id) {
+            $http({
+                method: 'GET',
+                url: 'https://public.backend.vimpelcom.ru/api/public/v1/collections/' + id + '/filters/',
+                params: {
+                    "api_key": window.api_key,
+                    "market_region": window.market_region
+                }
+            })
+            .success(function (data) {
+                window.filter[window.subCategory.id] = data;
+                $rootScope.productsListFilter = data;
+                // $rootScope.filterShow = true;
+            })
+            .error(function () {
+                console.error('ERROR! "__LoadFilters"');
+                // $rootScope.filterShow = false;
+            })
+        }
+    })
+
+    .service('__LoadOneProduct', function ($http, $rootScope, $q) {
+        var deferred = $q.defer();
+        return function (id) {
+            $http({
+                method: 'GET',
+                url: 'https://public.backend.vimpelcom.ru/api/public/v1/products/' + id + '/',
+                params: {
+                    "api_key": window.api_key,
+                    "market_region": window.market_region
+                }
+            })
+            .success(function (data) {
+                deferred.resolve(data);
+            })
+            .error(function () {
+                deferred.reject('ERROR! "__LoadOneProduct"');
+            })
+
+            return deferred.promise;
+        }
+    })
+
+angular.module('directives', [])
+    .directive("leaders", function ($timeout) {
+        return {
+            templateUrl: 'templates/leaders.html',
+            replace: true,
+            scope: {},
+            controller: function ($scope, $http, $q, $state) {
+                function loadLeaders () {
+                    var deferred = $q.defer();
+                    var idsForLeaders = [76, 10];
+
+                    if (Array.isArray(window.leaders)) { // cache leaders
+                        deferred.resolve(window.leaders);
+                        return deferred.promise;
+                    }
+                    else {
+                        window.leaders = [];
+                    }
+
+                    idsForLeaders.forEach(function (item, i, arr) {
+                        load(item, i);
+                    })
+
+                    function load (id, i) {
+                        $http({
+                            method: 'GET',
+                            url: 'http://beeline-ecommerce.herokuapp.com/api/public/v1/products/',
+                            params: {
+                                api_key: window.api_key,
+                                market_region: window.market_region,
+                                collection: id,
+                                amount: 8,
+                                sort_by: '-weight'
+                            }
+                        })
+                        .success(function (data) {
+                            data.forEach(function (item, i, arr) {
+                                window.leaders.push(item);
+                            })
+
+                            if (i == idsForLeaders.length - 1) {
+                                deferred.resolve(window.leaders);
+                            }
+                        })
+                    }
+
+                    return deferred.promise;
+                }
+
+                loadLeaders().then(function (leaders) {
+                    $scope.leaders = leaders;
+                })
+
+                $scope.openLeader = function (data) {
+                    data.intags_categories.forEach(function (item, i, arr) { // general intags for detail page
+                        if (item.id == 61) {
+                            data.general_intags = item;
+                        }
+                    })
+
+                    window.product = data;
+                    $state.go('leaders', {id: data.id});
+                }
+            },
+            link: function(scope, element, attributes) {
+                $timeout(function () {
+                    var swiper = new Swiper('.swiper-container', {
+                        pagination: '.swiper-pagination',
+                        paginationClickable: '.swiper-pagination',
+                        nextButton: '.swiper-button-next',
+                        prevButton: '.swiper-button-prev',
+                        freeMode: true,
+                        slidesPerView: 3.5,
+                    });
+                }, 1500);
+            }
+        }
+    })
+
+    .directive("images", function ($timeout) {
+        return {
+            templateUrl: 'templates/images.html',
+            replace: true,
+            scope: false,
+            link: function () {
+                $timeout(function () {
+                    // var swiper = new Swiper('.swiper-container', {
+                    //     pagination: '.swiper-pagination',
+                    //     paginationClickable: '.swiper-pagination',
+                    //     nextButton: '.swiper-button-next',
+                    //     prevButton: '.swiper-button-prev'
+                    // });
+                    //two-way control swiper
+                    var swiper1 = new Swiper('.gallery-top', {
+                        nextButton: '.swiper-button-next',
+                        prevButton: '.swiper-button-prev',
+                        spaceBetween: 10,
+                    });
+                    var swiper2 = new Swiper('.gallery-thumbs', {
+                        spaceBetween: 10,
+                        centeredSlides: true,
+                        slidesPerView: 'auto',
+                        touchRatio: 0.2,
+                        slideToClickedSlide: true
+                    });
+                    swiper1.params.control = swiper2;
+                    swiper2.params.control = swiper1;
+                }, 1000);
+            }
+        }
+    })
+
+    .directive('key', function () {
+        return {
+            restrict: 'C',
+            controller: function ($scope, $element, $attrs) {
+                $element.on('click', function () {
+                    var phoneLength = $scope.form.phone.length;
+                    switch (phoneLength) {
+                        case 0:
+                            $scope.form.phone += '(';
+                            break;
+                        case 4:
+                            $scope.form.phone += ') ';
+                            break;
+                        case 9:
+                            $scope.form.phone += ' ';
+                            break;
+                        case 12:
+                            $scope.form.phone += ' ';
+                            break;
+                        case 15:
+                            return false
+                    }
+
+                    $scope.form.phone += $element[0].innerText;
+                    $scope.$apply();
+                })
+            }
+        }
+    })
+
+    .directive('clear', function () {
+        return {
+            restrict: 'C',
+            controller: function ($scope, $element, $attrs) {
+                $element.on('click', function () {
+                    $scope.form = {};
+                    $scope.form.phone = '';
+                    $scope.$apply();
+                })
+            }
+        }
+    })
+
+    .directive('backspace', function () {
+        return {
+            restrict: 'C',
+            controller: function ($scope, $element, $attrs) {
+                $element.on('click', function () {
+                    var a = $scope.form.phone.split('');
+                    a.pop();
+
+                    $scope.form.phone = a.join('');
+                    $scope.$apply();
+                })
+            }
+        }
+    })
+
+    // basket form
+    .directive('field', function () {
+        return {
+            controller: function ($scope, $element, $attrs) {
+                $element.on('focus', function () { // listen focus on input
+                    window.selectedInput = $attrs.field; // set global variable with input model name
+                })
+            }
+        }
+    })
+
+    /* --- KEYBOARD BLOCK --- */
+    .directive('keyboard', function () {
+        return {
+            templateUrl: 'templates/keyboard.html',
+            replace: true,
+            controller: function () {
+                // document.addEventListener("blur", function( $event ) {
+                //     // console.log($event.srcElement);
+                //     window.selectedInput = null;
+                // }, true);
+            }
+        }
+    })
+
+    // keyboard buttons
+    .directive('letter', function () {
+        return {
+            restrict: 'C',
+            controller: function ($scope, $element, $attrs) {
+                $element.on('click', function () {
+                    if ($scope.form[window.selectedInput] == undefined) {
+                        $scope.form[window.selectedInput] = ''
+                    }
+
+                    $scope.form[window.selectedInput] += $element[0].innerText;
+                    $scope.$apply();
+                })
+            }
+        }
+    })
+    .directive('symbol', function () {
+        return {
+            restrict: 'C',
+            controller: function ($scope, $element, $attrs) {
+                $element.on('click', function () {
+                    if ($scope.form[window.selectedInput] == undefined) {
+                        $scope.form[window.selectedInput] = ''
+                    }
+
+                    $scope.form[window.selectedInput] += $element[0].innerText;
+                    $scope.$apply();
+                })
+            }
+        }
+    })
+    .directive('delete', function () {
+        return {
+            restrict: 'C',
+            controller: function ($scope, $element, $attrs) {
+                $element.on('click', function () {
+                    if ($scope.form[window.selectedInput] == undefined) {
+                        $scope.form[window.selectedInput] = ''
+                    }
+
+                    var a = $scope.form[window.selectedInput].split('');
+                    a.pop();
+
+                    $scope.form[window.selectedInput] = a.join('');
+                    $scope.$apply();
+                })
+            }
+        }
+    })
+    .directive('capslock', function () {
+        return {
+            restrict: 'C',
+            controller: function ($scope, $element, $attrs) {
+                $element.on('click', function () {
+                    var letters = document.querySelectorAll('.letter');
+                    var uppercase = document.querySelectorAll('.uppercase');
+
+                    if (uppercase.length != 0) {
+                        for (var i = 0; i < uppercase.length; i++) {
+                            var arr = uppercase[i].className.split(' ');
+                            arr.splice(arr.indexOf('uppercase'), 1);
+
+                            uppercase[i].className = arr.join('');
+                        }
+
+                        return true
+                    }
+
+                    for (var i = 0; i < letters.length; i++) {
+                        letters[i].className += ' uppercase';
+                    }
+                })
+            }
+        }
+    })
+    .directive('shift', function () {
+        return {
+            restrict: 'C',
+            controller: function ($scope, $element, $attrs) {
+                $element.on('click', function () {
+                    var letters = document.querySelectorAll('.letter');
+                    var uppercase = document.querySelectorAll('.uppercase');
+
+                    if (uppercase.length != 0) {
+                        for (var i = 0; i < uppercase.length; i++) {
+                            var arr = uppercase[i].className.split(' ');
+                            arr.splice(arr.indexOf('uppercase'), 1);
+
+                            uppercase[i].className = arr.join('');
+                        }
+
+                        return true
+                    }
+
+                    for (var i = 0; i < letters.length; i++) {
+                        letters[i].className += ' uppercase';
+                    }
+
+                    var listen = $scope.$watch('form', function () {
+                        var uppercase = document.querySelectorAll('.uppercase');
+                        for (var i = 0; i < uppercase.length; i++) {
+                            var arr = uppercase[i].className.split(' ');
+                            arr.splice(arr.indexOf('uppercase'), 1);
+
+                            uppercase[i].className = arr.join('');
+                        }
+
+                        listen();
+                    })
+                })
+            }
+        }
+    })
+    .directive('space', function () {
+        return {
+            restrict: 'C',
+            controller: function ($scope, $element, $attrs) {
+                $element.on('click', function () {
+                    if ($scope.form[window.selectedInput] == undefined) {
+                        $scope.form[window.selectedInput] = ''
+                    }
+
+                    $scope.form[window.selectedInput] += ' ';
+                    $scope.$apply();
+                })
+            }
+        }
+    })
