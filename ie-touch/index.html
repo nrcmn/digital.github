@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html ng-app="ie">
+    <head>
+        <meta charset="utf-8">
+        <title>IE Touch Test</title>
+
+        <style media="screen">
+            html {
+                touch-action: none;
+            }
+        </style>
+
+        <script src="https://code.angularjs.org/1.4.8/angular.min.js" charset="utf-8"></script>
+        <script type="text/javascript">
+            angular.module('ie', [])
+
+            .run(function () {
+                /* --------- Multi-touch event handlers --------- */
+
+                if (window.navigator.msPointerEnabled) {
+                    var start = 'pointerdown',
+                        move = 'pointermove',
+                        end = 'pointerup';
+                }
+                else {
+                    var start = 'touchstart',
+                        move = 'touchmove',
+                        end = 'touchend';
+                }
+
+                window.touchEvents = {};
+                document.addEventListener(start, function(event) {
+                    console.log('user start touch');
+                    window.touchEvents = {
+                        start: true,
+                        scroll: false,
+                        end: false,
+                        e: event
+                    }
+                }, false)
+
+                document.addEventListener(move, function (event) {
+                    window.touchEvents.scroll = true;
+                    console.log(event, 'move event');
+                }, false)
+
+                document.addEventListener(end, function(event) {
+                    window.touchEvents.end = true;
+                    console.log('user end touch');
+                    // console.log(window.touchEvents.e);
+
+                    if (!window.touchEvents.scroll && window.touchEvents.e.touches.length > 1) {
+                        var evObj = document.createEvent('Events');
+                        evObj.initEvent('click', true, false);
+                        event.target.dispatchEvent(evObj);
+                    }
+                }, false);
+
+                /* -------- END -------- */
+            })
+        </script>
+    </head>
+    <body>
+        Hello World!
+    </body>
+</html>
