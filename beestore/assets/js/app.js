@@ -216,8 +216,8 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
         window.touchEvents = {};
         window.pointerCount = 0;
 
-        document.addEventListener("pointerover", function () {
-            console.log('Pointerover handle run');
+        document.addEventListener("pointerover", function (event) {
+            console.log('Pointerover handle run\n', event.target.parentNode);
         }, false)
 
         document.addEventListener(start, function(event) {
