@@ -230,6 +230,10 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
 
         document.addEventListener(move, function (event) {
             window.touchEvents.scroll = true;
+            if (window.pointerCount > 1) {
+                event.target.className += ' touchIE';
+            }
+
             console.info('move event');
         }, false)
 
@@ -240,7 +244,6 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
             window.pointerCount = 0;
 
             if (!window.touchEvents.scroll && window.pointerCount > 1) {
-                event.target.className += ' touchIE';
                 var evObj = document.createEvent('Events');
                 evObj.initEvent('click', true, false);
                 event.target.dispatchEvent(evObj);
