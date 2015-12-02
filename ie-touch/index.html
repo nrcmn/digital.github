@@ -29,8 +29,12 @@
                 }
 
                 window.touchEvents = {};
+                window.pointerCount = 0;
+
                 document.addEventListener(start, function(event) {
                     console.log('user start touch');
+                    window.pointerCount += 1;
+
                     window.touchEvents = {
                         start: true,
                         scroll: false,
@@ -42,6 +46,7 @@
                 document.addEventListener(move, function (event) {
                     window.touchEvents.scroll = true;
                     console.log(event, 'move event');
+                    console.log(window.pointerCount, 'pointer count');
                 }, false)
 
                 document.addEventListener(end, function(event) {
