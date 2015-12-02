@@ -51,8 +51,8 @@
                 document.addEventListener(end, function(event) {
                     window.touchEvents.end = true;
                     console.info('pointer count:', window.pointerCount, '\nUser end touch');
-                    // console.log();
-                    // console.log(window.touchEvents.e);
+
+                    window.pointerCount = 0;
 
                     // if (!window.touchEvents.scroll && window.touchEvents.e.touches.length > 1) {
                     //     var evObj = document.createEvent('Events');
