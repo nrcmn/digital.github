@@ -14,7 +14,7 @@
         <script type="text/javascript">
             angular.module('ie', [])
 
-            .run(function () {
+            .run(function ($rootScope) {
                 /* --------- Multi-touch event handlers --------- */
 
                 if (window.navigator.msPointerEnabled) {
@@ -54,18 +54,26 @@
 
                     window.pointerCount = 0;
 
-                    // if (!window.touchEvents.scroll && window.touchEvents.e.touches.length > 1) {
-                    //     var evObj = document.createEvent('Events');
-                    //     evObj.initEvent('click', true, false);
-                    //     event.target.dispatchEvent(evObj);
-                    // }
+                    if (!window.touchEvents.scroll && window.pointerCount > 1) {
+                        var evObj = document.createEvent('Events');
+                        evObj.initEvent('click', true, false);
+                        event.target.dispatchEvent(evObj);
+                    }
                 }, false);
 
                 /* -------- END -------- */
+
+                $rootScope.touch = function () {
+                    alert('Working!')
+                }
             })
         </script>
     </head>
     <body>
-        Hello World!
+        Hello World!<br/>
+        <div style="width: 300px; height: 80px; border: 1px dashed #999; border-radius: 10px; text-align: center;" ng-click="touch()">
+            <h1>Touch me</h1>
+        </div>
+
     </body>
 </html>
