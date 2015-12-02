@@ -32,7 +32,7 @@
                 window.pointerCount = 0;
 
                 document.addEventListener(start, function(event) {
-                    console.log('user start touch');
+                    console.info('User start touch');
                     window.pointerCount += 1;
 
                     window.touchEvents = {
@@ -45,20 +45,20 @@
 
                 document.addEventListener(move, function (event) {
                     window.touchEvents.scroll = true;
-                    console.log(event, 'move event');
-                    console.log(window.pointerCount, 'pointer count');
+                    console.info('move event');
                 }, false)
 
                 document.addEventListener(end, function(event) {
                     window.touchEvents.end = true;
-                    console.log('user end touch');
+                    console.info('pointer count:', window.pointerCount, '\nUser end touch');
+                    // console.log();
                     // console.log(window.touchEvents.e);
 
-                    if (!window.touchEvents.scroll && window.touchEvents.e.touches.length > 1) {
-                        var evObj = document.createEvent('Events');
-                        evObj.initEvent('click', true, false);
-                        event.target.dispatchEvent(evObj);
-                    }
+                    // if (!window.touchEvents.scroll && window.touchEvents.e.touches.length > 1) {
+                    //     var evObj = document.createEvent('Events');
+                    //     evObj.initEvent('click', true, false);
+                    //     event.target.dispatchEvent(evObj);
+                    // }
                 }, false);
 
                 /* -------- END -------- */
