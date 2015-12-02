@@ -218,7 +218,6 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
 
         document.addEventListener("pointerover", function (event) {
             console.log('Pointerover handle run');
-            event.target.parentNode.style['touch-action'] = 'none';
         }, false)
 
         document.addEventListener(start, function(event) {
@@ -238,6 +237,13 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
             window.touchEvents.scroll = true;
             window.touchEvents.scrollCount += 1;
 
+            if (window.touchEvents.scrollCount == 1) {
+                applyClass('none');
+            }
+            else if (window.touchEvents.scrollCount > 1) {
+                applyClass('auto');
+            }
+
             console.info('Move event', '\nScroll to: ' + event.clientX + '-' + event.clientY);
         }, false)
 
@@ -253,8 +259,24 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
                 event.target.dispatchEvent(evObj);
             }
 
-            event.target.parentNode.style['touch-action'] = 'auto';
+            applyClass('none');
         }, false);
+
+
+        // F*&!@K you IE
+        function applyClass (property) {
+            document.querySelectorAll('html')[0].style['touch-action'] = property;
+            document.querySelectorAll('body')[0].style['touch-action'] = property;
+            var block = document.querySelectorAll('.grid-block');
+            for (var i = 0; i < block.length; i++) {
+                block[i].style['touch-action'] = property;
+            }
+
+            var content = document.querySelectorAll('.grid-content');
+            for (var i = 0; i < content.length; i++) {
+                content[i].style['touch-action'] = property;
+            }
+        }
 
         /* -------- END -------- */
 
