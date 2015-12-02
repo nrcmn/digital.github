@@ -149,7 +149,7 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
             })
     })
 
-    .run(function ($rootScope, FoundationApi, $state) {
+    .run(function ($rootScope, FoundationApi, $state, $document) {
         FastClick.attach(document.body);
 
         window.api_key = '852bff3ff459f9886729b9de223e8a0340ce008b',
@@ -223,6 +223,7 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
             window.touchEvents = {
                 start: true,
                 scroll: false,
+                scrollCount: 0,
                 end: false,
                 e: event
             }
@@ -230,7 +231,9 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
 
         document.addEventListener(move, function (event) {
             window.touchEvents.scroll = true;
-            window.scroll(event.clientX, event.clientY);
+            window.touchEvents.scrollCount += 1;
+            $document.scrollTo(0 , event.clientY)
+
             console.info('Move event', '\nScroll to: ' + event.clientX + '-' + event.clientY);
         }, false)
 
@@ -240,7 +243,7 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
 
             window.pointerCount = 0;
 
-            if (!window.touchEvents.scroll && window.pointerCount > 1) {
+            if (window.touchEvents.scrollCount > 1 && window.pointerCount > 1) {
                 var evObj = document.createEvent('Events');
                 evObj.initEvent('click', true, false);
                 event.target.dispatchEvent(evObj);
