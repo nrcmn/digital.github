@@ -252,6 +252,8 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
                 evObj.initEvent('click', true, false);
                 event.target.dispatchEvent(evObj);
             }
+
+            event.target.parentNode.style['touch-action'] = 'auto';
         }, false);
 
         /* -------- END -------- */
