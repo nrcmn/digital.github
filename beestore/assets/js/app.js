@@ -216,6 +216,10 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
         window.touchEvents = {};
         window.pointerCount = 0;
 
+        document.addEventListener("pointerover", function () {
+            console.log('Pointerover handle run');
+        }, false)
+
         document.addEventListener(start, function(event) {
             console.info('User start touch');
             window.pointerCount += 1;
@@ -232,7 +236,6 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
         document.addEventListener(move, function (event) {
             window.touchEvents.scroll = true;
             window.touchEvents.scrollCount += 1;
-            $document.scrollTo(0 , event.clientY)
 
             console.info('Move event', '\nScroll to: ' + event.clientX + '-' + event.clientY);
         }, false)
