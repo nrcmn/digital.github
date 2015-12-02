@@ -237,12 +237,12 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
             window.touchEvents.scroll = true;
             window.touchEvents.scrollCount += 1;
 
-            if (window.touchEvents.scrollCount == 1) {
-                applyClass('none');
-            }
-            else if (window.touchEvents.scrollCount > 1) {
-                applyClass('auto');
-            }
+            // if (window.touchEvents.scrollCount == 1) {
+            //     applyClass('none');
+            // }
+            // else if (window.touchEvents.scrollCount > 1) {
+            //     applyClass('auto');
+            // }
 
             console.info('Move event', '\nScroll to: ' + event.clientX + '-' + event.clientY);
         }, false)
@@ -259,7 +259,7 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
                 event.target.dispatchEvent(evObj);
             }
 
-            applyClass('none');
+            // applyClass('none');
         }, false);
 
 
