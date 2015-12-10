@@ -1078,9 +1078,9 @@ a, [ui-sref], [zf-open], [zf-close], [zf-toggle] {
       background: transparent;
       color: #f1f1f1; }
       .button.hollow.secondary:hover, .button.hollow.secondary:focus {
-        border-color: #f4f4f4;
+        border-color: whitesmoke;
         background: transparent;
-        color: #f4f4f4; }
+        color: whitesmoke; }
       .button.hollow.secondary .iconic * {
         fill: #f1f1f1;
         stroke: #f1f1f1; }
@@ -1088,11 +1088,11 @@ a, [ui-sref], [zf-open], [zf-close], [zf-toggle] {
           fill: #f1f1f1;
           stroke: #f1f1f1; }
       .button.hollow.secondary:hover .iconic * {
-        fill: #f4f4f4;
-        stroke: #f4f4f4; }
+        fill: whitesmoke;
+        stroke: whitesmoke; }
         .button.hollow.secondary:hover .iconic *.iconic-property-accent {
-          fill: #f4f4f4;
-          stroke: #f4f4f4; }
+          fill: whitesmoke;
+          stroke: whitesmoke; }
     .button.hollow.success {
       border: 1px solid #43AC6A;
       background: transparent;
@@ -1345,7 +1345,7 @@ a, [ui-sref], [zf-open], [zf-close], [zf-toggle] {
       background: #39925a;
       color: #fff; }
     .button-group > li.success > a:hover, .button-group > li.success > a:focus, .button-group > li.success > label:hover, .button-group > li.success > label:focus, .button-group > li.success > button:hover, .button-group > li.success > button:focus {
-      border-color: #32814f; }
+      border-color: #328150; }
     .button-group > li.success > a .iconic *, .button-group > li.success > label .iconic *, .button-group > li.success > button .iconic * {
       fill: #fff;
       stroke: #fff; }

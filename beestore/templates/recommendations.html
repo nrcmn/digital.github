@@ -1,6 +1,20 @@
 <div class="grid-block">
     <h2>Рекомендуем преобрести</h2>
-    <div style="position:relative;padding:0 40px;">
+    <div class="grid-block small-up-4 align-center">
+        <div class="grid-block" ng-repeat="recommendation in recommendations" ng-click="openRecomendation(recommendation)">
+            <div class="grid-content">
+                <div class="card-section" style="height:160px;text-align:center;">
+                    <img ng-src="{{recommendation.images[0]}}" style="height:100%; width:initial;">
+                </div>
+                <div class="card-section">
+                    <h3 style="display:inline;">{{recommendation.price | price}}</h3><span> руб.</span>
+                    <h6>{{recommendation.name}}</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div style="position:relative;padding:0 40px;">
         <div class="recomendation-swiper" style="height:360px;">
             <div class="swiper-wrapper">
                 <div class="swiper-slide" ng-repeat="slide in recommendations" ng-click="openRecomendation(slide)">
@@ -18,14 +32,9 @@
 
                 </div>
             </div>
-
-            <!-- Add Pagination -->
-            <!-- <div class="swiper-pagination"></div> -->
-
         </div>
 
-        <!-- Add Arrows -->
         <div class="swiper-button-next swiper-button-black swiper-button-next-recomend"></div>
         <div class="swiper-button-prev swiper-button-black swiper-button-prev-recomend"></div>
-    </div>
+    </div> -->
 </div>

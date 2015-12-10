@@ -152,6 +152,8 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
     .run(function ($rootScope, FoundationApi, $state) {
         FastClick.attach(document.body);
 
+        unacceptableCategories = [6, 5, 4, 101, 15, 202, 23, 24, 164, 78, 80, 79, 166, 162, 165, 71, 70, 77, 122, 121, 182, 93, 86, 85, 90, 87, 163, 10]; // unacceptable categories ids
+        
         window.api_key = '852bff3ff459f9886729b9de223e8a0340ce008b',
             market_region = 98082,
             filter = {},
@@ -270,8 +272,6 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
 
 angular.module('controllers', [])
     .controller('MainCategoryCtrl', function ($scope, $state, __LoadCategories, mainCategories) {
-        var unacceptableCategories = [6, 5, 4, 101, 15, 202, 23, 24, 164, 78, 80, 79, 166, 162, 165, 71, 70, 77, 122, 121, 182, 93, 86, 85, 90, 87, 163]; // unacceptable categories ids
-
         // if haven't categories data, load them
         if(!window.categories){
             __LoadCategories(unacceptableCategories).then(function (data) {
@@ -436,7 +436,7 @@ angular.module('controllers', [])
 
     .controller('ProductDetailCtrl', function ($scope, $rootScope, $stateParams, $document, $state, FoundationApi, __LoadOneProduct) {
         window.scroll(0,0); // scroll to top
-        $scope.product = window.product;
+        (window.product && window.product.id == $stateParams.id) ? $scope.product = window.product : window.product = undefined; // back from multicard bug fix
 
         __LoadOneProduct($stateParams.id).then(function (data) {
             data.intags_categories.forEach(function (item, i, arr) { // general intags for detail page
@@ -444,6 +444,18 @@ angular.module('controllers', [])
                     data.general_intags = item;
                 }
             })
+
+            // custom sorter for multicards
+            for (var i in data.multicard_products) {
+                data.multicard_products[i].sort(function (a,b) {
+                    if (a.intag_slug == 'obem-vstroennoi-pamiati') {
+                        return -1;
+                    }
+                    else {
+                        return 1;
+                    }
+                });
+            }
 
             try {
                 window.product.__proto__ = data; // load detail after product list page
@@ -647,8 +659,7 @@ angular.module('services', [])
         return function (subCategory, amount, page, sort, intags) {
             $http({
                 method: 'GET',
-                // url: 'http://beeline-ecommerce.herokuapp.com/api/public/v1/products/',
-                url: 'https://public.backend-test.vimpelcom.ru/api/public/v1/products/',
+                url: 'https://public.backend.vimpelcom.ru/api/public/v1/products/',
                 params: {
                     "api_key": window.api_key,
                     "market_region": window.market_region,
@@ -718,7 +729,7 @@ angular.module('services', [])
 
             $http({
                 method: 'GET',
-                url: 'https://public.backend-test.vimpelcom.ru/api/public/v1/products/' + id + '/',
+                url: 'https://public.backend.vimpelcom.ru/api/public/v1/products/' + id + '/',
                 params: {
                     "api_key": window.api_key,
                     "market_region": window.market_region,
@@ -731,7 +742,7 @@ angular.module('services', [])
             .error(function () {
                 deferred.reject('ERROR! "__LoadOneProduct"');
             })
-            
+
             return deferred.promise;
         }
     })
@@ -745,7 +756,6 @@ angular.module('directives', [])
             controller: function ($scope, $http, $q, $state) {
                 $scope.leaders = undefined;
                 $scope.openLeader = function (data) {
-                    console.log(data);
                     window.product = data;
                     $state.go('leaders', {id: data.id});
                 }
@@ -757,15 +767,26 @@ angular.module('directives', [])
 
                     $http({
                         method: 'GET',
-                        url: 'https://public.backend-test.vimpelcom.ru/api/public/v1/recommendation/popular/',
+                        url: 'https://public.backend.vimpelcom.ru/api/public/v1/recommendation/popular/',
                         params: {
                             api_key: window.api_key,
                             market_region: window.market_region,
-                            collection: window.category.id || categories[Math.floor(Math.random() * categories.length)]
+                            collection: window.category.id || categories[Math.floor(Math.random() * categories.length)],
+                            params: 'article,id,images,name,price,remain,main_collection'
                         }
                     })
                     .success(function (data) {
-                        deferred.resolve(data);
+                        var formatedData = [];
+                        data.forEach(function (item, i, arr) {
+                            if (unacceptableCategories.indexOf(item.main_collection.id) > -1 || item.main_collection.id == 30 || item.remain == 'временно нет' || item.remain == 'нет') {
+                                return false
+                            }
+                            else {
+                                formatedData.push(item)
+                            }
+                        })
+
+                        deferred.resolve(formatedData);
                     })
                     .error(function () {
                         console.error('load leaders error');
@@ -812,24 +833,26 @@ angular.module('directives', [])
                         }
 
                         var index = Math.random() * ((arr.length - 1) - 0) + 0;
-
                         $http({
                             method: 'GET',
-                            url: 'https://public.backend-test.vimpelcom.ru/api/public/v1/products/' + arr[index.toFixed()] + '/',
+                            url: 'https://public.backend.vimpelcom.ru/api/public/v1/products/' + arr[index.toFixed()] + '/',
                             params: {
                                 api_key: window.api_key,
                                 market_region: window.market_region,
-                                params: 'article,id,images,name,price,remain,kind'
+                                params: 'article,id,images,name,price,remain,main_collection'
                             }
                         })
                         .success(function (data) {
-                            arr.splice(index, 1);
-                            if (data.kind.id != 30) {
+                            arr.splice(index.toFixed(), 1);
+                            if (unacceptableCategories.indexOf(data.main_collection.id) > -1 || data.main_collection.id == 30 || data.remain == 'временно нет' || data.remain == 'нет') {
+                                return load();
+                            }
+                            else {
                                 window.recommendations.push(data);
                                 i++;
                             }
 
-                            if (i == 4) {
+                            if (i == 4 || arr.length == 0) {
                                 deferred.resolve();
                                 return false
                             }
@@ -851,14 +874,15 @@ angular.module('directives', [])
                     return deferred.promise;
                 })().then(function () {
                     scope.recommendations = window.recommendations;
-                    $timeout(function () {
-                        var swiper = new Swiper('.recomendation-swiper', {
-                            nextButton: '.swiper-button-next-recomend',
-                            prevButton: '.swiper-button-prev-recomend',
-                            freeMode: true,
-                            slidesPerView: 4,
-                        });
-                    }, 0.000001);
+
+                    // $timeout(function () {
+                    //     var swiper = new Swiper('.recomendation-swiper', {
+                    //         nextButton: '.swiper-button-next-recomend',
+                    //         prevButton: '.swiper-button-prev-recomend',
+                    //         freeMode: true,
+                    //         slidesPerView: 4,
+                    //     });
+                    // }, 0.000001);
                 })
             }
         }
