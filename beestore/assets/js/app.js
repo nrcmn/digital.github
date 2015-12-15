@@ -154,10 +154,10 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
 
         window.api_key = '852bff3ff459f9886729b9de223e8a0340ce008b',
             // url = 'https://public.backend.vimpelcom.ru', // public
-            // url = 'https://public.backend-test.vimpelcom.ru', // public test
-
+            url = 'https://public.backend-test.vimpelcom.ru', // public test
             // url = 'http://backend.vimpelcom.ru:8080', // internal
-            url = 'http://backend-test.vimpelcom.ru:8080', // internal test
+            // url = 'http://backend-test.vimpelcom.ru:8080', // internal test
+
             market_region = 98082,
             filter = {},
             page = 2;
@@ -770,7 +770,7 @@ angular.module('services', [])
         return function (id) {
             var deferred = $q.defer();
 
-            var params = (!window.product) ? 'id,name,remain,price,images,article,description,old_price,intags_categories,badges,accessories,rr_recommendations,multicard_products' : 'description,old_price,intags_categories,badges,accessories,rr_recommendations,multicard_products,id';
+            var params = (!window.product) ? 'id,name,remain,price,images,article,description,old_price,intags_categories,badges,accessories,rr_recommendations,multicard_products,description_small' : 'description,old_price,intags_categories,badges,accessories,rr_recommendations,multicard_products,id,description_small';
 
             $http({
                 method: 'GET',
