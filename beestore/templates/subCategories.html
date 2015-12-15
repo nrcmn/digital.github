@@ -14,7 +14,7 @@
         <div class="text-center padding" style="margin-bottom:20px;" ng-repeat="subCategory in subCategories | orderBy:'order':true" ng-click="openSubCategory(subCategory)" ng-if="$index <= 2" >
 
             
-                <img src="assets/img/ring.svg" ng-src="{{subCategory.image}}">
+                <img src="assets/img/ring.gif" ng-src="{{subCategory.image}}">
                 <div class="padding">
                     <h3>{{subCategory.name}}</h3>
                 </div>
@@ -28,7 +28,7 @@
     <div class="grid-block small-up-4 align-center">
         <div class="text-center padding" style="margin-bottom:32px;" ng-repeat="subCategory in subCategories | orderBy:'order':true" ng-click="openSubCategory(subCategory)" ng-if="$index > 2">
             
-            <img style="padding:0 24px;" src="assets/img/ring.svg" class="swiper-img" ng-src="{{subCategory.image}}">
+            <img style="padding:0 24px;" src="assets/img/ring.gif" class="swiper-img" ng-src="{{subCategory.image}}">
             
             <div class="padding">    
                 <h4>{{subCategory.name}}</h4>

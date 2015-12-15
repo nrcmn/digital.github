@@ -6411,6 +6411,10 @@ blockquote p {
   border-color: #e5e5e5;
   cursor: pointer; }
 
+.keypad div {
+  height: 80px;
+  font-size: 36px; }
+
 * {
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -6457,6 +6461,8 @@ h1, h2, h3, h4 {
   margin-right: auto; }
 
 .swiper-slide {
+  padding: 16px;
+  box-sizing: border-box;
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat; }
@@ -6464,6 +6470,10 @@ h1, h2, h3, h4 {
 .gallery-top {
   height: 80%;
   width: 100%; }
+
+.gallery-top .swiper-slide {
+  padding: 16px 48px;
+  box-sizing: border-box; }
 
 .gallery-thumbs {
   height: 100px;
@@ -6484,7 +6494,7 @@ h1, h2, h3, h4 {
 .beeline-button {
   color: #000;
   font-family: 'officinaserifcbold';
-  font-size: 18px;
+  font-size: 21px;
   background: linear-gradient(180deg, #ffe100 0%, #f7a700 100%);
   border: 2px solid #f1a011;
   border-radius: 25px;
@@ -6524,17 +6534,28 @@ a:hover, a:focus {
 
 .filters-block {
   position: fixed;
-  top: 38%;
+  top: 34%;
   left: 0;
   z-index: 150;
   width: 100%;
   background: #fff;
-  padding: 1rem 3rem;
+  padding: 2rem 3rem 1rem;
   box-shadow: 0 20px 44px 1px rgba(255, 255, 255, 0.9); }
 
 .filters-button.ng-hide {
   left: -500px;
   transition: 1s ease-out left; }
+
+.dead-center {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center; }
 
 .inline {
   display: inline; }

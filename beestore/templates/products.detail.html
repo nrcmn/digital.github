@@ -3,19 +3,17 @@
 
     <div class="grid-block">
         <div class="grid-content medium-12">
-            <h2 style="position:relative;">{{product.name}}
-                <a style="position:absolute;left:-44px;" onclick="history.back();"><img style="transform:rotate(180deg);height:30px;" zf-iconic="" icon="chevron" class="iconic-color-dark" size="medium"></a>
-            </h2>
+            <h2>{{product.name}}</h2>
             <br>
         </div>
 
-        <div class="grid-content  medium-8">
+        <div class="grid-content medium-8">
             <images></images>
         </div>
 
         <div class="grid-content medium-4">
 
-            <span style="text-decoration: line-through;">{{product.old_price}}<br/></span>
+            <span style="text-decoration: line-through;" ng-if="product.old_price > product.price">{{product.old_price}}<br/></span>
             <!-- <span ng-if="product.oplPrice" style="text-decoration: overline;">{{product.oplPrice}}</span> -->
             <h3 ng-if="product.price" class="inline old-price">{{product.price * 2 | price}}</h3> руб.
             <div ng-if="product.price">
@@ -28,20 +26,23 @@
 
             <!-- <a title="Есть в наличии!" content="Для оформления заказа обратитесь к консультанту" color="success" autoclose="5000" zf-notify="orderNotify" class="beeline-button">Позвать консультанта</a> -->
 
-            <div class="grid-block small-up-2">
-                <div class="grid-content text-center" ng-click="openCard(key)" ng-repeat="(key, value) in product.multicard_products">
-                    <div ng-repeat="value in value.sort()">
-                        <span class="text-center" ng-style="key == product.id && {'opacity':'0.3'}" style="display: block; padding-bottom: 10px;" ng-show="value.intag_slug == 'obem-vstroennoi-pamiati'">
-                            {{value.intag_choice}}
-                        </span>
+            <div class="grid-block">
+                <div class="grid-content" ng-repeat="(key, value) in product.memories" style="width: 100%;" ng-click="checkMemory(product.memories[key])">
+                    <span ng-style="value.current && {'font-weight':'bold'}">{{key}}</span>
+                </div>
 
-                        <span ng-show="value.intag_slug == 'tsvet'" ng-style="key == product.id && {'opacity':'0.3'}" style="display:block; margin: auto; width: 30px; height: 30px; border-radius: 20px; background: {{value.intag_choice | multiCardColor}};"></span>
+                <div class="grid-block small-up-3" ng-repeat="color in product.colors" ng-if="product.approvedIdsList.indexOf(color.id) != -1" ng-click="checkColor(color.id)">
+                    <div class="grid-content">
+                        <span ng-style="color.id == product.id && {'border': '3px dashed #777'}" style="display:block; margin: auto; width: 30px; height: 30px; border-radius: 20px; background: {{color.intag_choice | multiCardColor}};"></span>
+
+                        <span ng-if="color.intag_slug != 'tsvet'">{{color.intag_choice}}</span>
                     </div>
-                    <hr/>
+
+
                 </div>
             </div>
 
-            <a class="beeline-button" ng-click="addToBasket()" ng-show="toCartShow">В корзину</a>
+            <a class="beeline-button" ng-click="addToBasket()">В корзину</a>
         </div>
     </div>
 
@@ -77,7 +78,7 @@
                         <section class="block-list">
                             <ul>
                                 <li ng-repeat="field in product.intags_categories" ng-if="field.intags[0].value[0] != null">
-                                    <a ng-style="setActiveStyle(field.id == modalIntags.id)" ng-click="openField(field)">{{field.name}}</a>
+                                    <a ng-class="setActiveClass(field.id == modalIntags.id)" ng-click="openField(field)">{{field.name}}</a>
                                 </li>
                             </ul>
                         </section>
@@ -111,5 +112,5 @@
         </div>
     </div>
 
-    <recommendations ng-if="product.rr_recommendations.length > 0" list="{{product.rr_recommendations}}"></recommendations>
+    <recommendations list="{{product.rr_recommendations}}"></recommendations>
 </div>

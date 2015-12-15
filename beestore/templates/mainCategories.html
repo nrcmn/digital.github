@@ -2,7 +2,7 @@
 
     <div class="grid-block small-up-2 align-center">
         <div class="align-center padding" ng-repeat="category in categories track by category.order" ng-click="openCategory(category)" ng-if="$index <= 1" >
-            <div class="card padding">
+            <div class="padding">
                 <div class="card-section text-center" style="height:200px;display:flex;align-items:center;justify-content:center;">
                     <img ng-src="{{category.img}}" style="max-height:100%; width:initial; margin:auto;">
                 </div>
@@ -15,7 +15,7 @@
 
     <div class="grid-block small-up-3 align-center">
         <div class="align-center padding" ng-repeat="category in categories track by category.order" ng-click="openCategory(category)" ng-if="$index > 1">
-            <div class="card padding" style="height:320px; text-align: center;">
+            <div class="padding" style="height:320px; text-align: center;">
                 <div class="card-section text-center" style="height:180px;display:flex;align-items:center;justify-content:center;">
                     <img ng-src="{{category.img}}" style="max-height:100%; width:initial; margin:auto;">
                 </div>
