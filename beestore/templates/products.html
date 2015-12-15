@@ -5,7 +5,7 @@
         <div class="grid-content medium-4">
             <section class="block-list">
                 <ul>
-                    <li ng-if="$index != 0" ng-class="setActiveClass($index == filterInd)" ng-repeat="filter in productsListFilter" ng-click="checkFilter($index)">
+                    <li ng-if="filter.id != 659" ng-class="setActiveClass($index == filterInd)" ng-repeat="filter in productsListFilter" ng-click="checkFilter($index)">
                         <a>{{filter.name}}</a>
                     </li>
                 </ul>
@@ -14,7 +14,7 @@
         <div class="grid-content medium-8">
             <div class="grid-frame vertical">
             <label>Выберите значение:</label>
-            <div ng-repeat="val in productsListFilter[filterInd].choices"  ng-if="$index <= 4" style="padding: 10px; border-bottom: 2px dashed #999;">
+            <div ng-repeat="val in productsListFilter[filterInd].choices"  style="padding: 10px; border-bottom: 2px dashed #999;">
                 <input type="checkbox" ng-value="{{val.id}}" id="{{val.id}}" ng-checked="val.check" ng-click="check($event, val)">
                 <label ng-if="productsListFilter[filterInd].id != 21" for="{{val.id}}">{{val.value}}</label>
                 <label ng-if="productsListFilter[filterInd].id == 21" for="{{val.id}}">

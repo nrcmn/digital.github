@@ -153,8 +153,11 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
         unacceptableCategories = [6, 5, 4, 101, 15, 202, 23, 24, 164, 78, 80, 79, 166, 162, 165, 71, 70, 77, 122, 121, 182, 93, 86, 85, 90, 87, 163]; // unacceptable categories ids
 
         window.api_key = '852bff3ff459f9886729b9de223e8a0340ce008b',
-            url = 'https://public.backend.vimpelcom.ru', // public
-            // url = 'http://backend.vimpelcom.ru:8080' // internal
+            // url = 'https://public.backend.vimpelcom.ru', // public
+            // url = 'https://public.backend-test.vimpelcom.ru', // public test
+
+            // url = 'http://backend.vimpelcom.ru:8080', // internal
+            url = 'http://backend-test.vimpelcom.ru:8080', // internal test
             market_region = 98082,
             filter = {},
             page = 2;
@@ -579,6 +582,7 @@ angular.module('controllers', [])
         $rootScope.setFilter = function () {
             __LoadProducts(window.subCategory, 15, 1, window.sortItem.value, $rootScope.intagChoicesList);
             $rootScope.productsList = undefined;
+            window.page = 1;
         }
 
         $rootScope.clearFilter = function () {
@@ -594,6 +598,7 @@ angular.module('controllers', [])
             $rootScope.productsList = undefined;
             $rootScope.progress = true; // show progress bar
             __LoadProducts(window.subCategory, 15, 1, window.sortItem.value, $rootScope.intagChoicesList);
+            window.page = 1;
         }
 
         $rootScope.setActiveClass = function (condition) {
@@ -711,6 +716,9 @@ angular.module('services', [])
                 if (data.length < amount) {
                     window.scrollLoad = false;
                     $rootScope.progress = false;
+                }
+                else if (data.length >= amount) {
+                    window.scrollLoad = true;
                 }
 
                 if (intags && page == 1) {
