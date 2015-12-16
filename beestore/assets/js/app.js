@@ -711,7 +711,7 @@ angular.module('services', [])
                     page: page,
                     sort_by: sort,
                     intag_choices: intags,
-                    point_codes: 0952
+                    point_codes: "0952"
                 }
             })
             .success(function (data) {
@@ -782,7 +782,7 @@ angular.module('services', [])
                     "api_key": window.api_key,
                     "market_region": window.market_region,
                     params: params,
-                    point_codes: 0952
+                    point_codes: "0952"
                 }
             })
             .success(function (data) {
