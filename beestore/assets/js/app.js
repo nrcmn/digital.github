@@ -772,7 +772,7 @@ angular.module('services', [])
         return function (id) {
             var deferred = $q.defer();
 
-            var params = (!window.product) ? 'id,name,remain,price,images,article,description,old_price,intags_categories,badges,accessories,rr_recommendations,multicard_products,extended_remains' : 'description,old_price,intags_categories,badges,accessories,rr_recommendations,multicard_products,id,extended_remains';
+            var params = (!window.product) ? 'id,name,remain,price,images,article,description_yandex,old_price,intags_categories,badges,accessories,rr_recommendations,multicard_products,extended_remains' : 'description_yandex,old_price,intags_categories,badges,accessories,rr_recommendations,multicard_products,id,extended_remains';
             // TODO: add "description_small" parameter
 
             $http({
