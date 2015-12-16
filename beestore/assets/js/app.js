@@ -158,7 +158,8 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
             // url = 'http://backend.vimpelcom.ru:8080', // internal
             url = 'http://backend-test.vimpelcom.ru:8080', // internal test
 
-            market_region = 98082,
+            // market_region = 98082, // Moscow
+            market_region = 98220, // Ekaterinburg
             filter = {},
             page = 2;
 
@@ -709,7 +710,8 @@ angular.module('services', [])
                     amount: amount,
                     page: page,
                     sort_by: sort,
-                    intag_choices: intags
+                    intag_choices: intags,
+                    point_codes: 0952
                 }
             })
             .success(function (data) {
@@ -770,7 +772,8 @@ angular.module('services', [])
         return function (id) {
             var deferred = $q.defer();
 
-            var params = (!window.product) ? 'id,name,remain,price,images,article,description,old_price,intags_categories,badges,accessories,rr_recommendations,multicard_products,description_small' : 'description,old_price,intags_categories,badges,accessories,rr_recommendations,multicard_products,id,description_small';
+            var params = (!window.product) ? 'id,name,remain,price,images,article,description,old_price,intags_categories,badges,accessories,rr_recommendations,multicard_products,extended_remains' : 'description,old_price,intags_categories,badges,accessories,rr_recommendations,multicard_products,id,extended_remains';
+            // TODO: add "description_small" parameter
 
             $http({
                 method: 'GET',
@@ -778,7 +781,8 @@ angular.module('services', [])
                 params: {
                     "api_key": window.api_key,
                     "market_region": window.market_region,
-                    params: params
+                    params: params,
+                    point_codes: 0952
                 }
             })
             .success(function (data) {
