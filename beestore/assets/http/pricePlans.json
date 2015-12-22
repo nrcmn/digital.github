@@ -1,0 +1,823 @@
+[
+  {
+    "id": "plan_section_2299",
+    "order": 1,
+    "title": "Всё, что нужно",
+    "visible": true,
+    "plans": [
+      {
+        "id": "plan_2152647",
+        "code": [
+          {
+            "name": "66VSE3"
+          }
+        ],
+        "region": "EKT",
+        "ussd_on": null,
+        "ussd_off": null,
+        "name": "Всё за 500 архив 10.2015",
+        "tagline": "Безлимит в сети «Билайн», пакеты минут, интернет за комфортную сумму в месяц!",
+        "is_promo": false,
+        "promo_text": "Безлимит в сети «Билайн», пакеты минут, интернет за комфортную сумму в месяц!",
+        "promo_description": "",
+        "is_plan_opt": false,
+        "promo_image": "//static.beeline.ru/upload/dpcupload/contents/342/Icons/MobileTariffs/tarif-vse-vklyucheno-xl-215.jpg",
+        "promo_image2": "//static.beeline.ru/upload/dpcupload/contents/342/MobileTariffs/kartinka pixel1.jpg",
+        "promo_order": 0,
+        "visible": true,
+        "order": 20,
+        "section_id": "plan_section_2299",
+        "short_data": [
+          {
+            "id": "plandata_2152649",
+            "order": 0,
+            "icon": "ch-period.png",
+            "price": "16,67",
+            "units": "руб/сут"
+          },
+          {
+            "id": "plandata_2446106",
+            "order": 1,
+            "icon": "ch-phone.png",
+            "price": "700",
+            "units": "мин/мес"
+          },
+          {
+            "id": "plandata_2446108",
+            "order": 2,
+            "icon": "ch-sms.png",
+            "price": "1000",
+            "units": "сообщ/мес"
+          },
+          {
+            "id": "plandata_2446105",
+            "order": 3,
+            "icon": "ch-internet.png",
+            "price": "6",
+            "units": "ГБ/мес"
+          }
+        ],
+        "description": [
+          {
+            "id": "plandesc_2152647",
+            "order": 1,
+            "type": "large",
+            "show_separator": false,
+            "strings": [
+              "Безлимит в сети «Билайн», пакеты минут, интернет за комфортную сумму в месяц!",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_button",
+            "order": 2,
+            "type": "button",
+            "show_separator": false,
+            "strings": [
+              "Перейти на этот тариф",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_1776695_separator",
+            "order": 3,
+            "type": "separator",
+            "show_separator": true,
+            "strings": [
+              "",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_1776695",
+            "order": 4,
+            "type": "normal",
+            "show_separator": false,
+            "strings": [
+              "Каждый месяц вы получаете:",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_2152665",
+            "order": 5,
+            "type": "terms",
+            "show_separator": false,
+            "strings": [
+              "Безлимитные звонки на «Билайн» по России",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_2152666",
+            "order": 6,
+            "type": "terms",
+            "show_separator": false,
+            "strings": [
+              "700 минут для звонков на номера других операторов области подключения и на все исходящие вызовы (включая «Билайн») во внутрисетевом роуминге",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_2152683",
+            "order": 7,
+            "type": "terms",
+            "show_separator": false,
+            "strings": [
+              "1000 SMS на номера «Билайн» и других операторов зоны «Билайн –Урал",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_2152677",
+            "order": 8,
+            "type": "terms",
+            "show_separator": false,
+            "strings": [
+              "6  ГБ мобильного интернета",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_2296612",
+            "order": 9,
+            "type": "terms",
+            "show_separator": false,
+            "strings": [
+              "Чтобы узнать остаток минут, интернета и SMS, пожалуйста, авторизуйтесь или установите мобильное приложение.",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_1886890_separator",
+            "order": 10,
+            "type": "separator",
+            "show_separator": true,
+            "strings": [
+              "",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_1886890",
+            "order": 11,
+            "type": "normal",
+            "show_separator": false,
+            "strings": [
+              "Сколько это стоит?",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_2152649",
+            "order": 12,
+            "type": "price",
+            "show_separator": false,
+            "strings": [
+              "Абонентская плата",
+              "16,67 руб/сут"
+            ]
+          },
+          {
+            "id": "plandesc_2152647_2152661",
+            "order": 13,
+            "type": "price",
+            "show_separator": false,
+            "strings": [
+              "Перейти на тариф",
+              "0 руб."
+            ]
+          },
+          {
+            "id": "plandesc_2152647_1776943_separator",
+            "order": 14,
+            "type": "separator",
+            "show_separator": true,
+            "strings": [
+              "",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_1776943",
+            "order": 15,
+            "type": "normal",
+            "show_separator": false,
+            "strings": [
+              "Если закончился интернет, минуты или SMS",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_2152671",
+            "order": 16,
+            "type": "terms",
+            "show_separator": false,
+            "strings": [
+              "Звонки и SMS будут стоить:",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_2152672",
+            "order": 17,
+            "type": "price",
+            "show_separator": false,
+            "strings": [
+              "Звонки на номера других операторов по области подключения",
+              "1 руб/мин"
+            ]
+          },
+          {
+            "id": "plandesc_2152647_2152678",
+            "order": 18,
+            "type": "price",
+            "show_separator": false,
+            "strings": [
+              "SMS на «Билайн» и номера других операторов области подключения",
+              "1 руб."
+            ]
+          },
+          {
+            "id": "plandesc_2152647_2152679",
+            "order": 19,
+            "type": "terms",
+            "show_separator": false,
+            "strings": [
+              "Нужно больше интернета?",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_2152680",
+            "order": 20,
+            "type": "terms",
+            "show_separator": false,
+            "strings": [
+              "Когда 6 ГБ закончатся, для вас автоматически подключается услуга «Автопродление скорости» - каждые 150 МБ дополнительного интернета будут стоить 20 рублей.\r\nЕсли вы хотите отключить дополнительный интернет, наберите на телефоне 067 471 778 0.",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_2152681",
+            "order": 21,
+            "type": "terms",
+            "show_separator": false,
+            "strings": [
+              "6 ГБ на тарифе обновляется первого числа каждого месяца. Если вам требуется больше интернета, вы можете использовать услугу «Продли скорость», подключить опцию «Хайвей» или сменить тариф.",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_1776927_separator",
+            "order": 22,
+            "type": "separator",
+            "show_separator": true,
+            "strings": [
+              "",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_1776927",
+            "order": 23,
+            "type": "normal",
+            "show_separator": false,
+            "strings": [
+              "Звонки в другие города и страны",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_2152651",
+            "order": 24,
+            "type": "price",
+            "show_separator": false,
+            "strings": [
+              "Звонки на номера других операторов России",
+              "3 руб/мин"
+            ]
+          },
+          {
+            "id": "plandesc_2152647_2153490",
+            "order": 25,
+            "type": "terms",
+            "show_separator": false,
+            "strings": [
+              "На тарифе предусмотрена льготная стоимость звонков на  городские и мобильные номера на 15-и международных направлений",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_2152675",
+            "order": 26,
+            "type": "terms",
+            "show_separator": false,
+            "strings": [
+              "Подробнее о стоимости звонков в другие города и страны – в прайс-листе",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_2235797_separator",
+            "order": 27,
+            "type": "separator",
+            "show_separator": true,
+            "strings": [
+              "",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_2235797",
+            "order": 28,
+            "type": "normal",
+            "show_separator": false,
+            "strings": [
+              "Нужно больше интернета?",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_2236113",
+            "order": 29,
+            "type": "terms",
+            "show_separator": false,
+            "strings": [
+              "Подключите опцию «Хайвей» и продолжайте пользоваться мобильным интернетом на высокой скорости! Смотрите фильмы и видеоролики, слушайте музыку, общайтесь с друзьями, читайте книги – будьте онлайн в любом месте 24 часа в сутки!",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_1776924_separator",
+            "order": 30,
+            "type": "separator",
+            "show_separator": true,
+            "strings": [
+              "",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_1776924",
+            "order": 31,
+            "type": "normal",
+            "show_separator": false,
+            "strings": [
+              "В поездках по России и за границу",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_2152673",
+            "order": 32,
+            "type": "terms",
+            "show_separator": false,
+            "strings": [
+              "Условия использования тарифа в роуминге по России:",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_2153518",
+            "order": 33,
+            "type": "terms",
+            "show_separator": false,
+            "strings": [
+              "Бесплатные входящие вызовы, интернет и минуты из пакетов расходуются в поездках по России",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_2285772",
+            "order": 34,
+            "type": "terms",
+            "show_separator": false,
+            "strings": [
+              "Стоимость звонков, SMS и интернета в поездке можно посчитать с помощью калькулятора расходов в роуминге: просто выберите город или страну, которые вы собираетесь посетить",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_1776721_separator",
+            "order": 35,
+            "type": "separator",
+            "show_separator": true,
+            "strings": [
+              "",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_1776721",
+            "order": 36,
+            "type": "normal",
+            "show_separator": false,
+            "strings": [
+              "Другие возможности",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_2152660",
+            "order": 37,
+            "type": "price",
+            "show_separator": false,
+            "strings": [
+              "Отправка MMS",
+              "6,6 руб."
+            ]
+          },
+          {
+            "id": "plandesc_2152647_2152674",
+            "order": 38,
+            "type": "terms",
+            "show_separator": false,
+            "strings": [
+              "На тарифе автоматически подключена услуга «Будь в курсе +»",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_2152647_more",
+            "order": 39,
+            "type": "button-more",
+            "show_separator": false,
+            "strings": [
+              "Подробнее на www.beeline.ru",
+              "http://www.beeline.ru/mobileredirect.ashx?type=tariff&marketcode=EKT&soc=66VSE3"
+            ]
+          }
+        ],
+        "is_archive": true,
+        "weight": 0
+      }
+    ]
+  },
+  {
+    "id": "plan_section_2301",
+    "order": 8,
+    "title": "Для мобильного интернета",
+    "visible": true,
+    "plans": [
+      {
+        "id": "plan_1695432",
+        "code": [
+          {
+            "name": "FREEM_URL"
+          }
+        ],
+        "region": "EKT",
+        "ussd_on": null,
+        "ussd_off": null,
+        "name": "Интернет навсегда",
+        "tagline": "Тариф с 200-ми бесплатными мегабайтами каждый месяц.",
+        "is_promo": false,
+        "promo_text": "Тариф с 200-ми бесплатными мегабайтами каждый месяц.",
+        "promo_description": "",
+        "is_plan_opt": false,
+        "promo_image": "//static.beeline.ru/upload/dpcupload/contents/342/inet-forewer-215.jpg",
+        "promo_image2": "//static.beeline.ru/upload/dpcupload/contents/342/inet-forewer-715.jpg",
+        "promo_order": 0,
+        "visible": true,
+        "order": null,
+        "section_id": "plan_section_2301",
+        "short_data": [],
+        "description": [
+          {
+            "id": "plandesc_1695432",
+            "order": 1,
+            "type": "large",
+            "show_separator": false,
+            "strings": [
+              "Тариф с 200-ми бесплатными мегабайтами каждый месяц.",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_1695432_button",
+            "order": 2,
+            "type": "button",
+            "show_separator": false,
+            "strings": [
+              "Перейти на этот тариф",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_1695432_1695434",
+            "order": 3,
+            "type": "subscriber-payment",
+            "show_separator": false,
+            "strings": [
+              "Абонентская плата",
+              "0 руб."
+            ]
+          },
+          {
+            "id": "plandesc_1695432_2198_separator",
+            "order": 4,
+            "type": "separator",
+            "show_separator": true,
+            "strings": [
+              "",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_1695432_2198",
+            "order": 5,
+            "type": "normal",
+            "show_separator": false,
+            "strings": [
+              "Местная связь",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_1695432_1996046",
+            "order": 6,
+            "type": "terms",
+            "show_separator": false,
+            "strings": [
+              "Подключение голосовой связи возможно только при заключении письменного договора на оказание услуг подвижной радиотелефонной связи. Заключение договора возможно в любом офисе продаж «Билайн».",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_1695432_1996039",
+            "order": 7,
+            "type": "price",
+            "show_separator": false,
+            "strings": [
+              "Входящие звонки",
+              "0 руб/мин"
+            ]
+          },
+          {
+            "id": "plandesc_1695432_1996043",
+            "order": 8,
+            "type": "price",
+            "show_separator": false,
+            "strings": [
+              "Звонки на все местные номера",
+              "1,7 руб/мин"
+            ]
+          },
+          {
+            "id": "plandesc_1695432_2199_separator",
+            "order": 9,
+            "type": "separator",
+            "show_separator": true,
+            "strings": [
+              "",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_1695432_2199",
+            "order": 10,
+            "type": "normal",
+            "show_separator": false,
+            "strings": [
+              "Междугородная связь",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_1695432_1996047",
+            "order": 11,
+            "type": "terms",
+            "show_separator": false,
+            "strings": [
+              "Подключение голосовой связи возможно только при заключении письменного договора на оказание услуг подвижной радиотелефонной связи. Заключение договора возможно в любом офисе продаж «Билайн».",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_1695432_1996044",
+            "order": 12,
+            "type": "price",
+            "show_separator": false,
+            "strings": [
+              "Звонки на номера всех операторов России",
+              "2,9 руб/мин"
+            ]
+          },
+          {
+            "id": "plandesc_1695432_2204_separator",
+            "order": 13,
+            "type": "separator",
+            "show_separator": true,
+            "strings": [
+              "",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_1695432_2204",
+            "order": 14,
+            "type": "normal",
+            "show_separator": false,
+            "strings": [
+              "Международная связь",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_1695432_1996045",
+            "order": 15,
+            "type": "terms",
+            "show_separator": false,
+            "strings": [
+              "Подключение голосовой связи возможно только при заключении письменного договора на оказание услуг подвижной радиотелефонной связи. Заключение договора возможно в любом офисе продаж «Билайн».",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_1695432_1996042",
+            "order": 16,
+            "type": "price",
+            "show_separator": false,
+            "strings": [
+              "Звонки в СНГ на номера «Билайн»",
+              "12 руб/мин"
+            ]
+          },
+          {
+            "id": "plandesc_1695432_1996091",
+            "order": 17,
+            "type": "price",
+            "show_separator": false,
+            "strings": [
+              "Звонки в СНГ на другие номера",
+              "24 руб/мин"
+            ]
+          },
+          {
+            "id": "plandesc_1695432_1996040",
+            "order": 18,
+            "type": "price",
+            "show_separator": false,
+            "strings": [
+              "Звонки в Европу, США и Канаду",
+              "35 руб/мин"
+            ]
+          },
+          {
+            "id": "plandesc_1695432_1996041",
+            "order": 19,
+            "type": "price",
+            "show_separator": false,
+            "strings": [
+              "Звонки в остальные страны",
+              "50 руб/мин"
+            ]
+          },
+          {
+            "id": "plandesc_1695432_2200_separator",
+            "order": 20,
+            "type": "separator",
+            "show_separator": true,
+            "strings": [
+              "",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_1695432_2200",
+            "order": 21,
+            "type": "normal",
+            "show_separator": false,
+            "strings": [
+              "Мобильный интернет",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_1695432_1695435",
+            "order": 22,
+            "type": "price",
+            "show_separator": false,
+            "strings": [
+              "Количество включенных Мбайт в месяц",
+              "200 Мб"
+            ]
+          },
+          {
+            "id": "plandesc_1695432_1695436",
+            "order": 23,
+            "type": "terms",
+            "show_separator": false,
+            "strings": [
+              "Абоненты тарифного плана «Интернет навсегда» могут подключить любую интернет-опцию из линейки «Хайвей» или подключиться к пакету смартфона с помощью услуги «Интернет на всё». Выбирайте подходящую опцию и подключайтесь любым удобным способом: на сайте или в Личном кабинете",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_1695432_1776673",
+            "order": 24,
+            "type": "terms",
+            "show_separator": false,
+            "strings": [
+              "В собственных офисах «Билайн» тарифный план продается с уже подключенной опцией «Хайвей»",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_1695432_2201_separator",
+            "order": 25,
+            "type": "separator",
+            "show_separator": true,
+            "strings": [
+              "",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_1695432_2201",
+            "order": 26,
+            "type": "normal",
+            "show_separator": false,
+            "strings": [
+              "Сообщения",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_1695432_1887356",
+            "order": 27,
+            "type": "terms",
+            "show_separator": false,
+            "strings": [
+              "Подключение услуги SMS-сообщений возможно только при заключении письменного договора на оказание услуг подвижной радиотелефонной связи. Заключение договора возможно в любом офисе продаж «Билайн».",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_1695432_1695440",
+            "order": 28,
+            "type": "price",
+            "show_separator": false,
+            "strings": [
+              "Исходящие SMS",
+              "1.95 руб."
+            ]
+          },
+          {
+            "id": "plandesc_1695432_1695442",
+            "order": 29,
+            "type": "price",
+            "show_separator": false,
+            "strings": [
+              "Передача MMS",
+              "6,6 руб."
+            ]
+          },
+          {
+            "id": "plandesc_1695432_2202_separator",
+            "order": 30,
+            "type": "separator",
+            "show_separator": true,
+            "strings": [
+              "",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_1695432_2202",
+            "order": 31,
+            "type": "normal",
+            "show_separator": false,
+            "strings": [
+              "Роуминг",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_1695432_2210932",
+            "order": 32,
+            "type": "terms",
+            "show_separator": false,
+            "strings": [
+              "Подробнее о стоимости мобильного интернета в роуминге",
+              ""
+            ]
+          },
+          {
+            "id": "plandesc_1695432_more",
+            "order": 33,
+            "type": "button-more",
+            "show_separator": false,
+            "strings": [
+              "Подробнее на www.beeline.ru",
+              "http://www.beeline.ru/mobileredirect.ashx?type=tariff&marketcode=EKT&soc=FREEM_URL"
+            ]
+          }
+        ],
+        "is_archive": false,
+        "weight": 0
+      }
+    ]
+  }
+]

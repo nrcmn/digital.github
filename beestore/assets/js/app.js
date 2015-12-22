@@ -11,6 +11,7 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
                 controller: function ($rootScope) {
                     $rootScope.shadowShow = false;
                     $rootScope.basketBottomShow = true;
+                    $rootScope.showHomeButton = false;
                 },
                 show: false,
                 id: 1,
@@ -31,6 +32,7 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
                 controller: function ($rootScope) {
                     $rootScope.shadowShow = false;
                     $rootScope.basketBottomShow = true;
+                    $rootScope.showHomeButton = true;
                 },
                 show: true,
                 id: 2,
@@ -40,7 +42,8 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
             })
             .state('products', {
                 url: '/categories/products',
-                templateUrl: './templates/products.html',
+                // templateUrl: './templates/products.html',
+                templateUrl: './templates/products.test.html',
                 getTitle: function () {
                     try {
                         return window.subCategory.name
@@ -51,6 +54,7 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
                 controller: function ($rootScope) {
                     $rootScope.shadowShow = true;
                     $rootScope.basketBottomShow = true;
+                    $rootScope.showHomeButton = true;
                 },
                 show: true,
                 id: 3,
@@ -65,6 +69,7 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
                 controller: function ($rootScope, $scope) {
                     $rootScope.shadowShow = true;
                     $rootScope.basketBottomShow = true;
+                    $rootScope.showHomeButton = true;
                 },
                 show: false,
                 id: 4,
@@ -80,6 +85,7 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
                 controller: function ($rootScope) {
                     $rootScope.shadowShow = true;
                     $rootScope.basketBottomShow = true;
+                    $rootScope.showHomeButton = true;
                 },
                 show: true,
                 id: 5,
@@ -99,6 +105,7 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
                 controller: function ($rootScope) {
                     $rootScope.shadowShow = false;
                     $rootScope.basketBottomShow = false;
+                    $rootScope.showHomeButton = true;
                 },
                 show: true,
                 id: 6,
@@ -113,6 +120,7 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
                 controller: function ($rootScope) {
                     $rootScope.shadowShow = false;
                     $rootScope.basketBottomShow = false;
+                    $rootScope.showHomeButton = true;
                 },
                 show: true,
                 id: 7,
@@ -127,6 +135,7 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
                 controller: function ($rootScope, $scope) {
                     $rootScope.shadowShow = true;
                     $rootScope.basketBottomShow = true;
+                    $rootScope.showHomeButton = true;
                 },
                 show: false,
                 id: 8,
@@ -154,14 +163,15 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
 
         window.api_key = '852bff3ff459f9886729b9de223e8a0340ce008b',
             // url = 'https://public.backend.vimpelcom.ru', // public
-            // url = 'https://public.backend-test.vimpelcom.ru', // public test
+            url = 'https://public.backend-test.vimpelcom.ru', // public test
             // url = 'http://backend.vimpelcom.ru:8080', // internal
-            url = 'http://backend-test.vimpelcom.ru:8080', // internal test
+            // url = 'http://backend-test.vimpelcom.ru:8080', // internal test
 
-            // market_region = 98082, // Moscow
-            market_region = 98220, // Ekaterinburg
+            market_region = 98082, // Moscow
+            // market_region = 98220, // Ekaterinburg
             filter = {},
-            page = 2;
+            page = 2,
+            marketCode = 'VIP';
 
         // Bread crumbs
         $rootScope.crumbs = []; // crumbs
@@ -295,15 +305,8 @@ angular.module('controllers', [])
                         window.categories.sub.push(item);
                     }
                 })
-
-                // $scope.categories = window.categories;
-
             });
         }
-        // if have categories data initialize to variable
-        // else {
-        //     $scope.categories = window.categories;
-        // }
 
         window.category = {}; // for leaders loader
         $scope.categories = mainCategories;
@@ -316,8 +319,10 @@ angular.module('controllers', [])
 
     .controller('SubCategoryCtrl', function ($scope, $rootScope, $state, __LoadProducts, __LoadFilters) {
         $scope.subCategories = []; // clear subCategories
-        $rootScope.intagChoicesList = []; // clear filters
         $rootScope.productsList = undefined; // clear products list
+        $rootScope.intagChoicesList = undefined;
+        $rootScope.selectedFilters = undefined // clear selected filters list
+        window.intagChoicesList = []; // clear filters
         window.scroll(0,0); // scroll to top
         window.page = 1; // set page number in products list
         window.sortItem = undefined; // set sortItem
@@ -355,6 +360,10 @@ angular.module('controllers', [])
     })
 
     .controller('ProductListCtrl', function ($scope, $rootScope, $state, $document, __LoadProducts) {
+
+        // $document.on('scroll', function() {
+        //     console.log('Document scrolled to ', $document.scrollLeft(), $document.scrollTop());
+        // });
 
         $scope.leftFilter = false; //hide filter on left side
         window.scrollLoad = true; // progress bar status
@@ -405,40 +414,40 @@ angular.module('controllers', [])
             {
                 value: '-weight',
                 label: 'популярности',
+                selected: true
             },
             {
                 value: 'price',
                 label: 'цене: по возрастанию',
+                selected: false
             },
             {
                 value: '-price',
                 label: 'цене: по убыванию',
+                selected: false
             }
         ];
 
-        try {
-            $scope.selected = $scope.items[window.sortItem.index]
-        } catch (e) {
-            window.sortItem = $scope.selected = $scope.items[0];
-            window.sortItem.index = 0;
+        // select item in sort list
+        (window.sortItem) ? ($scope.selected = window.sortItem) : (window.sortItem = $scope.selected = $scope.items[0], window.sortItem.index = 0);
+
+        $scope.sortBy = function (arg) {
+            $rootScope.productsList = undefined;
+            window.page = 1;
+            window.sortItem = arg;
+            $scope.selected = arg;
+            $scope.customSelectActiveClass = ' ';
+
+            __LoadProducts(window.subCategory, 15, 1, window.sortItem.value, $rootScope.intagChoicesList);
         }
 
-        $scope.sortBy = function () {
-            $rootScope.productsList = undefined;
-
-            window.page = 1;
-            window.sortItem = $scope.selected;
-            $scope.items.forEach(function (item, i, arr) {
-                if (item.value == $scope.selected.value) {
-                    window.sortItem.index = i;
-                }
-            })
-
-            __LoadProducts(window.subCategory, 15, 1, $scope.selected.value, $rootScope.intagChoicesList);
+        $scope.customSelect = function () {
+            return $scope.customSelectActiveClass = (!$scope.customSelectActiveClass) ? 'cs-active' : '';
         }
     })
 
-    .controller('ProductDetailCtrl', function ($scope, $rootScope, $stateParams, $document, $state, FoundationApi, __LoadOneProduct) {
+    .controller('ProductDetailCtrl', function ($scope, $rootScope, $stateParams, $document, $state, FoundationApi, __LoadOneProduct, __LoadPricePlan, __LoadMockPricePlans) {
+
         window.scroll(0,0); // scroll to top
         (window.product && window.product.id == $stateParams.id) ? $scope.product = window.product : window.product = undefined; // back from multicard bug fix
 
@@ -447,67 +456,89 @@ angular.module('controllers', [])
                 if (item.id == 61) {
                     data.general_intags = item;
                 }
+
+                item.intags.forEach(function (intag_item, intag_i, intag_arr) {
+                    if (!intag_item.value[0]) {
+                        item.intags.splice(intag_i, 1);
+                        intag_i--;
+                    }
+                })
             })
 
-            var multicardMemories = {};
+            var multicardMemories = {}; // object with parent multicard params
             for (var i in data.multicard_products) {
                 var multicardArrays = data.multicard_products[i];
                 multicardArrays.forEach(function (item,index,arr) {
+                    // if this is memory and object haven't this value as key.
                     if (!multicardMemories[item.intag_choice] && item.intag_slug == 'obem-vstroennoi-pamiati') {
                         multicardMemories[item.intag_choice] = {
-                            current: (i == data.id) ? true : false,
+                            current: (i == data.id) ? true : false, // if this is current product
                             ids: []
                         };
 
-                        multicardMemories[item.intag_choice].ids.push(i);
+                        multicardMemories[item.intag_choice].ids.push(i); // push item to object
                     }
+                    // if this is memory and object have this value as key
                     else if (multicardMemories[item.intag_choice] && item.intag_slug == 'obem-vstroennoi-pamiati') {
                         if (!multicardMemories[item.intag_choice].current) {
-                            multicardMemories[item.intag_choice].current = (i == data.id) ? true : false;
+                            multicardMemories[item.intag_choice].current = (i == data.id) ? true : false;  // if this is current product
                         }
 
-                        multicardMemories[item.intag_choice].ids.push(i);
+                        multicardMemories[item.intag_choice].ids.push(i); // push item to object
                     }
 
+                    // create list with ids, which is approved for request for this object key
                     if (multicardMemories[item.intag_choice] && multicardMemories[item.intag_choice].current) {
                         return data.approvedIdsList = multicardMemories[item.intag_choice].ids;
                     }
                 })
             }
 
+            // create colors array
             var colors = new Array();
+
             for (var i in data.multicard_products) {
                 var multicardArrays = data.multicard_products[i];
                 multicardArrays.forEach(function (item,index,arr) {
-                    if (item.intag_slug != "obem-vstroennoi-pamiati") {
-                        item.id = i;
-                        colors.push(item);
+                    // if this is color slug
+                    if (item.intag_slug == "tsvet") {
+                        item.id = i; // add id to color object
+                        colors.push(item); // push color object to colors array
                     }
                 })
             }
 
+            // import memories object and colors array to data object
             data.memories = multicardMemories;
             data.colors = colors;
 
+            // inheritance data to global product object
             try {
                 window.product.__proto__ = data; // load detail after product list page
             } catch (e) {
                 window.product = data; // load detail without products list page
             }
 
-            $scope.product = window.product;
+            if (window.product.article.indexOf('kit') > -1) {
+                // __LoadPricePlan(window.product.description_small); // only for working mobile backend
+                __LoadMockPricePlans(window.product.description_small); // service with mock PricePlans data
+            }
+
+            $scope.product = window.product; // set scope
             $scope.modalIntags = window.product.intags_categories[0]; // set opened intag
         })
 
+        // check memory in multicards
         $scope.checkMemory = function (m) {
             for (var i in $scope.product.memories) {
-                $scope.product.memories[i].current = false;
+                $scope.product.memories[i].current = false; // remove current boolean
             }
 
             m.current = true;
-            $scope.product.approvedIdsList = m.ids;
+            $scope.product.approvedIdsList = m.ids; // set approved ids list
         }
 
+        // check color in multicards
         $scope.checkColor = function (id) {
             $state.go('detail', {id: id});
         }
@@ -530,7 +561,6 @@ angular.module('controllers', [])
         $scope.openCard = function (key) {
             delete window.product;
             $state.go('detail', {id: key});
-            // $state.go($state.current, {id: key}, {reload: true});
         }
 
         $scope.addToBasket = function () {
@@ -559,35 +589,77 @@ angular.module('controllers', [])
 
             // FoundationApi.publish('orderNotify', { title: 'В корзину', content: 'Товар добавлен в корзину', color: 'success', autoclose: '5000'});
         }
+
     })
 
     .controller('FilterCtrl', function ($scope, $rootScope, __LoadProducts) {
-        // $rootScope.intagChoicesList = []; // array for intag_choices ids
-        $rootScope.filterInd = 1;
+        // $rootScope.intagChoicesList = window.intagChoicesList; // array for intag_choices ids
+        $rootScope.filterInd = 0;
+        window.selectedFilters = {};
+
+
         $rootScope.checkFilter = function (index) {
             $rootScope.filterInd = index;
         }
 
         $rootScope.check = function ($event, val) {
             var checkbox = $event.target;
+
+            // check filter
             if (checkbox.checked) {
-                $rootScope.intagChoicesList.push(checkbox.value);
-                val.check = true;
+                window.intagChoicesList.push(checkbox.value); // add to global intagChoicesList array
+                val.check = true; // set check true
+
+                /* -- selected filters list -- */
+                // window.selectedFilters is object.
+                // if object haven't this name as key, create them.
+                if (!window.selectedFilters[$rootScope.productsListFilter[$rootScope.filterInd].name]) {
+                    window.selectedFilters[$rootScope.productsListFilter[$rootScope.filterInd].name] = []; // create array
+                    window.selectedFilters[$rootScope.productsListFilter[$rootScope.filterInd].name].push({ // push mock data
+                        id: val.id,
+                        value: val.value
+                    })
+                }
+                else {
+                    // if object have this name as key
+                    window.selectedFilters[$rootScope.productsListFilter[$rootScope.filterInd].name].push({ // push new value
+                        id: val.id,
+                        value: val.value
+                    })
+                }
             }
             else if (!checkbox.checked) {
-                $rootScope.intagChoicesList.splice($rootScope.intagChoicesList.indexOf(checkbox.value), 1);
-                val.check = false;
+                window.intagChoicesList.splice(window.intagChoicesList.indexOf(checkbox.value), 1); // remove this value from global intagChoicesList array
+                val.check = false; // set check false
+
+                /* -- selected filters list -- */
+                // get this object with this name as key, and remove from array item, with this value id
+                window.selectedFilters[$rootScope.productsListFilter[$rootScope.filterInd].name].forEach(function (item, i, arr) {
+                    if (item.id == val.id) { // check condition
+                        window.selectedFilters[$rootScope.productsListFilter[$rootScope.filterInd].name].splice(i, 1); // and remove value
+                    }
+                })
+
+                // if array of this object is empty, remove key
+                if (window.selectedFilters[$rootScope.productsListFilter[$rootScope.filterInd].name].length == 0) {
+                    delete window.selectedFilters[$rootScope.productsListFilter[$rootScope.filterInd].name];
+                }
             }
+
+            // set selected filters list
+            $rootScope.selectedFilters = window.selectedFilters;
         }
 
         $rootScope.setFilter = function () {
+            $rootScope.intagChoicesList = window.intagChoicesList;
             __LoadProducts(window.subCategory, 15, 1, window.sortItem.value, $rootScope.intagChoicesList);
             $rootScope.productsList = undefined;
             window.page = 1;
         }
 
         $rootScope.clearFilter = function () {
-            $rootScope.intagChoicesList.length = 0; // clear global intag choices array
+            $rootScope.intagChoicesList = window.intagChoicesList.length = 0; // clear global intag choices array
+            $rootScope.selectedFilters = window.selectedFilters = {}; // clear selected filters
 
             // delete all checked filters
             window.filter[window.subCategory.id].forEach(function (item, i, arr) {
@@ -710,8 +782,8 @@ angular.module('services', [])
                     amount: amount,
                     page: page,
                     sort_by: sort,
-                    intag_choices: intags,
-                    point_codes: "0952"
+                    intag_choices: intags/*,
+                    point_codes: "0952"*/
                 }
             })
             .success(function (data) {
@@ -757,13 +829,18 @@ angular.module('services', [])
                 }
             })
             .success(function (data) {
+                // remove sales from data
+                data.forEach(function (item, i, arr) {
+                    if (item.id == 659) {
+                        data.splice(i, 1);
+                    }
+                })
+
                 window.filter[window.subCategory.id] = data;
                 $rootScope.productsListFilter = data;
-                // $rootScope.filterShow = true;
             })
             .error(function () {
                 console.error('ERROR! "__LoadFilters"');
-                // $rootScope.filterShow = false;
             })
         }
     })
@@ -771,9 +848,8 @@ angular.module('services', [])
     .service('__LoadOneProduct', function ($http, $rootScope, $q) {
         return function (id) {
             var deferred = $q.defer();
-
-            var params = (!window.product) ? 'id,name,remain,price,images,article,description_yandex,old_price,intags_categories,badges,accessories,rr_recommendations,multicard_products,extended_remains' : 'description_yandex,old_price,intags_categories,badges,accessories,rr_recommendations,multicard_products,id,extended_remains';
-            // TODO: add "description_small" parameter
+            var params = (!window.product) ? 'id,name,remain,price,images,article,description_yandex,old_price,intags_categories,badges,accessories,rr_recommendations,multicard_products,description_small' : 'description_yandex,old_price,intags_categories,badges,accessories,rr_recommendations,multicard_products,id,extended_remains,description_small';
+            // TODO: add "description_small" parameter in 1.21 release
 
             $http({
                 method: 'GET',
@@ -781,8 +857,8 @@ angular.module('services', [])
                 params: {
                     "api_key": window.api_key,
                     "market_region": window.market_region,
-                    params: params,
-                    point_codes: "0952"
+                    params: params,/*
+                    point_codes: "0952"*/
                 }
             })
             .success(function (data) {
@@ -793,6 +869,43 @@ angular.module('services', [])
             })
 
             return deferred.promise;
+        }
+    })
+
+    .service('__LoadMockPricePlans', function ($http, $rootScope) {
+        return function (arg) {
+            var soc = arg.split(';')[0];
+            $http.get('./assets/http/pricePlans.json')
+            .success(function (data) {
+                $rootScope.showPricePlanPopup = true;
+                data.forEach(function (item, i, arr) {
+                    if (item.plans[0].code[0].name == soc) {
+                        window.currentPricePlan = item.plans[0];
+                        return $rootScope.pricePlansData = item.plans[0];
+                    }
+                })
+            })
+        }
+    })
+
+    .service('__LoadPricePlan', function ($http, $rootScope) {
+        return function (arg) {
+            var soc = arg.split(';')[0];
+            $http({
+                method: 'GET',
+                url: 'http://api.beeline.ru/api/products/mobile/priceplans/query/marketandsocs',
+                headers: {
+                    Accept: 'application/vnd.beeline.api.v1.mobapp+json'
+                },
+                params: {
+                    marketCode: window.marketCode,
+                    arrSoc: soc
+                }
+            })
+            .success(function (data) {
+                console.log(data);
+                $rootScope.showPricePlanPopup = true;
+            })
         }
     })
 

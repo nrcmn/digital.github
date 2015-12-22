@@ -27,7 +27,7 @@
             <!-- <a title="Есть в наличии!" content="Для оформления заказа обратитесь к консультанту" color="success" autoclose="5000" zf-notify="orderNotify" class="beeline-button">Позвать консультанта</a> -->
 
             <div class="grid-block">
-                <div class="grid-content" ng-repeat="(key, value) in product.memories" style="width: 100%;" ng-click="checkMemory(product.memories[key])">
+                <div class="grid-content" ng-repeat="(key, value) in product.memories track by $index" style="width: 100%;" ng-click="checkMemory(product.memories[key])">
                     <span ng-style="value.current && {'font-weight':'bold'}">{{key}}</span>
                 </div>
 
@@ -43,14 +43,15 @@
             </div>
 
             <a class="beeline-button" ng-click="addToBasket()">В корзину</a>
+            <a class="beeline-button" ng-show="showPricePlanPopup" zf-open="pricePlanModal">Об акции</a>
         </div>
     </div>
 
     <div class="grid-block" style="margin-top:20px;margin-bottom:20px;">
-        <div class="grid-content medium-6" ng-if="product.description">
+        <div class="grid-content medium-6" ng-if="product.description_yandex">
             <h3>Описание:</h3>
             <p>
-                {{product.description || 'Описание'}}
+                {{product.description_yandex || 'Описание'}}
             </p>
         </div>
 
@@ -71,13 +72,14 @@
 
             <a class="large dark hollow button" zf-open="intagModal">Все характеристики</a>
 
+            <!-- *** INTAGS POPUP *** -->
             <div zf-modal="" id="intagModal">
                 <a zf-close="" class="close-button" style="top:0.1rem;right:0.1rem;"><img src="assets/img/close.svg" style="width:40px;"></a>
                 <div class="grid-block">
                     <div class="grid-content medium-4">
                         <section class="block-list">
                             <ul>
-                                <li ng-repeat="field in product.intags_categories" ng-if="field.intags[0].value[0] != null">
+                                <li ng-repeat="field in product.intags_categories">
                                     <a ng-class="setActiveClass(field.id == modalIntags.id)" ng-click="openField(field)">{{field.name}}</a>
                                 </li>
                             </ul>
@@ -110,6 +112,36 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- *** PRICE PLAN MODAL WINDOW INIT *** -->
+    <div zf-modal="" id="pricePlanModal">
+        <h2>{{pricePlansData.name}}</h2>
+        <ul style="padding: 0; margin: 0; list-style-type: none;">
+            <li ng-repeat="desc in pricePlansData.description" ng-if="desc.type != 'button'">
+                <h4 ng-if="desc.type == 'large'">{{desc.strings[0]}}</h4>
+                <span ng-if="desc.type == 'separator'" style="width: 100%; border-bottom: 3px dashed #666; margin: 10px 0; display: block;"></span>
+                <b ng-if="desc.type == 'normal'">{{desc.strings[0]}}</b>
+                <div ng-if="desc.type == 'terms'" style="padding: 0 1rem;">
+                    <div style="display: flex;">
+                        <div>
+                            &mdash;&nbsp;
+                        </div>
+                        <div>
+                            {{desc.strings[0]}}
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-block" ng-if="desc.type == 'price'" style="border: 2px solid #666; padding: 10px; border-radius: 10px; margin: 10px 0; font-size: 1.3rem">
+                    <div class="grid-content medium-8 text-left">
+                        <span>{{desc.strings[0]}}</span>
+                    </div>
+                    <div class="grid-content medium-4 text-right">
+                        <span>{{desc.strings[1]}}</span>
+                    </div>
+                </div>
+            </li>
+        </ul>
     </div>
 
     <recommendations list="{{product.rr_recommendations}}"></recommendations>

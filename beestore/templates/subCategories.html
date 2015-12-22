@@ -1,24 +1,17 @@
-<div class="grid-container" ng-controller="SubCategoryCtrl">
+<div class="categories" ng-controller="SubCategoryCtrl">
 
-    <!-- <div class="grid-block small-up-3">
-        <div class="grid-content card" style="text-align: center;" ng-repeat="subCategory in subCategories | orderBy:'order':true" ng-click="openSubCategory(subCategory)">
-            <img ng-src="{{subCategory.image}}" ng-if="$index <= 2">
-            <img ng-src="{{subCategory.image}}" ng-if="$index > 2" style="width: 50%;"/>
-            <div class="card-section">
-                <h3>{{subCategory.name}}</h3>
-            </div>
-        </div>
-    </div> -->
 
     <div class="grid-block small-up-3 align-center">
-        <div class="text-center padding" style="margin-bottom:20px;" ng-repeat="subCategory in subCategories | orderBy:'order':true" ng-click="openSubCategory(subCategory)" ng-if="$index <= 2" >
+        <div class="grid-block text-center padding align-center" ng-repeat="subCategory in subCategories | orderBy:'order':true" ng-click="openSubCategory(subCategory)" ng-if="$index <= 2" >
 
-            
-                <img src="assets/img/ring.gif" ng-src="{{subCategory.image}}">
+            <div class="padding text-center">
+                <div class="image-section padding">
+                    <img src="assets/img/ring.gif" ng-src="{{subCategory.image}}" onerror="this.src = 'assets/img/placeholder.png'">
+                </div>
                 <div class="padding">
                     <h3>{{subCategory.name}}</h3>
                 </div>
-            
+            </div>            
             
         </div>
     </div>
@@ -26,13 +19,16 @@
     <br>
 
     <div class="grid-block small-up-4 align-center">
-        <div class="text-center padding" style="margin-bottom:32px;" ng-repeat="subCategory in subCategories | orderBy:'order':true" ng-click="openSubCategory(subCategory)" ng-if="$index > 2">
-            
-            <img style="padding:0 24px;" src="assets/img/ring.gif" class="swiper-img" ng-src="{{subCategory.image}}">
-            
-            <div class="padding">    
-                <h4>{{subCategory.name}}</h4>
-            </div>
+        <div class="grid-block text-center padding" ng-repeat="subCategory in subCategories | orderBy:'order':true" ng-click="openSubCategory(subCategory)" ng-if="$index > 2">
+
+            <div class="padding text-center">
+                <div class="image-section padding">
+                    <img src="assets/img/ring.gif" ng-src="{{subCategory.image}}" onerror="this.src = 'assets/img/placeholder.png'">
+                </div>
+                <div class="padding">
+                    <h4>{{subCategory.name}}</h4>
+                </div>
+            </div> 
             
         </div>
     </div>

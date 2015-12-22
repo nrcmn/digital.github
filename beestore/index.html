@@ -2,6 +2,7 @@
 <html lang="ru" ng-app="BeeStore">
     <head>
         <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <title>BeeStore</title>
         <link href="./assets/css/app.css" rel="stylesheet" type="text/css">
@@ -24,25 +25,68 @@
 
             /* Product list bug */
             .grid-frame {
+                height: auto;
                 height: initial;
             }
+
 
             .recomendation-swiper {
                 height: 80%;
                 width: 100%;
             }
+            body {
+                /*max-width: 960px;
+                margin: auto;*/
+                /*touch-action: none;*/
+                overflow-x: hidden;
+            }
+
+            html {
+              -ms-overflow-style: none;
+            }
+
+
+            .flex-container {
+              padding: 0;
+              margin: 0;
+              list-style: none;
+
+              display: -webkit-box;
+              display: -moz-box;
+              display: -ms-flexbox;
+              display: -webkit-flex;
+              display: flex;
+
+              -webkit-flex-flow: row wrap;
+              justify-content: space-around;
+            }
+
+            .flex-item {
+              background: tomato;
+              padding: 5px;
+              width: 200px;
+              height: 300px;
+              margin-top: 10px;
+
+              line-height: 150px;
+              color: white;
+              font-weight: bold;
+              font-size: 3em;
+              text-align: center;
+            }
         </style>
+
     </head>
 
     <body oncontextmenu="return false;">
     <!-- <body> -->
 
             <!-- Upper Video block (fixed positioned) -->
-            <div class="video-block">
-                <!-- <video style="width:100%;" src="assets/img/gorod.webm" autoplay="true" loop="true"> -->
+            <!-- <div class="video-block">
+                <video style="width:100%;" src="assets/img/gorod.webm" autoplay="true" loop="true">
                 </video>
-                <!-- <div class="show-overlay-button" onclick="document.getElementById('dark-overlay').classList.toggle('hide-overlay');"></div> -->
-            </div>
+                <div class="show-overlay-button" onclick="document.getElementById('dark-overlay').classList.toggle('hide-overlay');"></div>
+            </div> -->
 
             <!-- Dark Overlay -->
             <!-- <div id="dark-overlay" class="dark-overlay">
@@ -50,11 +94,10 @@
                 <button style="width:200px;" class="beeline-button" onclick="document.getElementById('dark-overlay').classList.toggle('hide-overlay');">Посмотреть</button>
             </div> -->
 
-            <!-- Shadow block (fixed positioned) -->
-            <div class="shadow-block" ng-show="shadowShow"></div>
+
 
             <!-- Basket block (fixed positioned to bottom) -->
-            <div ng-if="basket.length != 0" ng-show="basketBottomShow" style="width: 100%; height: 125px; background: #191919; position: fixed; bottom: 0; z-index: 1001; padding: 30px">
+            <!-- <div ng-if="basket.length != 0" ng-show="basketBottomShow" style="width: 100%; height: 125px; background: #191919; position: fixed; bottom: 0; z-index: 1001; padding: 30px">
                 <div class="grid-block">
                     <div class="grid-content medium-4 text-left" style="display:flex;flex-direction:row;align-items:center;padding:0;">
                         <img zf-iconic="" icon="cart" size="large" class="iconic-color-secondary" style="margin-right:18px;width:64px;height:64px;">
@@ -67,10 +110,10 @@
                         <a style="margin:6px 0 0 0;border-radius:6px;position:relative;padding-right:2rem;" class="button hollow warning large" ui-sref="basket.products">Перейти в корзину <img style="position:absolute;right:6px;top:44%;widht:12px;height:14px;" zf-iconic="" icon="chevron" size="small"></a>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- HEADER -->
-            <div class="shrink" style="padding:20px 40px 0;position: fixed; top: 30%; width: 100%;z-index:100;background:#fff;box-shadow: 0 20px 44px 1px rgba(255,255,255,0.9);">
+            <div class="shrink" style="padding:20px 40px 0;position: fixed; top: 0; width: 100%;z-index:100;background:#fff;box-shadow: 0 20px 44px 1px rgba(255,255,255,0.9);">
                 <!-- <ul class="menu-bar" style="">
                     <li style="border:2px solid #555;border-radius:8px;">
                         <a ui-sref="main">Девайсы</a>
@@ -88,7 +131,11 @@
 
                 <!-- <h4 ng-cloak style="padding: 10px; font-family: sans-serif;" ng-show="showCrumbs"><span><a style="font-size:28px;color:#666;" onclick="history.back();">&#9666;Назад | </a></span> {{crumbs.join('  /  ')}}</h4> -->
 
-                <h3 ng-cloak style="padding: 10px; font-family: sans-serif;"><a style="font-size:24px;color:#282828;border:2px solid #555;border-radius:8px;padding:10px 20px 10px 10px;" onclick="history.back();">&#8592; Назад</a></h3>
+                <!-- <h3 ng-show="crumbs.length > 1" ng-cloak style="display: inline-block; padding: 10px; font-family: sans-serif;"><a style="font-size:24px;color:#282828;border:2px solid #555;border-radius:8px;padding:10px 20px 10px 10px;" onclick="history.back();">&#8592; Назад</a></h3>
+
+                <h3 ng-show="showHomeButton" ui-sref="main" ng-cloak style="display: inline-block; padding: 10px; font-family: sans-serif;"><a style="font-size:24px;color:#282828;border:2px solid #555;border-radius:8px;padding:10px 20px 10px 10px;"><img style="width:24px;margin-bottom:4px;" src="assets/img/home.svg"> Главная</a></h3> -->
+
+
 
                 <!-- <h4 ng-cloak style="margin-top:16px; padding: 10px; font-family: sans-serif;">
                     <span ng-show="crumb.show" ng-repeat="crumb in crumbs" ng-click="openCrumb(crumb)"><span style="text-decoration:underline;">{{crumb.title}}</span> / </span>
@@ -97,20 +144,22 @@
             </div>
 
 
-        <div class="grid-frame vertical" style="padding-top:70%;padding-bottom:256px;width:80%;margin:auto;">
+        <!-- <div class="grid-frame vertical"> -->
 
-            <zf-notification-set id="eventError" position="top-right"></zf-notification-set>
+            <!-- <zf-notification-set id="eventError" position="top-right"></zf-notification-set> -->
 
             <!-- CONTENT -->
-            <div ui-view class="grid-content" ng-cloak></div>
+            <div style="overflow-x: hidden;" ui-view class="grid-content" ng-cloak></div>
 
-        </div>
+        <!-- </div> -->
 
 
 
 
 
         <!-- FOOTER -->
+        <!-- Shadow block (fixed positioned) -->
+            <div class="shadow-block" ng-show="shadowShow"></div>
 
 
     </body>

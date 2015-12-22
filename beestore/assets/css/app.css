@@ -6464,7 +6464,7 @@ h1, h2, h3, h4 {
   padding: 16px;
   box-sizing: border-box;
   background-size: contain;
-  background-position: center;
+  background-position: center center;
   background-repeat: no-repeat; }
 
 .gallery-top {
@@ -6534,7 +6534,7 @@ a:hover, a:focus {
 
 .filters-block {
   position: fixed;
-  top: 34%;
+  top: 80px;
   left: 0;
   z-index: 150;
   width: 100%;
@@ -6551,11 +6551,11 @@ a:hover, a:focus {
   display: -ms-flexbox;
   display: flex;
   -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center; }
+  -ms-flex-align: center;
+  align-items: center; }
 
 .inline {
   display: inline; }
@@ -6635,7 +6635,9 @@ a:hover, a:focus {
   display: block; }
 
 .modal {
-  min-width: 600px; }
+  min-width: 600px;
+  border: 4px #FFB612 solid;
+  border-radius: 4px; }
 
 .arrow-up {
   position: fixed;
@@ -6664,5 +6666,184 @@ a:hover, a:focus {
   transition: opacity 0.5s linear;
   opacity: 0; }
 
-.notification-container.top-right {
-  top: 31%; }
+.categories .img-section {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center; }
+
+.categories .small-up-2 .image-section {
+  height: 200px; }
+
+.categories .small-up-3 .image-section {
+  height: 180px; }
+
+.categories .small-up-3.products .image-section {
+  height: 240px; }
+
+.categories .small-up-4 .image-section {
+  height: 160px; }
+
+.categories .grid-block img {
+  max-height: 100%;
+  width: initial;
+  margin: auto; }
+
+.modal {
+  height: 600px; }
+
+.block-list .active-item {
+  background: orange; }
+
+/* Default custom select styles */
+div .cs-select {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  text-align: left;
+  background: #fff;
+  z-index: 100;
+  width: 100%;
+  max-width: 500px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
+div .cs-select:focus {
+  outline: none;
+  /* For better accessibility add a style for this in your skin */ }
+
+.cs-select select {
+  display: none; }
+
+.cs-select span {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  padding: 1em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
+/* Placeholder and selected option */
+.cs-select > span {
+  padding-right: 3em; }
+
+.cs-select > span::after,
+.cs-select .cs-selected span::after {
+  speak: none;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+.cs-select > span::after {
+  content: '\25BE';
+  right: 1em; }
+
+.cs-select .cs-selected span::after {
+  content: '\2713';
+  margin-left: 1em; }
+
+.cs-select.cs-active > span::after {
+  -webkit-transform: translateY(-50%) rotate(180deg);
+  transform: translateY(-50%) rotate(180deg); }
+
+div .cs-active {
+  z-index: 200; }
+
+/* Options */
+.cs-select .cs-options {
+  position: absolute;
+  overflow: hidden;
+  width: 100%;
+  background: #fff;
+  visibility: hidden; }
+
+.cs-select.cs-active .cs-options {
+  visibility: visible; }
+
+.cs-select ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%; }
+
+.cs-select ul span {
+  padding: 1em; }
+
+.cs-select ul li.cs-focus span {
+  background-color: #ddd; }
+
+/* Optgroup and optgroup label */
+.cs-select li.cs-optgroup ul {
+  padding-left: 1em; }
+
+.cs-select li.cs-optgroup > span {
+  cursor: default; }
+
+div .cs-skin-border {
+  background: transparent;
+  font-size: 1em;
+  font-weight: 700;
+  max-width: 600px; }
+
+@media screen and (max-width: 30em) {
+  div .cs-skin-border {
+    font-size: 1em; } }
+
+.cs-skin-border > span {
+  border: 5px solid #000;
+  border-color: inherit;
+  transition: background 0.2s, border-color 0.2s; }
+
+.cs-skin-border > span::after,
+.cs-skin-border .cs-selected span::after {
+  font-family: 'icomoon';
+  content: '\e000'; }
+
+.cs-skin-border ul span::after {
+  content: '';
+  opacity: 0; }
+
+.cs-skin-border .cs-selected span::after {
+  content: '\e00e';
+  color: #ddd9c9;
+  font-size: 1.5em;
+  opacity: 1;
+  transition: opacity 0.2s; }
+
+.cs-skin-border.cs-active > span {
+  background: #fff;
+  border-color: #fff;
+  color: #2980b9; }
+
+.cs-skin-border .cs-options {
+  color: #2980b9;
+  font-size: 0.75em;
+  opacity: 0;
+  border: 1px solid;
+  transition: opacity 0.2s, visibility 0s 0.2s; }
+
+.cs-skin-border.cs-active .cs-options {
+  opacity: 1;
+  transition: opacity 0.2s; }
+
+.cs-skin-border ul span {
+  padding: 1em 2em;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden; }
+
+.cs-skin-border .cs-options li span:hover,
+.cs-skin-border li.cs-focus span {
+  background: #f5f3ec; }
