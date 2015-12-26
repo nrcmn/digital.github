@@ -15,7 +15,7 @@
 
             <span style="text-decoration: line-through;" ng-if="product.old_price > product.price">{{product.old_price}}<br/></span>
             <!-- <span ng-if="product.oplPrice" style="text-decoration: overline;">{{product.oplPrice}}</span> -->
-            <h3 ng-if="product.price" class="inline old-price">{{product.price * 2 | price}}</h3> руб.
+            <!-- <h3 ng-if="product.old_price" class="inline old-price">{{product.old_price}}</h3><span ng-if="product.old_price"> руб.<span> -->
             <div ng-if="product.price">
                 <h1 style="display:inline;font-size:3.75rem;">{{product.price | price}}</h1><span> руб.</span>
             </div>
@@ -26,7 +26,7 @@
 
             <!-- <a title="Есть в наличии!" content="Для оформления заказа обратитесь к консультанту" color="success" autoclose="5000" zf-notify="orderNotify" class="beeline-button">Позвать консультанта</a> -->
 
-            <div class="grid-block">
+<!--             <div class="grid-block">
                 <div class="grid-content" ng-repeat="(key, value) in product.memories track by $index" style="width: 100%;" ng-click="checkMemory(product.memories[key])">
                     <span ng-style="value.current && {'font-weight':'bold'}">{{key}}</span>
                 </div>
@@ -43,7 +43,7 @@
             </div>
 
             <a class="beeline-button" ng-click="addToBasket()">В корзину</a>
-            <a class="beeline-button" ng-show="showPricePlanPopup" zf-open="pricePlanModal">Об акции</a>
+            <a class="beeline-button" ng-show="showPricePlanPopup" zf-open="pricePlanModal">Об акции</a> -->
         </div>
     </div>
 
@@ -75,9 +75,13 @@
             <!-- *** INTAGS POPUP *** -->
             <div zf-modal="" id="intagModal">
                 <a zf-close="" class="close-button" style="top:0.1rem;right:0.1rem;"><img src="assets/img/close.svg" style="width:40px;"></a>
-                <div class="grid-block">
-                    <div class="grid-content medium-4">
-                        <section class="block-list">
+
+                <div class="grid-frame" style="height:600px;">
+                    <div class="grid-block">
+
+                    <!-- Left (key) -->
+                    <div style="overflow: scroll;padding-bottom:32px;" class="grid-content medium-4">
+                        <section class="block-list officina">
                             <ul>
                                 <li ng-repeat="field in product.intags_categories">
                                     <a ng-class="setActiveClass(field.id == modalIntags.id)" ng-click="openField(field)">{{field.name}}</a>
@@ -85,7 +89,8 @@
                             </ul>
                         </section>
                     </div>
-                    <div class="grid-block medium-8">
+
+                    <div style="overflow: scroll;padding-bottom:32px;" class="grid-content medium-8">
                         <section class="block-list grid-content">
                             <ul>
                                 <li style="display:flex;padding:10px 2px;" ng-repeat="param in modalIntags.intags | color:param" ng-if="param.value[0] != null">

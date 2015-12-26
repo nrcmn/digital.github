@@ -42,8 +42,8 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
             })
             .state('products', {
                 url: '/categories/products',
-                // templateUrl: './templates/products.html',
-                templateUrl: './templates/products.test.html',
+                templateUrl: './templates/products.html',
+                // templateUrl: './templates/products.test.html',
                 getTitle: function () {
                     try {
                         return window.subCategory.name
@@ -156,22 +156,26 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
             })
     })
 
-    .run(function ($rootScope, FoundationApi, $state) {
+    .run(function ($rootScope, FoundationApi, $state, __closeWebView) {
         FastClick.attach(document.body);
-
         unacceptableCategories = [6, 5, 4, 101, 15, 202, 23, 24, 164, 78, 80, 79, 166, 162, 165, 71, 70, 77, 122, 121, 182, 93, 86, 85, 90, 87, 163]; // unacceptable categories ids
 
         window.api_key = '852bff3ff459f9886729b9de223e8a0340ce008b',
-            // url = 'https://public.backend.vimpelcom.ru', // public
-            url = 'https://public.backend-test.vimpelcom.ru', // public test
+            url = 'https://public.backend.vimpelcom.ru', // public
+            // url = 'https://public.backend-test.vimpelcom.ru', // public test
             // url = 'http://backend.vimpelcom.ru:8080', // internal
             // url = 'http://backend-test.vimpelcom.ru:8080', // internal test
 
-            market_region = 98082, // Moscow
-            // market_region = 98220, // Ekaterinburg
+            // market_region = 98082, // Moscow
+            market_region = 98220, // Ekaterinburg
             filter = {},
             page = 2,
-            marketCode = 'VIP';
+            marketCode = 'VIP', // for mobile backend
+            webview = location.search.replace(/\?id=/g, ''); // webview id for bridge from electron to this interface
+
+        const TIMER_VALUE = 10;
+        // var timer = TIMER_VALUE;
+        var timerStart = false;
 
         // Bread crumbs
         $rootScope.crumbs = []; // crumbs
@@ -214,6 +218,28 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
             } catch (e) {console.log('ok');}
 
             return $rootScope.crumbs.push(toState);
+        })
+
+        function startTimer() {
+            timer = TIMER_VALUE;
+            secondsToMars = setInterval(function () {
+                timer--;
+                if (timer == 0) {
+                    __closeWebView();
+                    return timer  = TIMER_VALUE;
+                }
+            }, 1000);
+        };
+        startTimer();
+
+        document.body.addEventListener('touchstart', function () {
+            try {
+                clearInterval(secondsToMars);
+            } catch (e) {
+                console.info('Timer is not defined yet');
+            }
+
+            return startTimer();
         })
 
         $rootScope.openCrumb = function (crumb) {
@@ -266,8 +292,15 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
         return function (value) {
             try {
                 value.forEach(function (item, i, arr) {
-                    if (item.id == 21 && item.value.length < 2) {
-                        item.value = item.value[0].split(';')
+                    // for intags
+                    if (item.id == 21 && item.value && item.value.length < 2) {
+                        item.value = item.value[0].split(';');
+                    }
+                    // for filters
+                    else if (item.id == 21 && item.choices) {
+                        for (var i = 0; i < item.choices.length; i++) {
+                            item.choices[i].value = item.choices[i].value.split(';')[0]; // 0 or 1 == color NAME or color HEX
+                        }
                     }
                 })
 
@@ -361,15 +394,12 @@ angular.module('controllers', [])
 
     .controller('ProductListCtrl', function ($scope, $rootScope, $state, $document, __LoadProducts) {
 
-        // $document.on('scroll', function() {
-        //     console.log('Document scrolled to ', $document.scrollLeft(), $document.scrollTop());
-        // });
-
         $scope.leftFilter = false; //hide filter on left side
         window.scrollLoad = true; // progress bar status
 
         // -- LAZY loading block
         window.onscroll = function () {
+            $scope.customSelectActiveClass = '';
 
             if ($state.current.name != "products") {
                 return false
@@ -399,6 +429,7 @@ angular.module('controllers', [])
 
         $scope.openProduct = function (data) {
             data.collectionId = window.subCategory.id; // set collectionId to product data
+
             // product.intags_categories.forEach(function (item, i, arr) { // general intags for detail page
             //     if (item.id == 61) {
             //         product.general_intags = item;
@@ -444,6 +475,11 @@ angular.module('controllers', [])
         $scope.customSelect = function () {
             return $scope.customSelectActiveClass = (!$scope.customSelectActiveClass) ? 'cs-active' : '';
         }
+
+        $scope.openFilters = function () {
+            $scope.customSelectActiveClass = '';
+            // document.body.className += ' no-scroll';
+        }
     })
 
     .controller('ProductDetailCtrl', function ($scope, $rootScope, $stateParams, $document, $state, FoundationApi, __LoadOneProduct, __LoadPricePlan, __LoadMockPricePlans) {
@@ -465,6 +501,7 @@ angular.module('controllers', [])
                 })
             })
 
+            // Multircard generator
             var multicardMemories = {}; // object with parent multicard params
             for (var i in data.multicard_products) {
                 var multicardArrays = data.multicard_products[i];
@@ -594,9 +631,15 @@ angular.module('controllers', [])
 
     .controller('FilterCtrl', function ($scope, $rootScope, __LoadProducts) {
         // $rootScope.intagChoicesList = window.intagChoicesList; // array for intag_choices ids
+        if (window.intagChoicesList.length == 0) {
+            $rootScope.filtersModalButtonConfig = {
+                label: 'выберите параметры',
+                class: 'secondary'
+            }
+        }
+
         $rootScope.filterInd = 0;
         window.selectedFilters = {};
-
 
         $rootScope.checkFilter = function (index) {
             $rootScope.filterInd = index;
@@ -655,6 +698,19 @@ angular.module('controllers', [])
             __LoadProducts(window.subCategory, 15, 1, window.sortItem.value, $rootScope.intagChoicesList);
             $rootScope.productsList = undefined;
             window.page = 1;
+
+            if (window.intagChoicesList > 0) {
+                $rootScope.filtersModalButtonConfig = {
+                    label: 'выбрано параметров',
+                    class: 'warning'
+                }
+            }
+            else {
+                $rootScope.filtersModalButtonConfig = {
+                    label: 'выберите параметры',
+                    class: 'secondary'
+                }
+            }
         }
 
         $rootScope.clearFilter = function () {
@@ -672,6 +728,11 @@ angular.module('controllers', [])
             $rootScope.progress = true; // show progress bar
             __LoadProducts(window.subCategory, 15, 1, window.sortItem.value, $rootScope.intagChoicesList);
             window.page = 1;
+
+            $rootScope.filtersModalButtonConfig = {
+                label: 'выберите параметры',
+                class: 'secondary'
+            }
         }
 
         $rootScope.setActiveClass = function (condition) {
@@ -782,8 +843,8 @@ angular.module('services', [])
                     amount: amount,
                     page: page,
                     sort_by: sort,
-                    intag_choices: intags/*,
-                    point_codes: "0952"*/
+                    intag_choices: intags,
+                    point_codes: "0952"
                 }
             })
             .success(function (data) {
@@ -857,8 +918,8 @@ angular.module('services', [])
                 params: {
                     "api_key": window.api_key,
                     "market_region": window.market_region,
-                    params: params,/*
-                    point_codes: "0952"*/
+                    params: params,
+                    point_codes: "0952"
                 }
             })
             .success(function (data) {
@@ -905,6 +966,18 @@ angular.module('services', [])
             .success(function (data) {
                 console.log(data);
                 $rootScope.showPricePlanPopup = true;
+            })
+        }
+    })
+
+    .service('__closeWebView', function ($http) {
+        return function () {
+            $http({
+                method: 'GET',
+                url: 'http://localhost:3000',
+                params: {
+                    id: window.webview
+                }
             })
         }
     })

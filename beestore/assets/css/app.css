@@ -6415,6 +6415,102 @@ blockquote p {
   height: 80px;
   font-size: 36px; }
 
+/**
+ * Checkbox
+ * --------------------------------------------------
+ */
+.checkbox {
+  position: relative;
+  display: inline-block;
+  padding: 7px 7px;
+  cursor: pointer; }
+  .checkbox input:before,
+  .checkbox .checkbox-icon:before {
+    border-color: #ED7703; }
+  .checkbox input:checked:before,
+  .checkbox input:checked + .checkbox-icon:before {
+    background: #ED7703;
+    border-color: #ED7703; }
+
+.checkbox input:disabled:before,
+.checkbox input:disabled + .checkbox-icon:before {
+  border-color: red; }
+
+.checkbox input:disabled:checked:before,
+.checkbox input:disabled:checked + .checkbox-icon:before {
+  background: red; }
+
+.checkbox.checkbox-input-hidden input {
+  display: none !important; }
+
+.checkbox input,
+.checkbox-icon {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  display: block;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  -webkit-appearance: none; }
+  .checkbox input:before,
+  .checkbox-icon:before {
+    display: table;
+    width: 100%;
+    height: 100%;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 28px;
+    background: #fff;
+    content: ' ';
+    transition: background-color 20ms ease-in-out; }
+
+.checkbox input:checked:before,
+input:checked + .checkbox-icon:before {
+  border-width: 3px; }
+
+.checkbox input:after,
+.checkbox-icon:after {
+  transition: opacity 0.05s ease-in-out;
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  position: absolute;
+  top: 33%;
+  left: 25%;
+  display: table;
+  width: 14px;
+  height: 6px;
+  border: 2px solid #282828;
+  border-top: 0;
+  border-right: 0;
+  content: ' ';
+  opacity: 0; }
+
+.checkbox input:checked:after,
+input:checked + .checkbox-icon:after {
+  opacity: 1; }
+
+.item-checkbox {
+  padding-left: 68px; }
+  .item-checkbox.active {
+    box-shadow: none; }
+
+.item-checkbox .checkbox {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  left: 10px;
+  z-index: 0;
+  margin-top: -21px; }
+
+.item-checkbox.item-checkbox-right {
+  padding-right: 68px;
+  padding-left: 20px; }
+
+.item-checkbox-right .checkbox input,
+.item-checkbox-right .checkbox-icon {
+  float: right; }
+
 * {
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -6423,23 +6519,6 @@ blockquote p {
 
 *::-webkit-scrollbar {
   display: none; }
-
-.video-block {
-  background: #ddd;
-  height: 30%;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  z-index: 99; }
-
-.show-overlay-button {
-  position: fixed;
-  top: 15%;
-  left: 0;
-  z-index: 1000;
-  background: rgba(255, 0, 0, 0.03);
-  width: 200px;
-  height: 200px; }
 
 .shadow-block {
   background: red;
@@ -6508,6 +6587,9 @@ h1, h2, h3, h4 {
   text-shadow: 0 1px 1px #fff4bc;
   -webkit-tap-highlight-color: transparent; }
 
+.beeline-button.small {
+  font-size: 18px; }
+
 a:hover, a:focus {
   color: #000; }
 
@@ -6545,6 +6627,9 @@ a:hover, a:focus {
 .filters-button.ng-hide {
   left: -500px;
   transition: 1s ease-out left; }
+
+.filters.button svg {
+  margin-top: 3px; }
 
 .dead-center {
   display: -webkit-flex;
@@ -6697,8 +6782,39 @@ a:hover, a:focus {
 .modal {
   height: 600px; }
 
+.block-list.officina {
+  font-family: 'officinaserifcregular'; }
+
+.block-list.officina li {
+  font-size: 18px; }
+
 .block-list .active-item {
+  background: orange;
+  font-family: 'officinaserifcbold';
+  font-weight: bold; }
+
+.block-list .active-item:hover {
   background: orange; }
+
+.block-list .active-item:active {
+  background: orange; }
+
+.block-list .active-item:focused {
+  background: orange; }
+
+.no-scroll {
+  overflow: hidden; }
+
+input:focus {
+  outline: 0; }
+
+.found-nothing {
+  padding: 10px;
+  width: 480px;
+  border: 2px dashed #999;
+  border-radius: 10px;
+  margin: 128px auto;
+  text-align: center; }
 
 /* Default custom select styles */
 div .cs-select {
@@ -6810,14 +6926,14 @@ div .cs-skin-border {
 .cs-skin-border > span::after,
 .cs-skin-border .cs-selected span::after {
   font-family: 'icomoon';
-  content: '\e000'; }
+  content: '+'; }
 
 .cs-skin-border ul span::after {
   content: '';
   opacity: 0; }
 
 .cs-skin-border .cs-selected span::after {
-  content: '\e00e';
+  content: '-';
   color: #ddd9c9;
   font-size: 1.5em;
   opacity: 1;
@@ -6826,10 +6942,10 @@ div .cs-skin-border {
 .cs-skin-border.cs-active > span {
   background: #fff;
   border-color: #fff;
-  color: #2980b9; }
+  color: #777; }
 
 .cs-skin-border .cs-options {
-  color: #2980b9;
+  color: #777;
   font-size: 0.75em;
   opacity: 0;
   border: 1px solid;
