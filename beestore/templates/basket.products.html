@@ -1,7 +1,9 @@
-<div class="grid-block padding" ng-controller="BasketProductListCtrl">
-    <div ng-if="basket.length == 0" class="grid-content medium-12 text-center" style="border: 3px dashed #999; border-radius: 10px; padding: 20px;">
+<div class="grid-container" style="padding:32px;" ng-controller="BasketProductListCtrl">
+
+    <div ng-if="basket.length == 0" class="found-nothing">
         <h3>Корзина пуста</h3>
-        <a ui-sref="main">Перейти к товарам</a>
+        <a ui-sref="main">Перейти на главную</a>
+        <p></p>
     </div>
 
     <div ng-if="basket.length != 0" class="grid-content medium-12">
@@ -36,11 +38,11 @@
             </div>
 
             <div class="grid-content medium-3 text-center" style="font-size: 40px">
-                <button style="font-size: 44px; width:52px;" ng-click="quantity(false, product)">-</button> {{product.quantity}} <button style="font-size: 44px; width:52px;" ng-click="quantity(true, product)">+</button>
+                <div class="step-button dead-center" ng-click="quantity(false, product)">-</div> {{product.quantity}} <div class="step-button dead-center" ng-click="quantity(true, product)">+</div>
             </div>
 
-            <div class="grid-content medium-2 text-center" style="font-size: 28px">
-                {{product.price | price}}
+            <div class="grid-content medium-2 text-center">
+                <span style="font-size: 28px">{{product.price | price}}</span>
             </div>
 
             <div class="grid-content medium-1 text-center" ng-click="deleteItem(product, $index)">
@@ -51,15 +53,15 @@
 
         <br><br>
 
-        <h2>
+        <h2 class="inline">
             Итого: {{basketPrice | price}}
-        </h2>
+        </h2><span> руб.</span>
 
         <br><br>
 
         <div class="grid-block">
             <div class="grid-content align-right text-right">
-                <a class="button beeline-button" style="width:280px;margin:auto;" ui-sref="basket.form">Перейти к оформлению</a>
+                <a class="beeline-button" style="width:200px;margin:auto;" ui-sref="basket.form">Далее</a>
             </div>
         </div>
 

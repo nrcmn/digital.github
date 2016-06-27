@@ -1,4 +1,4 @@
-<div class="grid-container" ng-controller="ProductDetailCtrl">
+<div class="grid-container" style="padding:32px;" ng-controller="ProductDetailCtrl">
     <zf-notification-set id="orderNotify" position="top-right"></zf-notification-set>
 
     <div class="grid-block">
@@ -24,26 +24,55 @@
                 <!-- На складе: {{product.remain}} -->
             </p>
 
-            <!-- <a title="Есть в наличии!" content="Для оформления заказа обратитесь к консультанту" color="success" autoclose="5000" zf-notify="orderNotify" class="beeline-button">Позвать консультанта</a> -->
+            <!-- <a class="beeline-button" ng-click="addToBasket()" ng-if="product.remain != 'нет' && product.remain != 'временно нет'">В корзину</a> -->
 
-<!--             <div class="grid-block">
-                <div class="grid-content" ng-repeat="(key, value) in product.memories track by $index" style="width: 100%;" ng-click="checkMemory(product.memories[key])">
-                    <span ng-style="value.current && {'font-weight':'bold'}">{{key}}</span>
+            <h4 ng-if="product.remain == 'нет' || product.remain == 'временно нет'">Извините, нет в наличии</h4>
+
+            <!-- ****** Multicard block. Don't DELETE ******* -->
+            <!-- ***** -->
+            <!-- **** -->
+            <!-- *** -->
+            <!-- ** -->
+            <!-- * -->
+            <!-- <div class="grid-block">
+                <div style="margin: 20px 0;" class="grid-content" ng-repeat="(key, value) in product.multicard track by $index">
+                    <span style="font-weight: bold; font-size: 20px; display: block;">Выберите {{value.name.toLowerCase()}}:</span>
+                    <span zf-open="multicardModal" style="margin: 5px; padding: 10px; border: 2px dashed #999; display: inline-block; border-radius: 5px; font-weight: bold;" ng-repeat="(key, value) in value.choiceValues" ng-click="multicardButton(value)" ng-class="{'test': value.current}">
+                        {{key}} / {{value.show}}
+                    </span>
                 </div>
+            </div> -->
 
-                <div class="grid-block small-up-3" ng-repeat="color in product.colors" ng-if="product.approvedIdsList.indexOf(color.id) != -1" ng-click="checkColor(color.id)">
-                    <div class="grid-content">
-                        <span ng-style="color.id == product.id && {'border': '3px dashed #777'}" style="display:block; margin: auto; width: 30px; height: 30px; border-radius: 20px; background: {{color.intag_choice | multiCardColor}};"></span>
+            <!-- <button zf-open="multicardModal" class="button hollow warning" ng-if="availableCount" ng-click="multicardSearchButton()" ng-disabled="availableCount.length == 1 && availableCount[0] == product.id">Показать ({{availableCount.length}})</button> -->
 
-                        <span ng-if="color.intag_slug != 'tsvet'">{{color.intag_choice}}</span>
+            <!-- <div zf-modal="" id="multicardModal">
+                <a zf-close="" class="close-button">×</a>
+                <div class="grid-block small-up-3 align-center products">
+                    <div class="grid-block" ng-repeat="card in multicardProductsList">
+                        <div class="">
+                            <div class="image-section padding">
+                                <img src="assets/img/ring.gif" ng-src="{{card.images[0]}}" onerror="this.src = 'assets/img/placeholder.png'" ng-click="openCard(card.id)">
+                            </div>
+                            <div class="padding">
+                                <div ng-if="card.price">
+                                    <h2 class="inline">{{card.price | price}}</h2><span> руб.</span>
+                                </div>
+                                <h4 ng-click="openCard(card.id)">{{card.name}}</h4>
+                            </div>
+                        </div>
                     </div>
-
-
                 </div>
-            </div>
+            </div> -->
 
-            <a class="beeline-button" ng-click="addToBasket()">В корзину</a>
-            <a class="beeline-button" ng-show="showPricePlanPopup" zf-open="pricePlanModal">Об акции</a> -->
+            <!-- * -->
+            <!-- ** -->
+            <!-- *** -->
+            <!-- **** -->
+            <!-- ***** -->
+            <!-- ****** Multicard block. Don't DELETE ******* -->
+
+            <!-- <a title="Есть в наличии!" content="Для оформления заказа обратитесь к консультанту" color="success" autoclose="5000" zf-notify="orderNotify" class="beeline-button">Позвать консультанта</a> -->
+            <!-- <a class="beeline-button" ng-show="showPricePlanPopup" zf-open="pricePlanModal">Об акции</a> -->
         </div>
     </div>
 
@@ -70,10 +99,10 @@
                 </ul>
             </section>
 
-            <a class="large dark hollow button" zf-open="intagModal">Все характеристики</a>
+            <a class="large dark hollow button" style="border-width:4px;margin-top:16px;" zf-open="intagModal">Все характеристики</a>
 
             <!-- *** INTAGS POPUP *** -->
-            <div zf-modal="" id="intagModal">
+            <div zf-modal="" id="intagModal" class="no-padding-left">
                 <a zf-close="" class="close-button" style="top:0.1rem;right:0.1rem;"><img src="assets/img/close.svg" style="width:40px;"></a>
 
                 <div class="grid-frame" style="height:600px;">
@@ -84,7 +113,7 @@
                         <section class="block-list officina">
                             <ul>
                                 <li ng-repeat="field in product.intags_categories">
-                                    <a ng-class="setActiveClass(field.id == modalIntags.id)" ng-click="openField(field)">{{field.name}}</a>
+                                    <a class="left-tab" ng-class="setActiveClass(field.id == modalIntags.id)" ng-click="openField(field)">{{field.name}}</a>
                                 </li>
                             </ul>
                         </section>
@@ -100,15 +129,6 @@
                                     <div style="flex:2;">
                                         <b>{{param.value[0]}}</b>
                                         <div ng-if="param.value[1]" style="border-radius:50%; width:30px; height:30px; background: {{param.value[1]}};"></div>
-                                        <!-- <span>
-                                            <div>
-                                                <b ng-if="param.id == 21">{{param.value[0].split(';')[0]}}</b>
-                                            </div>
-                                            <div style="border-radius:50%; width:30px; height:30px; background: {{param.value[0].split(';')[1]}};"></div>
-                                        </span>
-                                        <span>
-                                            <b ng-if="param.id != 21">{{param.value[0]}}</b>
-                                        </span> -->
                                     </div>
                                 </li>
                             </ul>
@@ -120,7 +140,7 @@
     </div>
 
     <!-- *** PRICE PLAN MODAL WINDOW INIT *** -->
-    <div zf-modal="" id="pricePlanModal">
+    <!-- <div zf-modal="" id="pricePlanModal">
         <h2>{{pricePlansData.name}}</h2>
         <ul style="padding: 0; margin: 0; list-style-type: none;">
             <li ng-repeat="desc in pricePlansData.description" ng-if="desc.type != 'button'">
@@ -147,7 +167,7 @@
                 </div>
             </li>
         </ul>
-    </div>
+    </div> -->
 
-    <recommendations list="{{product.rr_recommendations}}"></recommendations>
+    <!-- <recommendations list="{{product.rr_recommendations}}"></recommendations> -->
 </div>

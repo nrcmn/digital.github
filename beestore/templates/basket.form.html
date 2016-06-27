@@ -1,46 +1,65 @@
 <div class="grid-block padding" ng-controller="BasketFormCtrl">
 
-    <div class="grid-content medium-12">
-        <div class="grid-block">
-            <div class="grid-content medium-12 text-center">
-                <h2>Шаг 2 из 2</h2>
-            </div>
+    <div class="grid-content medium-12 text-center">
 
-            <br/><br/>
-            <br/><br/>
-            <br/><br/>
+        <div class="grid-content">
+            <h2>Шаг 2 из 2</h2>
+        </div>
 
-            <div class="grid-container medium-6 text-center">
-                <label>
+        <div class="grid-block medium-4 text-center" style="margin: 50px auto;">
+
+
+            <div class="grid-block">
+                <label style="margin:6px;">
                     <!-- <span style="font-size:24px;">номер телефона</span> -->
                     <span class="inline-label">
-                        <span class="form-label" style="font-size: 40px;">+7</span>
-                        <input field="phone" zf-open="keyboard_block" type="tel" placeholder="номер телефона" ng-model="form.phone" style="font-size: 40px; height: 60px;">
+                        <span class="form-label" style="font-size: 28px; font-weight:bold;">+7</span>
+                        <input class="tel" disabled="true" field="phone" zf-open="keyboard_block" type="tel" placeholder="номер телефона" ng-model="form.phone">
                     </span>
                 </label>
             </div>
+
+            <br>
+            <br>
+            <br>
+
+            <div class="grid-block small-up-3 keypad dead-center">
+                <div class="key">1</div>
+                <div class="key">2</div>
+                <div class="key">3</div>
+                <div class="key">4</div>
+                <div class="key">5</div>
+                <div class="key">6</div>
+                <div class="key">7</div>
+                <div class="key">8</div>
+                <div class="key">9</div>
+                <div class="clear">C</div>
+                <div class="key">0</div>
+                <div class="backspace">&#8592;</div>
+            </div>
+
+
         </div>
 
-        <div class="grid-block medium-6" style="margin: 50px auto;">
-            <div class="grid-block small-up-3 text-center keypad">
-                <div class="grid-content key">1</div>
-                <div class="grid-content key">2</div>
-                <div class="grid-content key">3</div>
-                <div class="grid-content key">4</div>
-                <div class="grid-content key">5</div>
-                <div class="grid-content key">6</div>
-                <div class="grid-content key">7</div>
-                <div class="grid-content key">8</div>
-                <div class="grid-content key">9</div>
-                <div class="grid-content clear">C</div>
-                <div class="grid-content key">0</div>
-                <div class="grid-content backspace">&#8592;</div>
+        <h4 ng-if="disable">{{orderResult}}</h4>
+
+        <div class="grid-block medium-4" style="margin: auto;">
+            <div class="grid-content text-center">
+                <a zf-open="basketFormModal" class="beeline-button" ng-hide="disable">Заказать</a>
             </div>
         </div>
 
-        <div class="grid-block medium-6" style="margin: auto;">
-            <div class="grid-content text-center">
-                <a class="button beeline-button" style="width:280px; margin: auto;" ng-click="placeAnOrder()" title="Заказ оформлен!" content="Заказ отправлен в никуда... Спасибо :)" color="success" autoclose="2000" zf-notify="basketResult">Оформить заказ</a>
+        <div zf-modal id="basketFormModal">
+            <a zf-close="" class="close-button">×</a>
+            <h3>Вы собираетесь сделать заказ на сумму<br/>{{basketPrice | price}} руб.</h3>
+
+            <div class="grid-block" style="margin: auto;">
+                <div class="grid-block padding">
+                    <button type="button" name="button" class="beeline-button grid-content" ng-click="_placeAnOrder()"  title="Заказ оформлен!" content="Обратитесь к любому консультанту" color="success" autoclose="3000" zf-notify="basketResult" zf-close="">Оформить</button>
+                </div>
+                <div class="grid-block padding">
+                    <button zf-close="" type="button" name="button" class="beeline-button grid-content" style="background: #fff;">отмена</button>
+                </div>
             </div>
         </div>
 

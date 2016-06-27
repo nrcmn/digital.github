@@ -161,8 +161,11 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
         unacceptableCategories = [6, 5, 4, 101, 15, 202, 23, 24, 164, 78, 80, 79, 166, 162, 165, 71, 70, 77, 122, 121, 182, 93, 86, 85, 90, 87, 163]; // unacceptable categories ids
 
         window.api_key = '852bff3ff459f9886729b9de223e8a0340ce008b',
-            url = 'https://public.backend.vimpelcom.ru', // public
+            // url = 'https://public.backend.vimpelcom.ru', // public
             // url = 'https://public.backend-test.vimpelcom.ru', // public test
+
+            url = 'https://backend-api.beeline.ru', // public API with HTTPS
+
             // url = 'http://backend.vimpelcom.ru:8080', // internal
             // url = 'http://backend-test.vimpelcom.ru:8080', // internal test
 
@@ -173,9 +176,11 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
             marketCode = 'VIP', // for mobile backend
             webview = location.search.replace(/\?id=/g, ''); // webview id for bridge from electron to this interface
 
-        const TIMER_VALUE = 10;
-        // var timer = TIMER_VALUE;
-        var timerStart = false;
+        if (window.webview.indexOf('/') > -1) {
+            window.webview = window.webview.replace(/\//g, '');
+        }
+
+        const TIMER_VALUE = 60;
 
         // Bread crumbs
         $rootScope.crumbs = []; // crumbs
@@ -220,11 +225,21 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
             return $rootScope.crumbs.push(toState);
         })
 
+        $rootScope.closeTimer = function () {
+            $rootScope.showTimerNotify = false;
+        }
+
         function startTimer() {
             timer = TIMER_VALUE;
             secondsToMars = setInterval(function () {
                 timer--;
-                if (timer == 0) {
+                if (timer <= 20 && timer != 0) {
+                    $rootScope.timer = timer;
+                    $rootScope.showTimerNotify = true;
+
+                    $rootScope.$apply();
+                }
+                else if (timer == 0) {
                     __closeWebView();
                     return timer  = TIMER_VALUE;
                 }
@@ -235,6 +250,9 @@ angular.module('BeeStore', ['ui.router','ngAnimate', 'foundation', 'foundation.d
         document.body.addEventListener('touchstart', function () {
             try {
                 clearInterval(secondsToMars);
+
+                $rootScope.showTimerNotify = false;
+                $rootScope.$apply();
             } catch (e) {
                 console.info('Timer is not defined yet');
             }
@@ -417,7 +435,7 @@ angular.module('controllers', [])
             if (window.scrollLoad && (Number(window.pageYOffset.toFixed()) - (document.body.scrollHeight - window.innerHeight) >= -1500)) {
                 if (lazyLoadNow) {return false} // if loading process running later
 
-                __LoadProducts(window.subCategory, 15, window.page += 1, '-weight', $rootScope.intagChoicesList);
+                __LoadProducts(window.subCategory, 15, window.page += 1, window.sortItem.value, $rootScope.intagChoicesList);
                 $rootScope.progress = true;
                 window.lazyLoadNow = true; // start lazy loading process
             }
@@ -482,11 +500,12 @@ angular.module('controllers', [])
         }
     })
 
-    .controller('ProductDetailCtrl', function ($scope, $rootScope, $stateParams, $document, $state, FoundationApi, __LoadOneProduct, __LoadPricePlan, __LoadMockPricePlans) {
+    .controller('ProductDetailCtrl', function ($scope, $rootScope, $stateParams, $document, $state, FoundationApi, __LoadOneProduct, __LoadPricePlan, __LoadMockPricePlans, __LoadProductsListByID, ModalFactory) {
 
         window.scroll(0,0); // scroll to top
         (window.product && window.product.id == $stateParams.id) ? $scope.product = window.product : window.product = undefined; // back from multicard bug fix
 
+        var MULTICARD; // unchangeable variable
         __LoadOneProduct($stateParams.id).then(function (data) {
             data.intags_categories.forEach(function (item, i, arr) { // general intags for detail page
                 if (item.id == 61) {
@@ -501,53 +520,55 @@ angular.module('controllers', [])
                 })
             })
 
-            // Multircard generator
-            var multicardMemories = {}; // object with parent multicard params
-            for (var i in data.multicard_products) {
-                var multicardArrays = data.multicard_products[i];
-                multicardArrays.forEach(function (item,index,arr) {
-                    // if this is memory and object haven't this value as key.
-                    if (!multicardMemories[item.intag_choice] && item.intag_slug == 'obem-vstroennoi-pamiati') {
-                        multicardMemories[item.intag_choice] = {
-                            current: (i == data.id) ? true : false, // if this is current product
-                            ids: []
-                        };
 
-                        multicardMemories[item.intag_choice].ids.push(i); // push item to object
+            /* -- MULTICARD CONFIGURATION --
+            @SCHEME
+            [
+                {
+                    name: 'name_of_intag',
+                    choices: [
+                        {
+                            choice: "intag_choice",
+                            id: "product_id"
+                        }
+                    ]
+                },
+                {
+                    etc
+                }
+            ]
+            */
+
+            if (data.multicard_products && Object.keys(data.multicard_products).length > 0) {
+                var multicard = {}; // create object for multicard params
+                for (var i in data.multicard_products) break; // get first object element
+                var first = data.multicard_products[i];
+
+                // crete scheme
+                first.forEach(function (item, i, arr) {
+                    multicard[item.intag_slug] = {
+                        name: item.intag_name,
+                        choiceValues: {}
                     }
-                    // if this is memory and object have this value as key
-                    else if (multicardMemories[item.intag_choice] && item.intag_slug == 'obem-vstroennoi-pamiati') {
-                        if (!multicardMemories[item.intag_choice].current) {
-                            multicardMemories[item.intag_choice].current = (i == data.id) ? true : false;  // if this is current product
+                })
+
+                for (var i in data.multicard_products) {
+                    data.multicard_products[i].forEach(function (item, index, arr) {
+                        if (!multicard[item.intag_slug].choiceValues[item.intag_choice]) {
+                            multicard[item.intag_slug].choiceValues[item.intag_choice] = {show: true, choices: new Array()};
                         }
 
-                        multicardMemories[item.intag_choice].ids.push(i); // push item to object
-                    }
+                        if (data.id == i) {
+                            multicard[item.intag_slug].choiceValues[item.intag_choice].current = true; // add current trigger
+                        }
 
-                    // create list with ids, which is approved for request for this object key
-                    if (multicardMemories[item.intag_choice] && multicardMemories[item.intag_choice].current) {
-                        return data.approvedIdsList = multicardMemories[item.intag_choice].ids;
-                    }
-                })
+                        multicard[item.intag_slug].choiceValues[item.intag_choice].choices.push(i);
+                    })
+                }
+
+                MULTICARD = JSON.stringify(multicard); // stringify object, because it unchangeable type (look at multicardButton fn)
+                data.multicard = multicard;
             }
-
-            // create colors array
-            var colors = new Array();
-
-            for (var i in data.multicard_products) {
-                var multicardArrays = data.multicard_products[i];
-                multicardArrays.forEach(function (item,index,arr) {
-                    // if this is color slug
-                    if (item.intag_slug == "tsvet") {
-                        item.id = i; // add id to color object
-                        colors.push(item); // push color object to colors array
-                    }
-                })
-            }
-
-            // import memories object and colors array to data object
-            data.memories = multicardMemories;
-            data.colors = colors;
 
             // inheritance data to global product object
             try {
@@ -565,20 +586,43 @@ angular.module('controllers', [])
             $scope.modalIntags = window.product.intags_categories[0]; // set opened intag
         })
 
-        // check memory in multicards
-        $scope.checkMemory = function (m) {
-            for (var i in $scope.product.memories) {
-                $scope.product.memories[i].current = false; // remove current boolean
+        $scope.multicardButton = function (arg) {
+            $scope.availableCount = arg.choices;
+            product.multicard = JSON.parse(MULTICARD); // set default values for multicard
+            arg.choices.forEach(function (item) {
+                for (var i in product.multicard) {
+                    for (var a in product.multicard[i].choiceValues) {
+                        if (product.multicard[i].choiceValues[a].choices.indexOf(item) < 0 && !product.multicard[i].choiceValues[a].save) {
+                            product.multicard[i].choiceValues[a].show = false;
+                        }
+                        else if (product.multicard[i].choiceValues[a].choices.indexOf(item) > -1) {
+                            product.multicard[i].choiceValues[a].show = true;
+                            product.multicard[i].choiceValues[a].save = true;
+                        }
+                    }
+                }
+            })
+
+            if ($scope.availableCount.length == 1) {
+                $state.go('detail', {id: $scope.availableCount[0]})
             }
-
-            m.current = true;
-            $scope.product.approvedIdsList = m.ids; // set approved ids list
+            else {
+                __LoadProductsListByID($scope.availableCount).then(function (data) {
+                    $scope.multicardProductsList = data;
+                });
+            }
         }
 
-        // check color in multicards
-        $scope.checkColor = function (id) {
-            $state.go('detail', {id: id});
-        }
+        // $scope.multicardSearchButton = function () {
+        //     if ($scope.availableCount.length == 1) {
+        //         $state.go('detail', {id: $scope.availableCount[0]})
+        //     }
+        //     else {
+        //         __LoadProductsListByID($scope.availableCount).then(function (data) {
+        //             $scope.multicardProductsList = data;
+        //         });
+        //     }
+        // }
 
         // open field in intags
         $scope.openField = function (f) {
@@ -633,7 +677,7 @@ angular.module('controllers', [])
         // $rootScope.intagChoicesList = window.intagChoicesList; // array for intag_choices ids
         if (window.intagChoicesList.length == 0) {
             $rootScope.filtersModalButtonConfig = {
-                label: 'выберите параметры',
+                label: 'выберите',
                 class: 'secondary'
             }
         }
@@ -701,13 +745,13 @@ angular.module('controllers', [])
 
             if (window.intagChoicesList > 0) {
                 $rootScope.filtersModalButtonConfig = {
-                    label: 'выбрано параметров',
+                    label: 'выбрано',
                     class: 'warning'
                 }
             }
             else {
                 $rootScope.filtersModalButtonConfig = {
-                    label: 'выберите параметры',
+                    label: 'выберите',
                     class: 'secondary'
                 }
             }
@@ -747,7 +791,7 @@ angular.module('controllers', [])
 
     .controller('BasketProductListCtrl', function ($scope, $rootScope, $state) {
         // clear crumbs
-        $rootScope.crumbs.length = 0;
+        // $rootScope.crumbs.length = 0;
 
         // push mock main state
         $rootScope.crumbs.push(
@@ -795,16 +839,44 @@ angular.module('controllers', [])
         }
     })
 
-    .controller('BasketFormCtrl', function ($scope, $rootScope, $timeout, $state) {
+    .controller('BasketFormCtrl', function ($scope, $rootScope, $timeout, $state, __Ordering) {
         $scope.form = {};
         $scope.form.phone = '';
 
-        $scope.placeAnOrder = function () {
-            console.log($scope.form);
-            $rootScope.basket.length = 0;
-            $timeout(function () {
-                $state.go('main')
-            }, 2000)
+        $scope._placeAnOrder = function () {
+            var basketItems = new Array();
+            $rootScope.basket.forEach(function (item, i, arr) {
+                basketItems.push({
+                    product: item.id,
+                    quantity: product.quantity
+                })
+            })
+
+            var checkoutData = {
+                market_region: window.market_region,
+                client: {
+                    first_name: 'Клиент',
+                    last_name: 'уважаемый',
+                    middle_name: '',
+                    phone: $scope.form.phone.replace(/\(|\)/g, '').replace(/ /g, ''),
+                    email: ''
+                },
+                items: basketItems,
+                warehouse: "0952",
+                order_status: "approved"
+            }
+
+            console.log('Order created');
+
+            __Ordering(checkoutData).then(function (data) {
+                $scope.orderResult = 'Заказ оформлен. Номер вашего заказа - ' + data.number;
+                $rootScope.basket.length = 0;
+                $scope.disable = true;
+            }, function (data) {
+                $scope.disable = true;
+                $scope.orderResult = 'Во время оформления заказа произошла ошибка. ' + data.detail;
+                console.log('ERROR! "__Checkout"');
+            });
         }
     })
 
@@ -845,6 +917,7 @@ angular.module('services', [])
                     sort_by: sort,
                     intag_choices: intags,
                     point_codes: "0952"
+                    // point_codes: "0055"
                 }
             })
             .success(function (data) {
@@ -909,7 +982,7 @@ angular.module('services', [])
     .service('__LoadOneProduct', function ($http, $rootScope, $q) {
         return function (id) {
             var deferred = $q.defer();
-            var params = (!window.product) ? 'id,name,remain,price,images,article,description_yandex,old_price,intags_categories,badges,accessories,rr_recommendations,multicard_products,description_small' : 'description_yandex,old_price,intags_categories,badges,accessories,rr_recommendations,multicard_products,id,extended_remains,description_small';
+            var params = (!window.product) ? 'id,name,remain,price,images,article,description_yandex,old_price,intags_categories,accessories,rr_recommendations,multicard_products,description_small' : 'description_yandex,old_price,intags_categories,accessories,rr_recommendations,multicard_products,id,extended_remains,description_small';
             // TODO: add "description_small" parameter in 1.21 release
 
             $http({
@@ -920,6 +993,7 @@ angular.module('services', [])
                     "market_region": window.market_region,
                     params: params,
                     point_codes: "0952"
+                    // "point_codes": "0055"
                 }
             })
             .success(function (data) {
@@ -927,6 +1001,36 @@ angular.module('services', [])
             })
             .error(function () {
                 deferred.reject('ERROR! "__LoadOneProduct"');
+            })
+
+            return deferred.promise;
+        }
+    })
+
+    .service('__LoadProductsListByID', function ($http, $rootScope, $q) {
+        return function (idsList) {
+            var deferred = $q.defer();
+            $rootScope.multicardFilterProductList = new Array();
+            $rootScope.$watchCollection('multicardFilterProductList', function(newNames, oldNames) {
+                if ($rootScope.multicardFilterProductList.length == idsList.length) {
+                    deferred.resolve($rootScope.multicardFilterProductList);
+                };
+            }, false);
+
+            idsList.forEach(function (item, i, arr) {
+                $http({
+                    method: 'GET',
+                    url: window.url + '/api/public/v1/products/' + item + '/',
+                    params: {
+                        "api_key": window.api_key,
+                        "market_region": window.market_region,
+                        point_codes: "0952"
+                        // "point_codes": "0055"
+                    }
+                })
+                .success(function (data) {
+                    $rootScope.multicardFilterProductList.push(data)
+                })
             })
 
             return deferred.promise;
@@ -974,11 +1078,33 @@ angular.module('services', [])
         return function () {
             $http({
                 method: 'GET',
-                url: 'http://localhost:3000',
+                url: 'http://localhost:3000/close',
                 params: {
                     id: window.webview
                 }
             })
+        }
+    })
+
+    .service('__Ordering', function ($http, $q) {
+        return function (checkoutData) {
+            var deferred = $q.defer();
+            $http({
+                method: 'POST',
+                url: window.url + '/api/public/v1/orders/',
+                params: {
+                    "api_key": window.api_key
+                },
+                data: checkoutData
+            })
+            .success(function (response) {
+                deferred.resolve(response);
+            })
+            .error(function (response) {
+                deferred.reject(response);
+            })
+
+            return deferred.promise;
         }
     })
 

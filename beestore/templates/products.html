@@ -1,42 +1,21 @@
 
 
-<div class="categories" ng-controller="ProductListCtrl">
-    <br>
-    <br>
-    <br>
-    <br>
+<div class="categories" ng-controller="ProductListCtrl" style="padding-top:128px;">
+
     <div class="filters-block">
 
         <div class="grid-block">
             <div class="small-12 medium-4 grid-content">
                 <label>Фильтровать по:</label>
-
-                <!-- <a ng-if="!intagChoicesList || intagChoicesList.length == 0" style="position:relative;width:100%;border: 5px solid #ccc;background:#fff;font-size:1rem; line-height:1.4rem; text-align:left;margin-bottom:0;" zf-open="filterModal" class="secondary button">выберите параметры <img style="position:absolute;right:3px;width:10px;" zf-iconic="" icon="chevron" size="small"></a> -->
-
-                <!-- <a
-                    ng-if="!intagChoicesList || intagChoicesList.length == 0"
-                    ng-click="openFilters()"
-                    style="position:relative;width:100%;border: 5px solid #ccc;background:#fff;font-size:1rem; font-weight: bold; line-height:1.4rem; text-align:left;"
-                    zf-open="filterModal"
-<<<<<<< HEAD
-                    class="secondary button">
-=======
-                    class="secondary button filters">
-                    выберите параметры<img style="position:absolute;right:3px;width:10px;" zf-iconic="" icon="chevron" size="small">
->>>>>>> origin/master
-                </a>
-
-                <a ng-if="intagChoicesList && intagChoicesList.length != 0" style="width:100%; font-size:1rem; line-height:1.4rem; border: 5px solid orange;" zf-open="filterModal" class="warning button">выбрано параметров ({{intagChoicesList.length}})</a> -->
-
-                <a
-                    class="button"
+                <a  class="button filters-button"
                     ng-class="filtersModalButtonConfig.class"
                     ng-click="openFilters()"
                     zf-open="filterModal">
                     {{filtersModalButtonConfig.label}} <span ng-show="intagChoicesList.length > 0">{{'(' + intagChoicesList.length + ')'}}</span>
+                    <img style="position:absolute;top:18px;right:3px;width:10px;" zf-iconic="" icon="chevron" size="small">
                 </a>
-
             </div>
+
             <div class="small-12 medium-4 grid-content">
                 <label>Сортировать по:</label>
                 <div class="cs-select cs-skin-border" ng-class="customSelectActiveClass || ''" ng-click="customSelect()">
@@ -50,8 +29,6 @@
 					</div>
 				</div>
 
-                <!-- <label>Сортировать по:</label>
-                <select ng-options="item as item.label for item in items" ng-model="selected" ng-change="sortBy()"></select> -->
             </div>
 
         </div>
@@ -63,7 +40,7 @@
     <div class="grid-block small-up-3 align-center products">
         <div class="grid-block" style="padding;2rem;" ng-repeat="products in productsList">
 
-            <div class="padding">
+            <div class="">
                 <div class="image-section padding">
                     <img src="assets/img/ring.gif" ng-src="{{products.images[0]}}" onerror="this.src = 'assets/img/placeholder.png'" ng-click="openProduct(products)">
                 </div>
@@ -99,29 +76,24 @@
         <img src="assets/img/ripple.gif">
     </div>
 
-    <!-- *** FILTERS BUTTON *** -->
-    <!-- <a ng-show="leftFilter" zf-open="filterModal" class="filters-button beeline-button">
-        <span ng-if="intagChoicesList.length == 0">Выберите параметры</span>
-        <span ng-if="intagChoicesList.length != 0">Выбрано параметров ({{intagChoicesList.length}})</span>
-    </a> -->
-
     <!-- *** Arrow Up BUTTON *** -->
     <div class="arrow-up" ng-show="leftFilter" ng-click="scrollToTop()">
         <img src="assets/img/arrow-up.svg">
     </div>
 
     <!-- *** IF PRODUCTS LIST IS EMPTY *** -->
-    <div ng-if="productsList.length == 0" style="padding: 10px; width: 100%; border: 2px dashed #999; border-radius: 10px; margin-top: 50px; text-align: center;">
-        <h3>Ничего не найдено</h3>
+    <div ng-if="productsList.length == 0" class="found-nothing">
+        <h3>Ничего не найдено :(</h3>
         <p>
             Попробуйте сбросить фильтры или посмотреть другую категорию товаров!
         </p>
     </div>
+
 </div>
 
 
 <!-- *** FILTERS MODAL *** -->
-<div zf-modal="" id="filterModal" ng-controller="FilterCtrl">
+<div zf-modal="" id="filterModal" class="no-padding-left" ng-controller="FilterCtrl">
     <a zf-close="" class="close-button" style="top:0.1rem;right:0.1rem;"><img src="assets/img/close.svg" style="width:40px;"></a>
 
     <!-- GLOBAL BLOCK -->
@@ -133,7 +105,7 @@
                 <section class="block-list">
                     <ul>
                         <li ng-class="setActiveClass($index == filterInd)" ng-repeat="filter in productsListFilter | color:filter" ng-click="checkFilter($index)">
-                            <a>{{filter.name}}</a>
+                            <a class="left-tab">{{filter.name}}</a>
                         </li>
                     </ul>
                 </section>
@@ -141,8 +113,8 @@
 
             <!-- Right (value) -->
             <div style="overflow: scroll;padding-bottom: 128px;" class="grid-content medium-8">
-                <label>Выберите значение:</label>
-                <div ng-repeat="val in productsListFilter[filterInd].choices"  style="padding: 20px; border-bottom: 1px dashed #ddd;">
+                <p style="padding-left:32px;margin:0;color:#999;font-style:italic;font-size:14px;">Выберите значение:</p>
+                <div ng-repeat="val in productsListFilter[filterInd].choices"  style="padding:20px;">
 
 
                     <!-- <input type="checkbox" ng-value="{{val.id}}" id="{{val.id}}" ng-checked="val.check" ng-click="check($event, val)">
@@ -152,7 +124,7 @@
                     </label> -->
 
                     <div style="position:relative;" class="item-checkbox">
-                       <label class="checkbox" for="{{val.id}}">
+                       <label style="padding-top:0;" class="checkbox" for="{{val.id}}">
                          <input type="checkbox" ng-value="{{val.id}}" id="{{val.id}}" ng-checked="val.check" ng-click="check($event, val)">
                        </label>
                        {{val.value}}
@@ -178,12 +150,12 @@
     </div>
 
     <!-- block with result buttons -->
-    <div class="grid-block" style="margin-top: 25px; position: absolute; bottom: 0; left:0; background: #fff; box-shadow: 0 0 40px #fff; width: 100%;">
-        <div class="grid-content medium-6" style="padding-right:8px;">
-            <a zf-close="" class="beeline-button small" ng-click="setFilter()">Применить фильтры</a>
+    <div class="grid-block" style="padding: 16px 32px; position: absolute; bottom: 0; left:0; background: #fff; box-shadow: 0 0 40px #fff; width: 100%;">
+        <div class="grid-content medium-6">
+            <button zf-close="" class="beeline-button small" ng-click="setFilter()">Применить фильтры</button>
         </div>
-        <div class="grid-content medium-6" style="padding-left:8px;">
-            <a class="beeline-button small" style="background:transparent;" ng-click="clearFilter()">Очистить фильтры</a>
+        <div class="grid-content medium-6">
+            <button class="beeline-button small" style="background:transparent;" ng-click="clearFilter()">Очистить фильтры</button>
         </div>
 
         <!-- <a zf-close="" class="alert hollow button" ng-click="cancelFilter()">Отмена</a> -->

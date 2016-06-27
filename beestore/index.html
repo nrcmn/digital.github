@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+        <meta http-equiv="Cache-Control" content="no-store" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <title>BeeStore</title>
         <link href="./assets/css/app.css" rel="stylesheet" type="text/css">
@@ -63,42 +64,39 @@
               justify-content: space-around;
             }
 
-            .flex-item {
-              background: tomato;
-              padding: 5px;
-              width: 200px;
-              height: 500px;
-              margin-top: 10px;
-
-              line-height: 150px;
-              color: white;
-              font-weight: bold;
-              font-size: 3em;
-              text-align: center;
+            #basketFormModal .modal {
+                height: 250px;
             }
         </style>
     </head>
 
-    <body oncontextmenu="return false;">
-    <!-- <body> -->
+    <body oncontextmenu="return false;" ng-cloak>
 
+        <div ng-show="showTimerNotify" class="notification alert is-active" style="touch-action: pan-x pan-y; -webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); width: 360px; border-radius: 12px; position: fixed; right: 20px; top: 20px;">
+            <a href="#" class="close-button" ng-click="closeTimer()">×</a>
 
+            <div class="notification-content">
+                <h1 class="ng-binding">Внимание</h1>
+                <p><span class="ng-binding ng-scope">Каталог закроется через <b>{{timer}}</b> сек.<br/>Коснитесь экрана для продолжения работы</span></p>
+            </div>
+        </div>
 
             <!-- Basket block (fixed positioned to bottom) -->
-            <!-- <div ng-if="basket.length != 0" ng-show="basketBottomShow" style="width: 100%; height: 125px; background: #191919; position: fixed; bottom: 0; z-index: 1001; padding: 30px">
+            <div ng-if="basket.length != 0" ng-show="basketBottomShow" class="cart-footer">
                 <div class="grid-block">
-                    <div class="grid-content medium-4 text-left" style="display:flex;flex-direction:row;align-items:center;padding:0;">
+                    <div ui-sref="basket.products" class="grid-content medium-6 text-left" style="display:flex;flex-direction:row;align-items:center;padding:0;">
                         <img zf-iconic="" icon="cart" size="large" class="iconic-color-secondary" style="margin-right:18px;width:64px;height:64px;">
                         <div>
-                            <h4 style="color:#999; margin-bottom:0;line-height:1;">Выбрано товаров ({{basketProductsCount}})</h4>
+                            <h4 style="color:#999; margin-bottom:0;line-height:1;">Товаров в корзине ({{basketProductsCount}})</h4>
                             <h3 style="color:#fff;display:inline;">{{basketPrice | price}}</h3><span style="color:#fff;"> руб.</span>
                         </div>
                     </div>
-                    <div class="grid-content medium-4 text-left" style="padding:0;">
+
+                    <!-- <div class="grid-content medium-4 text-left" style="padding:0;">
                         <a style="margin:6px 0 0 0;border-radius:6px;position:relative;padding-right:2rem;" class="button hollow warning large" ui-sref="basket.products">Перейти в корзину <img style="position:absolute;right:6px;top:44%;widht:12px;height:14px;" zf-iconic="" icon="chevron" size="small"></a>
-                    </div>
+                    </div> -->
                 </div>
-            </div> -->
+            </div>
 
             <!-- HEADER -->
             <div class="shrink" style="padding:20px 40px 0;position: fixed; top: 0; width: 100%;z-index:100;background:#fff;box-shadow: 0 20px 44px 1px rgba(255,255,255,0.9);">
@@ -121,7 +119,7 @@
 
                 <h3 ng-show="crumbs.length > 1" ng-cloak style="display: inline-block; padding: 10px; font-family: sans-serif;"><a style="font-size:24px;color:#282828;border:2px solid #555;border-radius:8px;padding:10px 20px 10px 10px;" onclick="history.back();">&#8592; Назад</a></h3>
 
-                <h3 ng-show="showHomeButton" ui-sref="main" ng-cloak style="display: inline-block; padding: 10px; font-family: sans-serif;"><a style="font-size:24px;color:#282828;border:2px solid #555;border-radius:8px;padding:10px;"><img style="width:24px;margin-bottom:4px;" src="assets/img/home.svg"><!--  Главная --></a></h3>
+                <h3 ng-show="showHomeButton" ui-sref="main" ng-cloak style="display: inline-block; padding: 10px; font-family: sans-serif;"><a style="font-size:24px;color:#282828;border:2px solid #555;border-radius:8px;padding:10px;"><img style="width:24px;margin-bottom:4px;" src="assets/img/home.svg"> Главная</a></h3>
 
 
 
