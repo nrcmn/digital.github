@@ -11,7 +11,7 @@
 					<key>kind</key>
 					<string>software-package</string>
 					<key>url</key>
-					<string>https://beeline-digital.github.io/monobrand/beta/MyBeeStore/myBeestore.ipa</string>
+					<string>https://bitbucket.org/indoordigial/monobrand-public/raw/994c9af56080ae8e16915b7cb94b775c93d57160/staging/myBeestore.ipa</string>
 				</dict>
 				<dict>
 					<key>kind</key>
@@ -29,7 +29,7 @@
 			<key>metadata</key>
 			<dict>
 				<key>bundle-identifier</key>
-				<string>ru.beeline.digital.indoor.monobrand</string>
+				<string>ru.beeline.digital.indoor.beta</string>
 				<key>bundle-version</key>
 				<string>0.1.2</string>
 				<key>kind</key>
