@@ -1,7 +1,0 @@
-{
-  "name": "Web Push Notifications Example",
-  "short_name": "WebPushNotificationsExample",
-  "start_url": "/",
-  "display": "standalone",
-  "gcm_sender_id": "709998194117"
-}
