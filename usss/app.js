@@ -315,6 +315,8 @@ const CombinedRequests = React.createClass({
         this.state.combine.status = 'IN PROCESS';
         this.state.combine.time = 0;
 
+        this.forceUpdate();
+
         var ctn = this.props.user.ctn;
         var startTime = new Date().getTime();
         $.ajax({
